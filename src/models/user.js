@@ -45,11 +45,10 @@ var UserSchema = new Schema({
         type: Number,
         default: 0
     },
-    challenges: [{
-        type: Schema.Types.ObjectId,
-        ref: 'CurrentChallenge',
-        unique: true
-    }],
+    //challenges: [{
+    //    type: Schema.Types.ObjectId,
+    //    ref: 'CurrentChallenge'
+    //}],
     createdAt: {
         type: Date,
         default: Date.now

@@ -31,11 +31,11 @@ var ChallengeSchema = new Schema({
     },
     karma: {
         type: Number,
-        required: [true, 'How much karma does this challenge give?'],
+        required: [true, 'How much karma does this challenge give?']
     },
     time: {
     type: Number,
-        required: [true, 'How long is the challenge in days?.'],
+        required: [true, 'How long is the challenge in days?.']
     },
     likes: {
         type: Number,
@@ -55,15 +55,12 @@ var ChallengeSchema = new Schema({
     },
     steps: [
         {
-            stepNumber: Number
-        },
-        {
+            stepNumber: Number,
             description: {
                 type: String,
                 required: [true, 'Describe the step'],
                 trim: true
-            }
-        }, {
+            },
             completed: {
                 type: Boolean,
                 default: false
