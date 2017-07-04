@@ -10,14 +10,29 @@ var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
 
 
 // GET all challenges
-apiRouter.get('/challenges', function(req, res) {
-    res.json({ challenges: 'challenges' });
+apiRouter.get('/challenges', function(req, res, next) {
+    Challenge.find({})
+        .select('_id title description time karma likes times_taken difficulty fun')
+        .sort({time: 1})
+        .exec(function (err, challenges) {
+            if(err) return next(err);
+            return res.status(200).json(challenges);
+        });
 });
 
 // GET a single challenge
 apiRouter.get('/challenges/:id', function(req, res) {
     let challengeId = req.params.id;
-    res.json({ challenge: 'challenge nr.: ' + challengeId });
+    Challenge.findById(challengeId)
+        .exec(function (err, challenge) {
+            if(err) return next(err);
+            if(!challenge){
+                var noChallengeErr = new Error('Challenge not found');
+                noChallengeErr.status = 404;
+                return next(noChallengeErr);
+            }
+            return res.status(200).json(challenge);
+        });
 });
 
 // GET current challenge

@@ -34,7 +34,7 @@ var ChallengeSchema = new Schema({
         required: [true, 'How much karma does this challenge give?']
     },
     time: {
-    type: Number,
+        type: Number,
         required: [true, 'How long is the challenge in days?.']
     },
     likes: {
