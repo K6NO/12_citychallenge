@@ -58,22 +58,42 @@ apiRouter.put('/challenges/current/:id', function(req, res) {
 });
 
 // GET a single user
-apiRouter.get('/users/:id', function(req, res) {
+apiRouter.get('/users/:id', function(req, res, next) {
+    // TODO switch to req.session.userId, add mid.isAuthenticated middleware to params
     let userId = req.params.id;
-    res.json({ challenge: 'user nr.: ' + userId });
+    User.findOne({_id: userId})
+        .select('-password')
+        .exec(function (err, user) {
+            if (err) return next(err);
+            return res.status(200).json(user);
+        })
 });
 
 // POST - create a single user
-apiRouter.post('/users', function(req, res) {
-    let user = req.body;
-    res.json({ challenge: 'new user: ' + user });
+apiRouter.post('/users', function(req, res, next) {
+    let user = new User(req.body);
+    user.save(function (err) {
+        if (err) return next(err);
+        res.setHeader('Location', '/');
+        res.status(200).json({saved: true});
+    })
 });
 
 // PUT - update a single user
-apiRouter.put('/users/:id', function(req, res) {
+apiRouter.put('/users/:id', function(req, res, next) {
     let userId = req.params.id;
-    let user = {}; // findByIdAndUpdate
-    res.json({ challenge: 'new user: ' + user });
+    //params: id, updateObj, {options}
+    User.findByIdAndUpdate(userId, req.body, {new: true})
+        .select('-password')
+        .exec(function (err, user) {
+            if (err) return next(err);
+            if(!user){
+                var noUserErr = new Error('User not found');
+                noUserErr.status = 404;
+                return next(noUserErr);
+            }
+            return res.status(201).json(user);
+        })
 });
 
 module.exports = apiRouter;
