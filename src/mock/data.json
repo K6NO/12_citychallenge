@@ -1,0 +1,167 @@
+{
+  "challenges": {
+    "_model": "Challenge",
+    "one": {
+      "title" : "First challenge",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
+      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
+      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
+      "city": "Budapest",
+      "karma": 10,
+      "time": 7,
+      "likes": 0,
+      "times_taken": 1,
+      "difficulty": 1,
+      "fun": 5,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
+          "completed" : false
+        },
+        {
+          "stepNumber": 2,
+          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
+          "completed" : false
+        },
+        {
+          "stepNumber": 3,
+          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
+          "completed" : false
+        }
+      ]
+    },
+    "two": {
+      "title" : "Second challenge",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
+      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
+      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
+      "city": "Ozora",
+      "karma": 20,
+      "time": 7,
+      "likes": 0,
+      "times_taken": 5,
+      "difficulty": 3,
+      "fun": 5,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
+          "completed" : false
+        },
+        {
+          "stepNumber": 2,
+          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
+          "completed" : false
+        },
+        {
+          "stepNumber": 3,
+          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
+          "completed" : false
+        }
+      ]
+    },
+    "three": {
+      "title" : "Third challenge",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
+      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
+      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
+      "city": "Chicago",
+      "karma": 10,
+      "time": 7,
+      "likes": 0,
+      "times_taken": 1,
+      "difficulty": 1,
+      "fun": 5,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
+          "completed" : false
+        },
+        {
+          "stepNumber": 2,
+          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
+          "completed" : false
+        },
+        {
+          "stepNumber": 3,
+          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
+          "completed" : false
+        }
+      ]
+    }
+  },
+  "users": {
+    "_model": "User",
+    "keno": {
+      "emailAddress": "tamas.kenessey@gmail.com",
+      "fullName": "Tamas Kenessey",
+      "userName": "K6NO",
+      "photoUrl": "https://avatars3.githubusercontent.com/u/19394212?v=3&s=400",
+      "password": "password",
+      "city": "Budapest",
+      "karma": 50
+    },
+    "mano": {
+      "emailAddress": "mano.keno@gmail.com",
+      "fullName": "Mano Keno",
+      "userName": "KenoMano",
+      "photoUrl": "https://avatars3.githubusercontent.com/u/19394212?v=3&s=400",
+      "password": "password",
+      "city": "Budapest",
+      "karma": 100
+    }
+  },
+  "currentChallenges": {
+    "_model": "CurrentChallenge",
+    "one": {
+      "user": "->users.keno",
+      "partner": "->users.mano",
+      "challenge" : "->challenges.one",
+      "state": "active",
+      "stepsCompleted": [1, 2]
+    },
+    "two": {
+      "user": "->users.mano",
+      "partner": "->users.keno",
+      "challenge" : "->challenges.one",
+      "state": "active",
+      "stepsCompleted": [2]
+    },
+    "three": {
+      "user": "->users.keno",
+      "partner": "->users.mano",
+      "challenge" : "->challenges.two",
+      "state": "completed",
+      "stepsCompleted": [1,2,3]
+    },
+    "four": {
+      "user": "->users.mano",
+      "partner": "->users.keno",
+      "challenge" : "->challenges.two",
+      "state": "completed",
+      "stepsCompleted": [1,2,3]
+    },
+    "five": {
+      "user": "->users.mano",
+      "partner": "->users.keno",
+      "challenge" : "->challenges.three",
+      "state": "active",
+      "stepsCompleted": []
+    },
+    "six": {
+      "user": "->users.keno",
+      "partner": "->users.mano",
+      "challenge" : "->challenges.three",
+      "state": "active",
+      "stepsCompleted": []
+    },
+    "seven": {
+      "user": "->users.keno",
+      "challenge" : "->challenges.three",
+      "state": "waiting",
+      "stepsCompleted": []
+    }
+  }
+}

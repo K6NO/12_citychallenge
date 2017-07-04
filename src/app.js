@@ -4,11 +4,13 @@ const express = require('express'),
       logger = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
-      mongoose = require('mongoose');
+      mongoose = require('mongoose'),
+      seeder = require('mongoose-seeder');
 
 
 var index = require('./routes/index');
 var apiRouter = require('./api/router-api');
+var mockData = require('./mock/data.json');
 
 var app = express();
 
@@ -25,8 +27,15 @@ db.on('error', (err)=> {
   console.log('There was an error with mongoDB ' + err)
 });
 
-//once only fires the event when it's first happening
+//Load dummy data when DB opens
 db.once('open', ()=> {
+  seeder.seed(mockData)
+      .then(function (dbData) {
+    console.log('DUMMY DATA LOADED... YAY');
+  })
+      .catch(function (err) {
+        console.log('Error when loading dummy data: ' + err);
+      });
   console.log('Connection to DB successfull');
 });
 

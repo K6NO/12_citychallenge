@@ -50,7 +50,10 @@ var UserSchema = new Schema({
         ref: 'CurrentChallenge',
         unique: true
     }],
-    createdAt: {type: Date, default: Date.now}
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 // TODO Hashing passwords with pre-save hook

@@ -12,8 +12,7 @@ var CurrentChallengeSchema = new Schema({
     },
     partner: {
         type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+        ref: "User"
     },
     challenge : {
         type: Schema.Types.ObjectId,
