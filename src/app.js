@@ -1,9 +1,11 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express'),
+      path = require('path'),
+      favicon = require('serve-favicon'),
+      logger = require('morgan'),
+      cookieParser = require('cookie-parser'),
+      bodyParser = require('body-parser'),
+      mongoose = require('mongoose');
+
 
 var index = require('./routes/index');
 var apiRouter = require('./api/router-api');
@@ -13,6 +15,20 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'jade');
+
+// Mongoose - TODO: follow-up: reset deprecated Mongoose promise to the general promise object
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/citychallenge');
+const db = mongoose.connection;
+
+db.on('error', (err)=> {
+  console.log('There was an error with mongoDB ' + err)
+});
+
+//once only fires the event when it's first happening
+db.once('open', ()=> {
+  console.log('Connection to DB successfull');
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

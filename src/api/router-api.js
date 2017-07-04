@@ -3,6 +3,11 @@
 var express = require('express');
 var apiRouter = express.Router();
 
+// Import models
+var User = require('../models/user').User;
+var Challenge = require('../models/challenge').Challenge;
+var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
+
 
 // GET all challenges
 apiRouter.get('/challenges', function(req, res) {
