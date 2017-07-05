@@ -2,8 +2,9 @@
 
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var uniqueValidator = require('mongoose-unique-validator');
-var validator = require('validator');
+const uniqueValidator = require('mongoose-unique-validator');
+const validator = require('validator');
+const bcrypt = require('bcrypt');
 
 // TODO verify if list of current challenges is necessary
 var UserSchema = new Schema({
@@ -55,17 +56,40 @@ var UserSchema = new Schema({
     }
 });
 
-// TODO Hashing passwords with pre-save hook
-//UserSchema.pre('save', function (next) {
-//    var user = this;
-//    bcrypt.hash(user.password, 10, function(err, hash) {
-//        if (err) {
-//            return next(err);
-//        }
-//        user.password = hash;
-//        next();
-//    });
-//});
+// Hashing passwords with pre-save hook
+UserSchema.pre('save', function (next) {
+    var user = this;
+    bcrypt.hash(user.password, 10, function(err, hash) {
+        if (err) {
+            return next(err);
+        }
+        user.password = hash;
+        next();
+    });
+});
+
+// Static method for auth middleware
+
+UserSchema.statics.authenticate = function (email, password, callback) {
+    User.findOne({emailAddress: email})
+        .exec(function (err, user) {
+            if(err) {
+                return callback(err);
+            } else if (!user) {
+                var noUserError = new Error('User not found.');
+                noUserError.status = 404;
+                return callback(noUserError);
+            }
+            bcrypt.compare(password, user.password, function (err, result) {
+                if(result === true) {
+                    return callback(null, user);
+                } else {
+                    return callback();
+                }
+            })
+
+        })
+}
 
 // Email unique-validator
 UserSchema.plugin(uniqueValidator);

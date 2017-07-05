@@ -25,11 +25,9 @@ var CurrentChallengeSchema = new Schema({
     },
     startedAt: {
         type: Date,
-        default: Date.now
     },
     endsAt: {
         type: Date,
-        default: Date.now
     },
     state: {
         type: String,
@@ -39,9 +37,13 @@ var CurrentChallengeSchema = new Schema({
     stepsCompleted: {
         type: [Number]
     }
-});
+}
+    //, {collection: "CurrentChallenge"}
+);
 
 // model
-var CurrentChallenge = mongoose.model("CurrentChallenge", CurrentChallengeSchema);
+var CurrentChallenge = mongoose.model("CurrentChallenge", CurrentChallengeSchema
+    //, 'CurrentChallenge'
+);
 
 module.exports.CurrentChallenge = CurrentChallenge;
