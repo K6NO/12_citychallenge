@@ -153,14 +153,14 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": []
+      "stepsCompleted": [1,2,3]
     },
     "six": {
       "user": "->users.keno",
       "partner": "->users.mano",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": []
+      "stepsCompleted": [1,2,3]
     },
     "seven": {
       "user": "->users.keno",

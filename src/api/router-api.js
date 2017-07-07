@@ -15,7 +15,9 @@ var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
 // auth middleware
 var auth = require('../middleware/auth'); //auth.isAuthenticated
 
+// waitlist, checkdates middleware
 var waitlist = require('../middleware/waitlist');
+var dateChecker = require('../middleware/datechecker');
 
 
 /* CHALLENGES */
@@ -75,8 +77,8 @@ apiRouter.put('/challenges/:id', function(req, res, next) {
 
 /* CURRENT CHALLENGES */
 
-// GET currentChallenge
-apiRouter.get('/current/challenges/:id', function(req, res, next) {
+// GET a single currentChallenge
+apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, function(req, res, next) {
     let challengeId = req.params.id;
 
     CurrentChallenge.findById(challengeId)
