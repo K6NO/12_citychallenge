@@ -127,7 +127,7 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
 
 });
 
-// PUT update a current challenge
+// PUT update a current challenge - abandon
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
     let currentChallengeId = req.params.id;
     CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
@@ -142,7 +142,7 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
         })
 });
 
-// PUT update a current challenge
+// PUT update a current challenge - step completed
 apiRouter.put('/current/challenges/:id', function(req, res, next) {
     let currentChallengeId = req.params.id;
     CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
