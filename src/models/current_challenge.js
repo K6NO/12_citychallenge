@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Message = require('./message');
 
 var CurrentChallengeSchema = new Schema({
     user: {
@@ -35,7 +36,10 @@ var CurrentChallengeSchema = new Schema({
     },
     stepsCompleted: {
         type: [Number]
-    }
+    },
+    messages: [
+        {message : { type: Schema.Types.ObjectId, ref: 'Message'}}
+    ]
 }
 );
 

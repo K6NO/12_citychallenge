@@ -11,6 +11,8 @@ var db = mongoose.connection;
 var User = require('../models/user').User;
 var Challenge = require('../models/challenge').Challenge;
 var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
+var Message = require('../models/message').Message;
+
 
 // auth middleware
 var auth = require('../middleware/auth'); //auth.isAuthenticated
@@ -138,6 +140,7 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
                 noDataErr.status = 404;
                 return next(noDataErr);
             }
+
             return res.status(201).json(currentChallenge);
         })
 });
@@ -157,20 +160,58 @@ apiRouter.put('/current/challenges/:id', function(req, res, next) {
         })
 });
 
-// DELETE a current challenge when abandoning
-//apiRouter.delete('/current/challenges/:id', function(req, res, next) {
-//
-//    CurrentChallenge.findByIdAndRemove(req.params.id)
-//        .exec(function (err, currentChallenge) {
-//            if (err) return next(err);
-//            if(!currentChallenge){
-//                var noDataErr = new Error('CurrentChallenge not found. No delete performed.');
-//                noDataErr.status = 404;
-//                return next(noDataErr);
-//            }
-//            return res.status(204).json({"deleted": true});
-//        })
-//});
+/* MESSAGES */
+
+// GET messages for currentChallenge
+apiRouter.get('/current/challenges/:id/messages', function(req, res, next) {
+    let currentChallengeId = req.params.id;
+    CurrentChallenge.findById(currentChallengeId)
+        .populate('messages', '_id text')
+        .exec(function (err, currentChallenge) {
+            if (err) return next(err);
+            if(!currentChallenge){
+                var noDataErr = new Error('CurrentChallenge not found');
+                noDataErr.status = 404;
+                return next(noDataErr);
+            }
+            console.log(currentChallenge.messages);
+            return res.status(201).json(currentChallenge);
+        })
+});
+
+//{
+//    path: 'messages.text',
+//        model: Message
+//}
+
+// POST new text for currentChallenge
+apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
+    let currentChallengeId = req.params.id;
+    CurrentChallenge.findById(currentChallengeId)
+        .exec(function (err, currentChallenge) {
+            if (err) return next(err);
+            if(!currentChallenge){
+                var noDataErr = new Error('CurrentChallenge not found. Message not saved.');
+                noDataErr.status = 404;
+                return next(noDataErr);
+            }
+
+            let message = new Message(
+                {
+                    "user" : currentChallenge.user,
+                    "currentChallenge" : currentChallenge._id,
+                    "text" : req.body
+                });
+            console.log(currentChallenge);
+            currentChallenge.messages.push(message);
+
+            currentChallenge.save(function (err, currentChallenge) {
+                if(err) return next(err);
+                return res.status(201).json(currentChallenge.messages);
+            });
+        })
+});
+
 
 /* USERS */
 
