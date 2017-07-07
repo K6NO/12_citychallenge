@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// TODO verify if partner logic works
 var CurrentChallengeSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -38,12 +37,9 @@ var CurrentChallengeSchema = new Schema({
         type: [Number]
     }
 }
-    //, {collection: "CurrentChallenge"}
 );
 
 // model
-var CurrentChallenge = mongoose.model("CurrentChallenge", CurrentChallengeSchema
-    //, 'CurrentChallenge'
-);
+var CurrentChallenge = mongoose.model("CurrentChallenge", CurrentChallengeSchema);
 
 module.exports.CurrentChallenge = CurrentChallenge;

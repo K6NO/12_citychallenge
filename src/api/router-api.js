@@ -128,6 +128,21 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
 });
 
 // PUT update a current challenge
+apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
+    let currentChallengeId = req.params.id;
+    CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
+        .exec(function (err, currentChallenge) {
+            if (err) return next(err);
+            if(!currentChallenge){
+                var noDataErr = new Error('CurrentChallenge not found');
+                noDataErr.status = 404;
+                return next(noDataErr);
+            }
+            return res.status(201).json(currentChallenge);
+        })
+});
+
+// PUT update a current challenge
 apiRouter.put('/current/challenges/:id', function(req, res, next) {
     let currentChallengeId = req.params.id;
     CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
@@ -141,6 +156,21 @@ apiRouter.put('/current/challenges/:id', function(req, res, next) {
             return res.status(201).json(currentChallenge);
         })
 });
+
+// DELETE a current challenge when abandoning
+//apiRouter.delete('/current/challenges/:id', function(req, res, next) {
+//
+//    CurrentChallenge.findByIdAndRemove(req.params.id)
+//        .exec(function (err, currentChallenge) {
+//            if (err) return next(err);
+//            if(!currentChallenge){
+//                var noDataErr = new Error('CurrentChallenge not found. No delete performed.');
+//                noDataErr.status = 404;
+//                return next(noDataErr);
+//            }
+//            return res.status(204).json({"deleted": true});
+//        })
+//});
 
 /* USERS */
 

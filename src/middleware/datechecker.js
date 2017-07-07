@@ -22,7 +22,7 @@ var checkIfEndDatePassed = function (req, res, next) {
                 } else {
                     currentChallenge.state = 'failed';
                 }
-                currentChallenge.save(function (err, updated) {
+                currentChallenge.save(function (err) {
                     if (err) return next(err);
                     console.log('State changed for ' + currentChallenge._id);
                 }); // end save
