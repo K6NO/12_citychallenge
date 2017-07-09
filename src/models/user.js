@@ -70,6 +70,7 @@ UserSchema.pre('save', function (next) {
 
 // Static method for auth middleware
 
+// TODO elvileg ezzel is mukodik, ha beadom az emailAddresst
 UserSchema.statics.authenticate = function (email, password, callback) {
     User.findOne({emailAddress: email})
         .exec(function (err, user) {
@@ -89,7 +90,11 @@ UserSchema.statics.authenticate = function (email, password, callback) {
             })
 
         })
-}
+};
+
+UserSchema.method.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password)
+};
 
 // Email unique-validator
 UserSchema.plugin(uniqueValidator);

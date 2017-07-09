@@ -24,10 +24,10 @@ var CurrentChallengeSchema = new Schema({
         default: Date.now
     },
     startedAt: {
-        type: Date,
+        type: Date
     },
     endsAt: {
-        type: Date,
+        type: Date
     },
     state: {
         type: String,

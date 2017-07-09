@@ -6,12 +6,52 @@ const express = require('express'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
       mongoose = require('mongoose'),
-      seeder = require('mongoose-seeder');
+      seeder = require('mongoose-seeder'),
+      passport = require('passport'),
+      session = require('express-session'),
+      FacebookStrategy = require('passport-facebook');
 
+// Mongo session store
+const MongoStore = require('connect-mongo')(session);
 
-var index = require('./routes/index');
-var apiRouter = require('./api/router-api');
-var mockData = require('./mock/data.json');
+// Pass configuration method to Passport
+require('./config/passport')(passport);
+
+//passport.serializeUser(function (user, done) {
+//  // user -> Mongoose model, done is a callback (err,
+//  done(null, user._id);
+//});
+//
+//// userId is data stored in the session - done either passes error or the user object
+//passport.deserializeUser(function (userId, done) {
+//  User.findById(userId, function (err, user) {
+//    done(err, user)
+//  })
+//});
+
+//function generateOrFindUser(accessToken, refreshToken, profile, done) {
+//  if(profile.emails[0]) {
+//    User.findOneAndUpdate({
+//      email: profile.emails[0].value
+//    }, {
+//      name: profile.displayName || profile.username,
+//      email: profile.emails[0].value,
+//      photo: profile.photos[0].value
+//    }, {
+//      upsert: true
+//    },
+//        done);
+//  } else {
+//    var noEmailError = new Error('Your email privacy settings prevent you from signing in. Please change privacy settings in your Facebook profile.');
+//    done(noEmailError, null);
+//  }
+//}
+
+const index = require('./routes/index');
+const apiRouter = require('./api/router-api');
+const authRouter = require('./routes/auth');
+
+const mockData = require('./mock/data.json');
 
 var app = express();
 
@@ -23,6 +63,40 @@ app.set('view engine', 'jade');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/citychallenge');
 const db = mongoose.connection;
+
+// body-parser and cookie-parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// Session config for Mongo and Passport
+
+let sessionOptions = {
+  secret: 'This is the secret pass phrase',
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore ({
+    mongooseConnection: db
+  })
+};
+
+app.use(session(sessionOptions));
+
+// Initialize passport
+app.use(passport.initialize());
+
+// Restores password session (if the user was previously signed in they still will be when returning)
+app.use(passport.session());
+
+// Facebook authentication strategy
+
+//passport.use(new FacebookStrategy({
+//  clientID: process.env.FACEBOOK_APP_ID,
+//  clientSecret: process.env.FACEBOOK_APP_SECRET,
+//  callbackURL: "http://localhost:3000/auth/facebook/return",
+//  profileFields: ['id', 'displayName', 'photos', 'email']
+//}), generateOrFindUser);
+
 
 db.on('error', (err)=> {
   console.log('There was an error with mongoDB ' + err)
@@ -46,18 +120,18 @@ db.once('open', ()=> {
 // logger / Morgan
 app.use(logger('dev'));
 
-// body-parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ROUTERS
 
 app.use('/', index);
 
 // API router
 app.use('/api', apiRouter);
+
+// AUTH router
+app.use('/auth', authRouter);
 
 // ERROR HANDLERS
 
