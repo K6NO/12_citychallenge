@@ -46,6 +46,10 @@ var UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    completed: {
+        type: Number,
+        default: 0
+    },
     //challenges: [{
     //    type: Schema.Types.ObjectId,
     //    ref: 'CurrentChallenge'
@@ -71,28 +75,28 @@ UserSchema.pre('save', function (next) {
 // Static method for auth middleware
 
 // TODO elvileg ezzel is mukodik, ha beadom az emailAddresst
-UserSchema.statics.authenticate = function (email, password, callback) {
-    User.findOne({emailAddress: email})
-        .exec(function (err, user) {
-            if(err) {
-                return callback(err);
-            } else if (!user) {
-                var noUserError = new Error('User not found.');
-                noUserError.status = 404;
-                return callback(noUserError);
-            }
-            bcrypt.compare(password, user.password, function (err, result) {
-                if(result === true) {
-                    return callback(null, user);
-                } else {
-                    return callback();
-                }
-            })
+//UserSchema.statics.authenticate = function (email, password, callback) {
+//    User.findOne({emailAddress: email})
+//        .exec(function (err, user) {
+//            if(err) {
+//                return callback(err);
+//            } else if (!user) {
+//                var noUserError = new Error('User not found.');
+//                noUserError.status = 404;
+//                return callback(noUserError);
+//            }
+//            bcrypt.compare(password, user.password, function (err, result) {
+//                if(result === true) {
+//                    return callback(null, user);
+//                } else {
+//                    return callback();
+//                }
+//            })
+//
+//        })
+//};
 
-        })
-};
-
-UserSchema.method.validPassword = function (password) {
+UserSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password)
 };
 

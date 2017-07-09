@@ -4,13 +4,13 @@ const express = require('express'),
     passport = require('passport'),
     User = require('../models/user').User;
 
-/* FACEBOOK AUTH */
+/* FACEBOOK AUTH ROUTES */
 
 // GET /auth/login/facebook
-router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email"]}));
+router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email,user_hometown"]}));
 
 // GET /auth/facebook/return
-router.get('/facebook/return', passport.authenticate('facebook', {failureRedirect: '/'}), function (req, res) {
+router.get('/facebook/return', passport.authenticate('facebook', {failureRedirect: '/auth/login'}), function (req, res) {
     // success auth
     res.status(200).json({auth: true});
 });
@@ -24,7 +24,6 @@ router.get('/logout', function (req, res) {
 });
 
 /* LOCAL AUTH */
-
 
 // process the login form
 router.post("/login", passport.authenticate('local-login'), function(req, res) {
@@ -60,13 +59,9 @@ router.post("/signup", function(req, res, next) {
             newUser.password = req.body.password;
             newUser.photoUrl = req.body.photoUrl;
             newUser.city = req.body.city;
-            console.log(newUser);
             newUser.save(function(err, user) {
-                console.log(user);
                 req.login(user, function(err) {
                     if (err) {
-                        console.log('in error');
-
                         return next(err);
                     }
                     console.log(user._id);

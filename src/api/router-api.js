@@ -84,8 +84,8 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
     let challengeId = req.params.id;
 
     CurrentChallenge.findById(challengeId)
-        .populate('user', 'fullName username photoUrl city')
-        .populate('partner', 'fullName username photoUrl city')
+        .populate('user')
+        .populate('partner')
         .populate('challenge')
         .exec(function (err, currentChallenge) {
             if(err) return next(err);
@@ -111,9 +111,8 @@ apiRouter.get('/current/challenges/user/:id', function(req, res, next) {
         });
 });
 
-// POST create a new current challenge
+// POST create a new current challenge AND check for matching challenge
 apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, function(req, res, next) {
-
     if(req.currentChallenges) {
         res.setHeader('Location', '/');
         res.status(200).json({
@@ -126,7 +125,6 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
             saved: req.saved
         });
     }
-
 });
 
 // PUT update a current challenge - abandon
