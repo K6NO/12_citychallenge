@@ -125,48 +125,63 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.one",
       "state": "active",
-      "stepsCompleted": [1, 2]
+      "stepsCompleted": [1, 2],
+      "startedAt" : "2017-07-02T16:37:26.484Z",
+      "endsAt" : "2017-07-09T16:37:26.484Z"
+
     },
     "two": {
       "user": "->users.mano",
       "partner": "->users.keno",
       "challenge" : "->challenges.one",
       "state": "active",
-      "stepsCompleted": [2]
+      "stepsCompleted": [2],
+      "startedAt" : "2017-07-02T16:37:26.484Z",
+      "endsAt" : "2017-07-09T16:37:26.484Z"
     },
     "three": {
       "user": "->users.keno",
       "partner": "->users.mano",
       "challenge" : "->challenges.two",
       "state": "completed",
-      "stepsCompleted": [1,2,3]
+      "stepsCompleted": [1,2,3],
+      "startedAt" : "2017-07-02T16:37:26.484Z",
+      "endsAt" : "2017-07-09T16:37:26.484Z"
     },
     "four": {
       "user": "->users.mano",
       "partner": "->users.keno",
       "challenge" : "->challenges.two",
       "state": "completed",
-      "stepsCompleted": [1,2,3]
+      "stepsCompleted": [1,2,3],
+      "startedAt" : "2017-07-02T16:37:26.484Z",
+      "endsAt" : "2017-07-09T16:37:26.484Z"
     },
     "five": {
       "user": "->users.mano",
       "partner": "->users.keno",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": [1,2,3]
+      "stepsCompleted": [1,2,3],
+      "startedAt" : "2017-07-02T16:37:26.484Z",
+      "endsAt" : "2017-07-09T16:37:26.484Z"
     },
     "six": {
       "user": "->users.keno",
       "partner": "->users.mano",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": [1,2,3]
+      "stepsCompleted": [1,2,3],
+      "startedAt" : "2017-07-02T16:37:26.484Z",
+      "endsAt" : "2017-07-09T16:37:26.484Z"
     },
     "seven": {
       "user": "->users.keno",
       "challenge" : "->challenges.three",
       "state": "waiting",
-      "stepsCompleted": []
+      "stepsCompleted": [],
+      "startedAt" : "2017-07-09T16:37:26.484Z",
+      "endsAt" : "2017-07-16T16:37:26.484Z"
     }
   }
 }

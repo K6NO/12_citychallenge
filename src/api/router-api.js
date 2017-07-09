@@ -94,6 +94,10 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
                 noDataError.status = 404;
                 return next(noDataError);
             }
+
+            // TODO consider to move client-side for perf benefits
+            currentChallenge.calculateRemainingTime();
+
             res.status(200).json(currentChallenge);
         });
 });
