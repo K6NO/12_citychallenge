@@ -1,0 +1,61 @@
+
+.challenge-box-title {
+    padding-top: 12em;
+}
+
+.title-padding {
+    padding-top: 1em;
+    padding-bottom: 2em;
+}
+
+.description-padding {
+    margin-top: 2em;
+}
+
+.word-experience {
+    color: #4caf50;
+    font-family: Megrim;
+}
+
+.word-fun {
+    color: #9c27b0;
+    font-family: Megrim;
+}
+
+.word-in {
+    color: #ffffff;
+}
+
+.word-urban {
+    color: #fffff0;
+
+    /*color: #fbc02d;*/
+    font-family: Megrim;
+}
+
+.word-life {
+    color: #fffff0;
+    font-family: Megrim;
+}
+
+.text-ivory {
+    color: #fffff0;
+}
+
+.challenge-box-nav {
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.challenge-box-profile {
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    margin: 15px 0;
+}
+
+.challenge-detail-big-picture {
+    padding-top: 12em;
+}
+
+.background-white {
+    background-color: rgba(255, 255, 255, .6);
+}

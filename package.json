@@ -7,6 +7,11 @@
     "devstart": "nodemon ./src/bin/www"
   },
   "dependencies": {
+    "@uirouter/angularjs": "latest",
+    "angular": "^1.6.5",
+    "angular-resource": "^1.6.5",
+    "angular-route": "^1.6.5",
+    "angular-ui-bootstrap": "^2.5.0",
     "basic-auth": "^1.1.0",
     "bcrypt": "1.0.2",
     "body-parser": "~1.17.1",

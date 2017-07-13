@@ -27,7 +27,7 @@ var dateChecker = require('../middleware/datechecker');
 // GET all challenges
 apiRouter.get('/challenges', function(req, res, next) {
     Challenge.find({})
-        .select('_id title description time karma likes times_taken difficulty fun')
+        .select('_id title description time karma likes times_taken difficulty fun backgroundImage')
         .sort({time: 1})
         .exec(function (err, challenges) {
             if(err) return next(err);

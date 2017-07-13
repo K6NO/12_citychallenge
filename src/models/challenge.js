@@ -24,6 +24,11 @@ var ChallengeSchema = new Schema({
         required: [true, 'Provide info on the scientific background of the challenge.'],
         trim: true
     },
+    backgroundImage: {
+        type: String,
+        required: [true, 'Upload a background image.'],
+        trim: true
+    },
     city: {
         type: String,
         required: [true, 'Which city does the challenge take place?.'],

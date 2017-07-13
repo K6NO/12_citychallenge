@@ -11,6 +11,7 @@
       "karma": 10,
       "time": 30,
       "likes": 0,
+      "backgroundImage" : "/assets/img/bg2.jpeg",
       "times_taken": 1,
       "difficulty": 1,
       "fun": 5,
@@ -42,6 +43,7 @@
       "karma": 20,
       "time": 7,
       "likes": 0,
+      "backgroundImage" : "/assets/img/bg3.jpeg",
       "times_taken": 5,
       "difficulty": 3,
       "fun": 5,
@@ -76,6 +78,7 @@
       "times_taken": 1,
       "difficulty": 1,
       "fun": 5,
+      "backgroundImage" : "/assets/img/bg4.jpeg",
       "steps": [
         {
           "stepNumber": 1,
