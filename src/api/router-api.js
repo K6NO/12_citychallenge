@@ -97,7 +97,6 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
 
             // TODO consider to move client-side for perf benefits
             currentChallenge.calculateRemainingTime();
-
             res.status(200).json(currentChallenge);
         });
 });
