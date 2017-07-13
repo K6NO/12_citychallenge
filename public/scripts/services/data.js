@@ -35,35 +35,36 @@
 
             // GET a single currentChallenge
             this.getCurrentChallenge = function (currentChallengeId, successCallback) {
-                $http.get('/current/challenges/' + currentChallengeId)
+                $http.get('/api/current/challenges/' + currentChallengeId)
                     .then(successCallback)
             };
 
             // GET all currentChallenges for user
             // returns an array of currentChallenges objects
-            this.getCurrentChallengesForUser = function (userId, successCallback) {
-                $http.get('/current/challenges/user/' + userId)
-                    .then(successCallback)
+            this.getCurrentChallengesForUser = function (userId, successCallback, errorCallback) {
+                $http.get('/api/current/challenges/user/' + userId)
+                    .then(successCallback, errorCallback)
             };
 
             // POST create a new current challenge AND check for matching challenge
             // returns currentChallenges = [firstChallenge, secondChallenge] IF matches were found OR just saved: true
             this.addCurrentChallenge = function (currentChallenge, successCallback, errorCallback) {
-                $http.post('/current/challenges/', currentChallenge)
+
+                $http.post('/api/current/challenges/', currentChallenge)
                     .then(successCallback, errorCallback)
             };
 
             // PUT update a current challenge - abandon
             // returns updated currentChallenge
             this.abandonCurrentChallenge = function (currentChallengeId, currentChallenge, successCallback, errorCallback) {
-                $http.put('/current/challenges/' + currentChallengeId + '/abandon', currentChallenge)
+                $http.put('/api/current/challenges/' + currentChallengeId + '/abandon', currentChallenge)
                     .then(successCallback, errorCallback)
             };
 
             // PUT update a current challenge - step completed
             // returns updated currentChallenge
             this.stepCompletedCurrentChallenge = function (currentChallengeId, currentChallenge, successCallback, errorCallback) {
-                $http.put('/current/challenges/' + currentChallengeId, currentChallenge)
+                $http.put('/api/current/challenges/' + currentChallengeId, currentChallenge)
                     .then(successCallback, errorCallback)
             };
 
@@ -77,7 +78,7 @@
 
             // POST - create a single user
             this.addUser = function (user, successCallback, errorCallback) {
-                $http.post('/users', user)
+                $http.post('/api/users', user)
                     .then(successCallback, errorCallback)
             };
 
@@ -92,14 +93,14 @@
             // GET messages for currentChallenge
             // returns an array of messages
             this.getMessages = function (currentChallengeId, successCallback) {
-                $http.get('/current/challenges/' + currentChallengeId + '/messages')
+                $http.get('/api/current/challenges/' + currentChallengeId + '/messages')
                     .then(successCallback)
             };
 
             // POST new text for currentChallenge
             // returns an array of updated messages
             this.sendMessage = function (currentChallengeId, message, successCallback, errorCallback) {
-                $http.post('/current/challenges/' + currentChallengeId + '/messages', message)
+                $http.post('/api/current/challenges/' + currentChallengeId + '/messages', message)
                     .then(successCallback, errorCallback)
             };
 

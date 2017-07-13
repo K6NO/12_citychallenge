@@ -1,4 +1,4 @@
-<div class="{{$ctrl.page}}">
+<div class="{{pageIdentifier}}">
     <navbar></navbar>
 
     <div class="wrapper">
@@ -7,43 +7,40 @@
                 <div class="section text-center section-landing">
                     <div class="features">
                         <div class="row">
-                            <div class="challenge-detail-big-picture text-center" ng-style="$ctrl.challenge.backgroundImage != '' && {'background-image':'url('+$ctrl.challenge.backgroundImage+')', 'background-size' : 'cover'}">
+                            <div class="challenge-detail-big-picture text-center" ng-style="challenge.backgroundImage != '' && {'background-image':'url('+ challenge.backgroundImage+')', 'background-size' : 'cover'}">
 
-                                <h2 class="info-title text-ivory text-uppercase">{{$ctrl.challenge.title}}</h2>
-                                <a href="#!/challenges/{{$ctrl.challenge._id}}">
-                                    <button class="btn btn-danger btn-round">
+                                <h2 class="info-title text-ivory text-uppercase">{{challenge.title}}</h2>
+                                    <button ng-click="startCurrentChallenge(user._id, challenge._id)" class="btn btn-danger btn-round">
                                         <i class="material-icons">favorite_border</i> do this
                                     </button>
-                                </a>
                                 <div class="challenge-box-profile background-white clearfix">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <i class="material-icons">stars</i> {{$ctrl.challenge.karma}} karma
-                                        <i class="material-icons">date_range</i> {{$ctrl.challenge.time}} days
-                                        <i class="material-icons">favorite</i> {{$ctrl.challenge.likes}}
-                                        <i class="material-icons">update</i> {{$ctrl.challenge.times_taken}}
+                                        <i class="material-icons">stars</i> {{challenge.karma}} karma
+                                        <i class="material-icons">date_range</i> {{challenge.time}} days
+                                        <i class="material-icons">favorite</i> {{challenge.likes}}
+                                        <i class="material-icons">update</i> {{challenge.times_taken}}
                                     </div>
 
                                 </div>
                             </div>
                             <div >
                                 <h5>This is about...</h5>
-                                <p>{{$ctrl.challenge.description}}</p>
+                                <p>{{challenge.description}}</p>
                                 <h5>What science says?</h5>
-                                <p>{{$ctrl.challenge.science}}</p>
+                                <p>{{challenge.science}}</p>
                                 <h5>Why do this?</h5>
-                                <p>{{$ctrl.challenge.why}}</p>
+                                <p>{{challenge.why}}</p>
 
 
                                 <div class="col-md-6  text-left">
                                     <h5 class="text-center">What steps will you complete?</h5>
-                                    <li ng-repeat="step in $ctrl.challenge.steps">
-                                        {{step.completed | checkbox}} {{step.stepNumber}} {{step.description}}
+                                    <li ng-repeat="step in challenge.steps">
+                                        {{step.description}}
                                     </li>
                                 </div>
                                 <div class="col-md-6 text-left">
-                                    <h5 class="text-center">What others are saying?</h5>
+                                    <h5 class="text-center">Who did it already?</h5>
                                     <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
-
                                 </div>
 
                             </div>

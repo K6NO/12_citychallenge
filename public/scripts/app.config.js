@@ -11,12 +11,12 @@ config(['$locationProvider', '$routeProvider',
         when('/challenges/:challengeId', {
             controller: 'ChallengeController',
             controllerAs: 'vm',
-            templateUrl: 'template/challenge-detail.template.html'
+            templateUrl: 'templates/challenge-detail.template.html'
         }).
         when('/profile/:userId', {
             controller : 'UserController',
             controllerAs: 'vm',
-            templateUrl: 'template/profile.template.html'
+            templateUrl: 'templates/profile.template.html'
         }).
         when('/logout', {
             template: '<p>Logout page - probably only redirects to challenges</p>'

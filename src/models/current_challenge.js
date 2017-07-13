@@ -35,7 +35,8 @@ var CurrentChallengeSchema = new Schema({
         default: 'waiting' // waiting, active, completed, abandoned, failed
     },
     stepsCompleted: {
-        type: [Number]
+        type: [Number],
+        default: []
     },
     messages: [
         {message : { type: Schema.Types.ObjectId, ref: 'Message'}}

@@ -105,7 +105,9 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
 apiRouter.get('/current/challenges/user/:id', function(req, res, next) {
     // TODO change to session.userId and change path (delete /user/)
     let userId = req.params.id;
+    console.log('userId: ' + userId);
     CurrentChallenge.find({'user' : userId})
+        .sort('createdAt')
         .populate('partner', '-password')
         .populate('challenge', 'title likes times_taken difficulty fun karma')
         .exec(function (err, currentChallenges) {

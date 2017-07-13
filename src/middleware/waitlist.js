@@ -31,8 +31,10 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
         // query object
         {
             $and: [
+                {state: {$eq: 'waiting'}},
                 {challenge : {$eq: newCurrentChallenge.challenge}},
                 {user: {$ne: newCurrentChallenge.user}}
+
             ]
         },
         //callback

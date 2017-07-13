@@ -4,15 +4,22 @@
     angular.module('cityChallengeApp')
         .controller('UserController',  function ($scope, $location, $filter, dataService) {
 
+            $scope.pageIndicator = 'profile-page';
+
             let userId = $location.path().split('/')[2];
-            console.log(challengeId);
 
             if(userId != undefined){
                 //get challenge
                 dataService.getUser(userId, function (response) {
-                    console.log(response.data);
                     $scope.user = response.data;
                 });
+
+                dataService.getCurrentChallengesForUser(userId, function (response) {
+                    $scope.currentChallenges = response.data;
+                    console.log(response.data);
+                }, function (response) {
+                    $scope.errors = response.data.errors;
+                })
             }
 
             // add user
