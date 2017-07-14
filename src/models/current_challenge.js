@@ -1,8 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Message = require('./message');
+const Schema = mongoose.Schema;
+const Message = require('./message');
+const Step = require('./step');
+
 
 var CurrentChallengeSchema = new Schema({
     user: {
@@ -38,10 +40,11 @@ var CurrentChallengeSchema = new Schema({
         required: true,
         default: 'waiting' // waiting, active, completed, abandoned, failed
     },
-    stepsCompleted: {
-        type: [Number],
-        default: []
-    },
+    steps: [
+            { type: Schema.Types.ObjectId,
+                ref: 'Step'
+            }
+        ],
     messages: [
         { type: Schema.Types.ObjectId, ref: 'Message'}
     ],

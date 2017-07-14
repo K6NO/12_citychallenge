@@ -10,7 +10,7 @@
                             <div class="challenge-detail-big-picture text-center" ng-style="challenge.backgroundImage != '' && {'background-image':'url('+ challenge.backgroundImage+')', 'background-size' : 'cover'}">
 
                                 <h2 class="info-title text-ivory text-uppercase">{{challenge.title}}</h2>
-                                    <button ng-click="startCurrentChallenge(user._id, challenge._id)" class="btn btn-danger btn-round">
+                                    <button ng-click="startCurrentChallenge(user._id, challenge._id, challenge.steps)" class="btn btn-danger btn-round">
                                         <i class="material-icons">favorite_border</i> do this
                                     </button>
                                 <div class="challenge-box-profile background-white clearfix">

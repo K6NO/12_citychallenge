@@ -63,8 +63,8 @@
 
             // PUT update a current challenge - step completed
             // returns updated currentChallenge
-            this.stepCompletedCurrentChallenge = function (currentChallengeId, currentChallenge, successCallback, errorCallback) {
-                $http.put('/api/current/challenges/' + currentChallengeId, currentChallenge)
+            this.stepCompletedCurrentChallenge = function (currentChallengeId, steps, successCallback, errorCallback) {
+                $http.put('/api/current/challenges/' + currentChallengeId, steps)
                     .then(successCallback, errorCallback)
             };
 

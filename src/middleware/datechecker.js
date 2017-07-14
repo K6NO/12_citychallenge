@@ -23,7 +23,7 @@ var checkIfEndDatePassed = function (req, res, next) {
             currentChallenges.forEach(function (currentChallenge) {
 
                 // Update state of currentChallenge, karma and number of current challenges for user and partner
-                if(currentChallenge.stepsCompleted.length === 3) {
+                if(currentChallenge.steps.length === 3) {
                     currentChallenge.state = 'completed';
                     let newUserKarma = currentChallenge.user.karma += currentChallenge.challenge.karma;
                     let newPartnerKarma = currentChallenge.partner.karma += currentChallenge.challenge.karma;

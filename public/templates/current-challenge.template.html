@@ -15,17 +15,16 @@
                                     <i class="material-icons">stars</i> {{currentChallenge.user.karma}} karma
                                     <i class="material-icons">location_city</i> {{currentChallenge.user.city}}
                                     <i class="material-icons">check_box</i> {{currentChallenge.user.completed}} completed challenges
-                                    <button ng-click="abandonCurrentChallenge" class="btn btn-danger btn-round">
+                                    <button ng-click="abandonCurrentChallenge()" class="btn btn-danger btn-round">
                                         i have to give up <i class="material-icons">sentiment_very_dissatisfied</i>
                                     </button>
                                 </div>
                             </div>
                             <div class="col-md-2 text-center">
-                                <h2 class="info-title">{{currentChallenge.remaining[0]}}</h2>
-                                <h6 class="info-title">{{currentChallenge.remaining[1]}} left</h6>
+                                <h2 ng-if="currentChallenge.partner" class="info-title">{{currentChallenge.remaining[0]}}</h2>
+                                <h6 ng-if="currentChallenge.partner" class="info-title">{{currentChallenge.remaining[1]}} left</h6>
                             </div>
                             <div ng-if="!currentChallenge.partner" class="col-md-5 text-center">
-                                <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
 
                                 <h2 class="info-title text-uppercase">We are currently searching for your partner</h2>
                                 <h6 class="info-title text-uppercase">Your challenge starts as soon as we find one</h6>
@@ -46,7 +45,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 messages-background">
-                                <h1>Say what you feel</h1>
+                                <h1>Say how you feel...</h1>
                                 <div class="row">
                                     <div class="col-md-6 message-title-user">
                                         <img class="message-image img-circle img-responsive img-raised" ng-src="{{currentChallenge.user.photoUrl}}">
@@ -57,37 +56,65 @@
                                 </div>
 
                                 <div class="row">
-                                        <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</div>
+                                    <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</div>
+                                </div>
+                                <div class="row">
+                                        <div class="form-group col-sm-10">
+                                            <input type="text" ng-model="newMessageText" placeholder="What's on your mind?" class="form-control" />
+                                        </div>
+                                    {{newMessageText}}
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <button ng-click="sendMessage(newMessageText)" class="btn btn-danger">Send</button>
                                     </div>
+                                </div>
                             </div>
                             <div class="col-md-6 tasks-background">
-                                <h1 class="text-center">Mark your steps</h1>
+                                <h1 class="text-center">Mark your steps...</h1>
 
-                                <label ng-repeat="(step, completed) in currentChallenge.challenge.steps">
-                                    <input type="checkbox" ng-model=""/> {{step.description}}
-                                </label>
+                                <div class="checkbox text-left">
+                                    <label ng-repeat="step in steps" class="checkbox-label">
+                                        <div ng-if="currentChallenge.partner" class="col-xs-1">
+                                            <input type="checkbox"
+                                                   value="{{step._id}}"
+                                                   ng-model="step.completed"/>
+                                        <span class="checkbox-material">
+                                            <span class="check">
+
+                                            </span>
+                                        </span>
+                                        </div>
+                                        <div class="col-xs-11">
+                                            <span>{{step.description}}</span>
+                                        </div>
+                                    </label>
+                                    <button ng-if="currentChallenge.partner" ng-click="saveSteps()" class="btn btn-danger btn-round">
+                                        save progress <i class="material-icons">sentiment_very_satisfied</i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
-                                <div >
-                                    <h5>This is about...</h5>
-                                    <p>{{currentChallenge.challenge.description}}</p>
-                                    <h5>What science says?</h5>
-                                    <p>{{currentChallenge.challenge.science}}</p>
-                                    <h5>Why do this?</h5>
-                                    <p>{{currentChallenge.challenge.why}}</p>
+                            <div >
+                                <h5>This is about...</h5>
+                                <p>{{currentChallenge.challenge.description}}</p>
+                                <h5>What science says?</h5>
+                                <p>{{currentChallenge.challenge.science}}</p>
+                                <h5>Why do this?</h5>
+                                <p>{{currentChallenge.challenge.why}}</p>
 
 
-                                    <div class="col-md-6  text-left">
+                                <div class="col-md-6  text-left">
 
-                                    </div>
-                                    <div class="col-md-6 text-left">
-                                        <h5 class="text-center">Who did it already?</h5>
-                                        <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
-                                    </div>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <h5 class="text-center">Who did it already?</h5>
+                                    <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>

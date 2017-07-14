@@ -141,3 +141,7 @@
     display: block;
 }
 
+.checkbox-label {
+    padding: 1em 0 0 0;
+}
+

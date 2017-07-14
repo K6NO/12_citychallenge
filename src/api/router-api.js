@@ -11,6 +11,7 @@ var db = mongoose.connection;
 var User = require('../models/user').User;
 var Challenge = require('../models/challenge').Challenge;
 var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
+var Step = require('../models/current_challenge').Step;
 var Message = require('../models/message').Message;
 
 
@@ -84,7 +85,7 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
     let challengeId = req.params.id;
 
     CurrentChallenge.findById(challengeId)
-        .populate('user partner challenge messages')
+        .populate('user partner challenge messages steps')
         .exec(function (err, currentChallenge) {
             if(err) return next(err);
             if(!currentChallenge) {
@@ -163,16 +164,32 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
 // PUT update a current challenge - step completed
 apiRouter.put('/current/challenges/:id', function(req, res, next) {
     let currentChallengeId = req.params.id;
-    CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
-        .exec(function (err, currentChallenge) {
-            if (err) return next(err);
-            if(!currentChallenge){
-                var noDataErr = new Error('CurrentChallenge not found');
-                noDataErr.status = 404;
-                return next(noDataErr);
-            }
-            return res.status(201).json(currentChallenge);
-        })
+    console.log(req.body);
+
+    CurrentChallenge.update({_id: currentChallengeId, 'steps': req.body},
+        function (err, numAffected) {
+            if(err) return next(err);
+            console.log(numAffected);
+            return res.status(201).json(numAffected);
+        });
+
+    //CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true}, function (err, _currentChallenge, response) {
+    //    if (err) return next(err);
+    //    if(!_currentChallenge){
+    //        var noDataErr = new Error('CurrentChallenge not found');
+    //        noDataErr.status = 404;
+    //        return next(noDataErr);
+    //    }
+    //    console.log(_currentChallenge);
+    //    console.log('_____________');
+    //    console.log(response);
+    //
+    //
+    //    return res.status(201).json(_currentChallenge);
+    //
+    //});
+
+
 });
 
 /* MESSAGES */

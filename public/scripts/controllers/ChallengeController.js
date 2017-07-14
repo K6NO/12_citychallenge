@@ -24,11 +24,11 @@
                 })
             }
 
-            $scope.startCurrentChallenge = function (userId, challengeId) {
+            $scope.startCurrentChallenge = function (userId, challengeId, steps) {
                 let currentChallenge = {
                     "user" : userId,
                     "challenge" : challengeId,
-                    "steps" : []
+                    "steps" : steps
                 };
                 dataService.addCurrentChallenge(currentChallenge, function (response) {
                     console.log(response);

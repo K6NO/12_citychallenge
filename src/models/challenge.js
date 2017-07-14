@@ -2,6 +2,8 @@
 
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Step = require('./step');
+
 
 var ChallengeSchema = new Schema({
     title: {
@@ -59,18 +61,8 @@ var ChallengeSchema = new Schema({
         default: 0
     },
     steps: [
-        {
-            stepNumber: Number,
-            description: {
-                type: String,
-                required: [true, 'Describe the step'],
-                trim: true
-            },
-            completed: {
-                type: Boolean,
-                default: false
-            }
-        }],
+        { type: Schema.Types.ObjectId, ref: 'Step'}
+    ],
     createdAt: {
         type: Date,
         default: Date.now

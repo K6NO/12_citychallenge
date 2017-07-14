@@ -1,4 +1,25 @@
 {
+  "steps": {
+    "_model": "Step",
+    "one" : {
+      "stepNumber": 1,
+      "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
+      "completed" : false
+        },
+      "two" :
+        {
+          "stepNumber": 2,
+          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
+          "completed" : false
+        },
+    "three" :
+        {
+          "stepNumber": 3,
+          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
+          "completed" : false
+        }
+    },
+
   "challenges": {
     "_model": "Challenge",
     "one": {
@@ -16,21 +37,11 @@
       "difficulty": 1,
       "fun": 5,
       "steps": [
-        {
-          "stepNumber": 1,
-          "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
-          "completed" : false
-        },
-        {
-          "stepNumber": 2,
-          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
-          "completed" : false
-        },
-        {
-          "stepNumber": 3,
-          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
-          "completed" : false
-        }
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
       ]
     },
     "two": {
@@ -48,21 +59,11 @@
       "difficulty": 3,
       "fun": 5,
       "steps": [
-        {
-          "stepNumber": 1,
-          "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
-          "completed" : false
-        },
-        {
-          "stepNumber": 2,
-          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
-          "completed" : false
-        },
-        {
-          "stepNumber": 3,
-          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
-          "completed" : false
-        }
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
       ]
     },
     "three": {
@@ -80,21 +81,10 @@
       "fun": 5,
       "backgroundImage" : "/assets/img/bg4.jpeg",
       "steps": [
-        {
-          "stepNumber": 1,
-          "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
-          "completed" : false
-        },
-        {
-          "stepNumber": 2,
-          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
-          "completed" : false
-        },
-        {
-          "stepNumber": 3,
-          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
-          "completed" : false
-        }
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
       ]
     }
   },
@@ -128,7 +118,7 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.one",
       "state": "active",
-      "stepsCompleted": [1, 2],
+      "stepsCompleted": ["->steps.one", "->steps.two"],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
 
@@ -138,7 +128,7 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.one",
       "state": "active",
-      "stepsCompleted": [2],
+      "stepsCompleted": ["->steps.one"],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -147,7 +137,7 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.two",
       "state": "completed",
-      "stepsCompleted": [1,2,3],
+      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -156,7 +146,7 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.two",
       "state": "completed",
-      "stepsCompleted": [1,2,3],
+      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -165,7 +155,7 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": [1,2,3],
+      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -174,17 +164,9 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": [1,2,3],
+      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
-    },
-    "seven": {
-      "user": "->users.keno",
-      "challenge" : "->challenges.three",
-      "state": "waiting",
-      "stepsCompleted": [],
-      "startedAt" : "2017-07-09T16:37:26.484Z",
-      "endsAt" : "2017-07-16T16:37:26.484Z"
     }
   }
 }
