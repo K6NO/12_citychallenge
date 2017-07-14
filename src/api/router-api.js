@@ -84,9 +84,7 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
     let challengeId = req.params.id;
 
     CurrentChallenge.findById(challengeId)
-        .populate('user')
-        .populate('partner')
-        .populate('challenge')
+        .populate('user partner challenge messages')
         .exec(function (err, currentChallenge) {
             if(err) return next(err);
             if(!currentChallenge) {
@@ -176,8 +174,7 @@ apiRouter.get('/current/challenges/:id/messages', function(req, res, next) {
                 noDataErr.status = 404;
                 return next(noDataErr);
             }
-            console.log(currentChallenge.messages);
-            return res.status(201).json(currentChallenge);
+            return res.status(201).json(currentChallenge.messages);
         })
 });
 
@@ -205,19 +202,26 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
                     "text" : req.body.message
                 });
 
-            message.save(function (err, _message) {
-                if (err) return next(err);
-                console.log(_message);
-                currentChallenge.messages.push(_message);
-                console.log(currentChallenge.messages);
-
-                currentChallenge.save(function (err, _currentChallenge) {
+            currentChallenge.messages.push(message);
+            currentChallenge.save(function (err) {
+                if(err) return next(err);
+                message.save(function (err, _message) {
                     if (err) return next(err);
-                    CurrentChallenge.populate(_currentChallenge, {path: "messages"}, function (err, __currentChallenge) {
-                        if(err) return next(err);
-                        return res.status(201).json(__currentChallenge.messages);
-                    })
-                })
+                    console.log(_message);
+                    currentChallenge.populate('messages', function (err, _currentChallenge) {
+                        return res.status(201).json(_currentChallenge.messages);
+                    });
+
+                });
+
+
+                //currentChallenge.save(function (err, _currentChallenge) {
+                //    if (err) return next(err);
+                //    _currentChallenge.populate('messages', function (err, __currentChallenge) {
+                //        if(err) return next(err);
+                //        return res.status(201).json(__currentChallenge.messages);
+                //    })
+                //})
             });
         })
 });

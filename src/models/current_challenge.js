@@ -39,7 +39,7 @@ var CurrentChallengeSchema = new Schema({
         default: []
     },
     messages: [
-        {message : { type: Schema.Types.ObjectId, ref: 'Message'}}
+        { type: Schema.Types.ObjectId, ref: 'Message'}
     ],
     remaining: {
         type: Schema.Types.Mixed
