@@ -15,7 +15,21 @@
             if(currentChallengeId != undefined){
                 //get challenge
                 dataService.getCurrentChallenge(currentChallengeId, function (response) {
-                    $scope.currentChallenge = response.data;
+
+                    let userMessages = response.data.currentChallenge.messages;
+                    let partnerMessages = response.data.partnerMessages;
+                    let allMessages = userMessages.concat(partnerMessages);
+                    console.log(allMessages);
+
+                    function compare(a,b) {
+                        if(a.createdAt < b.createdAt) return -1;
+                        if(a.createdAt > b.createdAt) return 1;
+                        return 0;
+                    }
+                    allMessages.sort(compare);
+
+                    $scope.currentChallenge = response.data.currentChallenge;
+                    $scope.messages = allMessages;
                 }, errorCallback);
             }
 

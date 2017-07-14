@@ -24,7 +24,8 @@
                                 <h2 class="info-title">{{currentChallenge.remaining[0]}}</h2>
                                 <h6 class="info-title">{{currentChallenge.remaining[1]}} left</h6>
                             </div>
-                            <div ng-if="!currentChallenge.partner" class="col-md-5 text-center" ng-style="currentChallenge.partner.photoUrl != '' && {'background-image':'url('+ currentChallenge.partner.photoUrl +')', 'background-size' : 'cover'}">
+                            <div ng-if="!currentChallenge.partner" class="col-md-5 text-center">
+                                <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
 
                                 <h2 class="info-title text-uppercase">We are currently searching for your partner</h2>
                                 <h6 class="info-title text-uppercase">Your challenge starts as soon as we find one</h6>
@@ -44,53 +45,54 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="messages-background">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            {{currentChallenge.user.userName}}
-                                        </div>
-                                        <div class="col-sm-6">
-                                            {{currentChallenge.partner.userName}}
-                                        </div>
+                            <div class="col-md-6 messages-background">
+                                <h1>Say what you feel</h1>
+                                <div class="row">
+                                    <div class="col-md-6 message-title-user">
+                                        <img class="message-image img-circle img-responsive img-raised" ng-src="{{currentChallenge.user.photoUrl}}">
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <li ng-repeat="message in currentChallenge.messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</li>
-                                        </div>
+                                    <div class="col-md-6 message-title-partner">
+                                        <img class="message-image img-circle img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                        <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</div>
+                                    </div>
+                            </div>
+                            <div class="col-md-6 tasks-background">
+                                <h1 class="text-center">Mark your steps</h1>
+
+                                <label ng-repeat="(step, completed) in currentChallenge.challenge.steps">
+                                    <input type="checkbox" ng-model=""/> {{step.description}}
+                                </label>
                             </div>
                         </div>
+
                         <div class="row">
-                            <div >
-                                <h5>This is about...</h5>
-                                <p>{{currentChallenge.challenge.description}}</p>
-                                <h5>What science says?</h5>
-                                <p>{{currentChallenge.challenge.science}}</p>
-                                <h5>Why do this?</h5>
-                                <p>{{currentChallenge.challenge.why}}</p>
+                                <div >
+                                    <h5>This is about...</h5>
+                                    <p>{{currentChallenge.challenge.description}}</p>
+                                    <h5>What science says?</h5>
+                                    <p>{{currentChallenge.challenge.science}}</p>
+                                    <h5>Why do this?</h5>
+                                    <p>{{currentChallenge.challenge.why}}</p>
 
 
-                                <div class="col-md-6  text-left">
-                                    <h5 class="text-center">What steps will you complete?</h5>
-                                    <li ng-repeat="step in currentChallenge.challenge.steps">
-                                        {{step.description}}
-                                    </li>
+                                    <div class="col-md-6  text-left">
+
+                                    </div>
+                                    <div class="col-md-6 text-left">
+                                        <h5 class="text-center">Who did it already?</h5>
+                                        <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 text-left">
-                                    <h5 class="text-center">Who did it already?</h5>
-                                    <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
-                                </div>
-
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <!--date conversion from unix epoch-->

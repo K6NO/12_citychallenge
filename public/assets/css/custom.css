@@ -67,8 +67,77 @@
 }
 
 .my-message {
-    background-color: #00b0ff;
-    padding: 10px;
+    background-color: #03a9f4;
+    border-radius: .8em;
+    padding: 10px 30px;
+    margin: 5px 0;
+    max-width: 300px;
+    position: relative;
+    text-align: left;
     box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 
 }
+
+.my-message:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-right-color: #03a9f4;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -10px;
+    margin-left: -20px;
+}
+
+.your-message {
+    background-color: #f44336;
+    border-radius: .8em;
+    position: relative;
+    padding: 10px 30px;
+    margin: 5px 0 5px 50px;
+    max-width: 300px;
+    text-align: right;
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.your-message:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-left-color: #f44336;
+    border-right: 0;
+    border-bottom: 0;
+    margin-top: -10px;
+    margin-right: -20px;
+}
+
+.message-title-user {
+    margin: 1em 0;
+    /*padding: 20px 0;*/
+    /*background-color: #03a9f4;*/
+    /*border-radius: .8em;*/
+    /*box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);*/
+}
+
+.message-title-partner {
+    margin: 1em 0;
+    /*padding: 20px 0;*/
+    /*background-color: #f44336;*/
+    /*border-radius: .8em;*/
+    /*box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);*/
+}
+
+.message-image {
+    max-height: 80px;
+    margin: 0 auto;
+    display: block;
+}
+

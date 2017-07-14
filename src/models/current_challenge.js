@@ -19,6 +19,10 @@ var CurrentChallengeSchema = new Schema({
         ref: "Challenge",
         required: true
     },
+    partnerChallenge: {
+        type: Schema.Types.ObjectId,
+        ref: "CurrentChallenge"
+    },
     createdAt: {
         type: Date,
         default: Date.now

@@ -16,11 +16,11 @@ function addDays(date, days) {
 var saveAndCheckWaitListForMatch = function(req, res, next) {
     // save current challenge
     let newCurrentChallenge = new CurrentChallenge(req.body);
-    newCurrentChallenge.save(function (err, currentChallenge) {
+    newCurrentChallenge.save(function (err, _currentChallenge) {
         if (err) return next(err);
 
         //add new currentChallenge to the waitlist;
-        db.collection('waitlist').insert(currentChallenge);
+        db.collection('waitlist').insert(_currentChallenge);
 
         // check if the waitlist has a matching currentChallenge (same challenge, different user, waiting status)
         db.collection('waitlist').findOne(
@@ -50,8 +50,6 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                             // Update first currentChallenge - start, endTime, state, partner
                             let startDate = new Date();
                             let endDate = addDays(startDate, matchingCurrentChallenges[0].challenge.time);
-                            console.log(startDate);
-                            console.log(matchingCurrentChallenges[0].challenge);
 
                             CurrentChallenge.findOneAndUpdate(
                                 {
@@ -61,6 +59,7 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                     $set: {
                                         state: 'active',
                                         partner: matchingCurrentChallenges[1].user,
+                                        partnerChallenge: matchingCurrentChallenges[1]._id,
                                         startedAt: startDate,
                                         endsAt: endDate
                                     }
@@ -78,6 +77,7 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                             $set: {
                                                 state: 'active',
                                                 partner: matchingCurrentChallenges[0].user,
+                                                partnerChallenge: matchingCurrentChallenges[0]._id,
                                                 startedAt: startDate,
                                                 endsAt: endDate
                                             }

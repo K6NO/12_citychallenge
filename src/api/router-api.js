@@ -93,7 +93,22 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
                 return next(noDataError);
             }
             currentChallenge.calculateRemainingTime();
-            res.status(200).json(currentChallenge);
+
+            if(currentChallenge.partnerChallenge) {
+                CurrentChallenge.findById(currentChallenge.partnerChallenge)
+                    .populate('messages')
+                    .exec(function (err, partnerChallenge) {
+                        if(err) return next(err);
+                        console.log(partnerChallenge.messages);
+                        res.status(200).json({currentChallenge: currentChallenge, partnerMessages: partnerChallenge.messages});
+                    })
+            } else {
+                res.status(200).json({currentChallenge: currentChallenge});
+
+            }
+
+
+
         });
 });
 
