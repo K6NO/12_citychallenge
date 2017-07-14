@@ -19,97 +19,97 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
     newCurrentChallenge.save(function (err, currentChallenge) {
         if (err) return next(err);
 
-        // add new currentChallenge to waitlist
+        //add new currentChallenge to the waitlist;
         db.collection('waitlist').insert(currentChallenge);
-    }); // end save
 
-    /* --- CALLBACK HELL --- */
+        // check if the waitlist has a matching currentChallenge (same challenge, different user, waiting status)
+        db.collection('waitlist').findOne(
+            {
+                $and: [
+                    {state: {$eq: 'waiting'}},
+                    {challenge : {$eq: newCurrentChallenge.challenge}},
+                    {user: {$ne: newCurrentChallenge.user}}
 
-    // check if there are matches in the waitlist (when new currentChallenge saved)
-    // return matching currentChallenge where challenge is the same but the user is different
-    db.collection('waitlist').findOne(
-        // query object
-        {
-            $and: [
-                {state: {$eq: 'waiting'}},
-                {challenge : {$eq: newCurrentChallenge.challenge}},
-                {user: {$ne: newCurrentChallenge.user}}
+                ]
+            },
+            //callback
+            function(err, matchingChallenge){
+                if (err) return next(err);
 
-            ]
-        },
-        //callback
-        function(err, matchingChallenge){
-            if (err) return next(err);
+                // if there is a match query the CurrentChallenge documents for both entries (not the waitlist)
+                if (matchingChallenge) {
+                    CurrentChallenge.find(
+                        {
+                            "_id" : { "$in" : [matchingChallenge._id, newCurrentChallenge._id]}
+                        }
+                        )
+                        .populate('challenge user')
+                        .exec(function (err, matchingCurrentChallenges) {
+                            if (err) return next(err);
 
-            // not falsey (which includes `undefined` and `null and `""`, and `0`, and `NaN`, and [of course] `false`)
-            if (matchingChallenge) {
+                            // Update first currentChallenge - start, endTime, state, partner
+                            let startDate = new Date();
+                            let endDate = addDays(startDate, matchingCurrentChallenges[0].challenge.time);
+                            console.log(startDate);
+                            console.log(matchingCurrentChallenges[0].challenge);
 
-                // We need to query on the CurrentChallenge collection (not waitlist)
-                CurrentChallenge.find(
-                    {
-                        "_id" : { "$in" : [matchingChallenge._id, newCurrentChallenge._id]}
-                    }
-                    )
-                    .populate('challenge', 'time')
-                    .exec(function (err, matchingCurrentChallenges) {
-                        if (err) return next(err);
+                            CurrentChallenge.findOneAndUpdate(
+                                {
+                                    _id: matchingCurrentChallenges[0]._id
+                                },
+                                {
+                                    $set: {
+                                        state: 'active',
+                                        partner: matchingCurrentChallenges[1].user,
+                                        startedAt: startDate,
+                                        endsAt: endDate
+                                    }
+                                },
+                                { new: true},
+                                function (err, firstChallenge) {
+                                    if(err) return next(err);
 
-                        // Update first currentChallenge - start, endTime, state, partner
-                        let startDate = new Date();
-                        let endDate = addDays(startDate, matchingCurrentChallenges[0].challenge.time);
+                                    // Update second currentChallenge (mathcing one) - start, endTime, state, partner
+                                    CurrentChallenge.findOneAndUpdate(
+                                        {
+                                            _id: matchingCurrentChallenges[1]._id
+                                        },
+                                        {
+                                            $set: {
+                                                state: 'active',
+                                                partner: matchingCurrentChallenges[0].user,
+                                                startedAt: startDate,
+                                                endsAt: endDate
+                                            }
+                                        },
+                                        {new: true},
+                                        function (err, secondChallenge) {
+                                            if(err) return next(err);
 
-                        CurrentChallenge.findOneAndUpdate(
-                            {
-                                _id: matchingCurrentChallenges[0]._id
-                            },
-                            {
-                                $set: {
-                                    state: 'active',
-                                    partner: matchingCurrentChallenges[1].user,
-                                    startedAt: startDate,
-                                    endsAt: endDate
-                                }
-                            },
-                            { new: true},
-                            function (err, firstChallenge) {
-                                if(err) return next(err);
+                                            // remove matching and new current challenges from waitlist
+                                            db.collection('waitlist').deleteMany({
+                                                "_id": { "$in" : [matchingChallenge._id, newCurrentChallenge._id]}
+                                            });
 
-                                // Update second currentChallenge - start, endTime, state, partner
-                                CurrentChallenge.findOneAndUpdate(
-                                    {
-                                        _id: matchingCurrentChallenges[1]._id
-                                    },
-                                    {
-                                        $set: {
-                                            state: 'active',
-                                            partner: matchingCurrentChallenges[0].user,
-                                            startedAt: startDate,
-                                            endsAt: endDate
-                                        }
-                                    },
-                                    {new: true},
-                                    function (err, secondChallenge) {
-                                        if(err) return next(err);
+                                            // return both documents in an array
+                                            req.saved = true;
+                                            req.currentChallenges = [firstChallenge, secondChallenge];
+                                            next();
+                                        }); // end second update
+                                }); // end first update
+                        }); // end find()
+                } else {
 
-                                        // remove matching and current challenges from waitlist
-                                        db.collection('waitlist').deleteMany({
-                                            "_id": { "$in" : [matchingChallenge._id, newCurrentChallenge._id]}
-                                        });
-                                        req.saved = true;
-                                        req.currentChallenges = [firstChallenge, secondChallenge];
-                                        res.setHeader('Location', '/');
-                                        next();
-                                    }); // end second update
-                            }); // end first update
-                    }); // end find()
-            } else {
-                console.log('No matches found');
-                req.saved = true;
-                next();
+                    // there was not metch, return the new currentChallenge
+                    console.log('No matches found');
+                    req.currentChallenge = newCurrentChallenge;
+                    next();
+                }
             }
-        }
-    ); // end waitlist find
-}
+        ); // end waitlist find
+
+    }); // end save
+};
 
 
 module.exports.saveAndCheckWaitListForMatch = saveAndCheckWaitListForMatch;

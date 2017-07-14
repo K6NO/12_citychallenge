@@ -1,0 +1,97 @@
+<div class="{{pageIdentifier}}">
+    <navbar></navbar>
+
+    <div class="wrapper">
+        <div class="main main-raised">
+            <div class="container">
+                <div class="section text-center section-landing">
+                    <div class="features">
+                        <div class="row">
+                            <div class="col-md-5 text-center">
+                                <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.user.photoUrl}}">
+                                <h6 class="info-title">{{currentChallenge.user.userName}}</h6>
+                                <h6 class="info-title">{{currentChallenge.user.fullName}}</h6>
+                                <div class="challenge-box-profile">
+                                    <i class="material-icons">stars</i> {{currentChallenge.user.karma}} karma
+                                    <i class="material-icons">location_city</i> {{currentChallenge.user.city}}
+                                    <i class="material-icons">check_box</i> {{currentChallenge.user.completed}} completed challenges
+                                    <button ng-click="abandonCurrentChallenge" class="btn btn-danger btn-round">
+                                        i have to give up <i class="material-icons">sentiment_very_dissatisfied</i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <h2 class="info-title">{{currentChallenge.remaining[0]}}</h2>
+                                <h6 class="info-title">{{currentChallenge.remaining[1]}} left</h6>
+                            </div>
+                            <div ng-if="!currentChallenge.partner" class="col-md-5 text-center" ng-style="currentChallenge.partner.photoUrl != '' && {'background-image':'url('+ currentChallenge.partner.photoUrl +')', 'background-size' : 'cover'}">
+
+                                <h2 class="info-title text-uppercase">We are currently searching for your partner</h2>
+                                <h6 class="info-title text-uppercase">Your challenge starts as soon as we find one</h6>
+
+                            </div>
+                            <div ng-if="currentChallenge.partner" class="col-md-5 text-center">
+
+                                <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
+                                <h6 class="info-title text-uppercase">{{currentChallenge.partner.userName}}</h6>
+                                <h6 class="info-title text-uppercase">{{currentChallenge.partner.fullName}}</h6>
+
+                                <div class="challenge-box-profile">
+                                    <i class="material-icons">stars</i> {{currentChallenge.partner.karma}} karma
+                                    <i class="material-icons">location_city</i> {{currentChallenge.partner.city}}
+                                    <i class="material-icons">check_box</i> {{currentChallenge.partner.completed}} completed challenges
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="messages-background">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            {{currentChallenge.user.userName}}
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{currentChallenge.partner.userName}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        Messages
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div >
+                                <h5>This is about...</h5>
+                                <p>{{currentChallenge.challenge.description}}</p>
+                                <h5>What science says?</h5>
+                                <p>{{currentChallenge.challenge.science}}</p>
+                                <h5>Why do this?</h5>
+                                <p>{{currentChallenge.challenge.why}}</p>
+
+
+                                <div class="col-md-6  text-left">
+                                    <h5 class="text-center">What steps will you complete?</h5>
+                                    <li ng-repeat="step in currentChallenge.challenge.steps">
+                                        {{step.description}}
+                                    </li>
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    <h5 class="text-center">Who did it already?</h5>
+                                    <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--date conversion from unix epoch-->
+<!--{{1459461289000 | date}}-->
+<!--{{1459461289000 | date:'MM/dd/yyyy @ h:mma'}}-->
+

@@ -34,9 +34,9 @@
             /* CURRENT CHALLENGES */
 
             // GET a single currentChallenge
-            this.getCurrentChallenge = function (currentChallengeId, successCallback) {
+            this.getCurrentChallenge = function (currentChallengeId, successCallback, errorCallback) {
                 $http.get('/api/current/challenges/' + currentChallengeId)
-                    .then(successCallback)
+                    .then(successCallback, errorCallback)
             };
 
             // GET all currentChallenges for user

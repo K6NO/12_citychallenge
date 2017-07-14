@@ -94,8 +94,6 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
                 noDataError.status = 404;
                 return next(noDataError);
             }
-
-            // TODO consider to move client-side for perf benefits
             currentChallenge.calculateRemainingTime();
             res.status(200).json(currentChallenge);
         });
@@ -119,16 +117,17 @@ apiRouter.get('/current/challenges/user/:id', function(req, res, next) {
 // POST create a new current challenge AND check for matching challenge
 apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, function(req, res, next) {
     if(req.currentChallenges) {
-        res.setHeader('Location', '/');
         res.status(200).json({
-            saved: req.saved,
             currentChallenges: req.currentChallenges
         });
-    } else {
-        res.setHeader('Location', '/');
+    } else if (req.currentChallenge) {
         res.status(200).json({
-            saved: req.saved
+            currentChallenge: req.currentChallenge,
         });
+    } else {
+        res.status(404).json({
+            message: 'Could not save current challenge'
+        })
     }
 });
 
@@ -203,14 +202,22 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
                 {
                     "user" : currentChallenge.user,
                     "currentChallenge" : currentChallenge._id,
-                    "text" : req.body
+                    "text" : req.body.message
                 });
-            console.log(currentChallenge);
-            currentChallenge.messages.push(message);
 
-            currentChallenge.save(function (err, currentChallenge) {
-                if(err) return next(err);
-                return res.status(201).json(currentChallenge.messages);
+            message.save(function (err, _message) {
+                if (err) return next(err);
+                console.log(_message);
+                currentChallenge.messages.push(_message);
+                console.log(currentChallenge.messages);
+
+                currentChallenge.save(function (err, _currentChallenge) {
+                    if (err) return next(err);
+                    CurrentChallenge.populate(_currentChallenge, {path: "messages"}, function (err, __currentChallenge) {
+                        if(err) return next(err);
+                        return res.status(201).json(__currentChallenge.messages);
+                    })
+                })
             });
         })
 });

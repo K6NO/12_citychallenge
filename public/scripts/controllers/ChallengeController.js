@@ -30,9 +30,11 @@
                     "challenge" : challengeId,
                     "steps" : []
                 };
-                dataService.addCurrentChallenge(currentChallenge, function (currentChallenge) {
-                    $scope.currentChallenge = currentChallenge;
-                    console.log($scope.currentChallenge);
+                dataService.addCurrentChallenge(currentChallenge, function (response) {
+                    console.log(response);
+                    $scope.currentChallenge = response.data.currentChallenge;
+                    //console.log($scope.currentChallenge);
+                    $location.path("/challenges/current/" + response.data.currentChallenge._id);
                 }, function (response) {
                     $scope.errors = response.data.errors;
                 })

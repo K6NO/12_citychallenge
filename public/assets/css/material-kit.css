@@ -2430,9 +2430,10 @@ legend {
 }
 .info .info-title {
   color: #fffff0;
-  background: rgba(156, 39, 176, .4);
-  padding: 10px 0 0;
+  background: rgba(244,67,54, .6);
+  padding: 10px 0;
 }
+/* rgba(156, 39, 176, .4);*/
 .info p {
   color: #999999;
 }
