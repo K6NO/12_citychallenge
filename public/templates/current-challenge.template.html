@@ -55,7 +55,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        Messages
+                                        <div class="col-sm-12">
+                                            <li ng-repeat="message in currentChallenge.messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</li>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
