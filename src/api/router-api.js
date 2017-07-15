@@ -136,7 +136,7 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
         });
     } else if (req.currentChallenge) {
         res.status(200).json({
-            currentChallenge: req.currentChallenge,
+            currentChallenge: req.currentChallenge
         });
     } else {
         res.status(404).json({
@@ -148,6 +148,7 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
 // PUT update a current challenge - abandon
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
     let currentChallengeId = req.params.id;
+    console.log(currentChallengeId);
     CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
         .exec(function (err, currentChallenge) {
             if (err) return next(err);
@@ -164,14 +165,44 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
 // PUT update a current challenge - step completed
 apiRouter.put('/current/challenges/:id', function(req, res, next) {
     let currentChallengeId = req.params.id;
-    console.log(req.body);
+    console.log('cChallengeId: ' + currentChallengeId);
+    let updateObject1 = req.body[0]._id;
 
-    CurrentChallenge.update({_id: currentChallengeId, 'steps': req.body},
-        function (err, numAffected) {
-            if(err) return next(err);
-            console.log(numAffected);
-            return res.status(201).json(numAffected);
+
+    CurrentChallenge.findById(currentChallengeId)
+        .populate('steps')
+        .exec(function (err, _currentChallenge) {
+            if (err) return next(err);
+            _currentChallenge.steps.forEach(function (step, index) {
+                console.log('step ' + step);
+                if (step.stepNumber === req.body[index].stepNumber) {
+                    console.log('update field');
+                    step.completed = req.body[index].completed;
+                    step.save(function (err) {
+                        if(err) return next(err);
+                    });
+                }
+            });
+            _currentChallenge.save(function (err, numAffected) {
+                    if (err) return next(err);
+                    console.log(numAffected);
+                    return res.status(201).json(numAffected)
+                });
         });
+});
+    //CurrentChallenge.update({_id: currentChallengeId},
+    //    { $set:
+    //        {
+    //            "steps.0.completed": req.body[0].completed,
+    //            "steps.1.completed": req.body[1].completed,
+    //            "steps.2.completed": req.body[2].completed
+    //        },
+    //    function (err, numAffected) {
+    //        if(err) return next(err);
+    //        console.log(numAffected);
+    //        return res.status(201).json(numAffected);
+    //    }
+    //});
 
     //CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true}, function (err, _currentChallenge, response) {
     //    if (err) return next(err);
@@ -190,7 +221,6 @@ apiRouter.put('/current/challenges/:id', function(req, res, next) {
     //});
 
 
-});
 
 /* MESSAGES */
 

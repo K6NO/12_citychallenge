@@ -75,7 +75,8 @@
 
                                 <div class="checkbox text-left">
                                     <label ng-repeat="step in steps" class="checkbox-label">
-                                        <div ng-if="currentChallenge.partner" class="col-xs-1">
+                                        <div class="col-xs-1">
+                                            <!--ng-if="currentChallenge.partner"-->
                                             <input type="checkbox"
                                                    value="{{step._id}}"
                                                    ng-model="step.completed"/>
@@ -89,9 +90,10 @@
                                             <span>{{step.description}}</span>
                                         </div>
                                     </label>
-                                    <button ng-if="currentChallenge.partner" ng-click="saveSteps()" class="btn btn-danger btn-round">
+                                    <button ng-click="saveSteps()" class="btn btn-danger btn-round">
                                         save progress <i class="material-icons">sentiment_very_satisfied</i>
                                     </button>
+                                    <!--ng-if="currentChallenge.partner"-->
                                 </div>
                             </div>
                         </div>
