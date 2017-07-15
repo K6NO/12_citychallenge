@@ -55,8 +55,8 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</div>
+                                <div class="row justify-content-md-center">
+                                    <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message align-self-center' : 'your-message align-self-center'">{{message.text}}</div>
                                 </div>
                                 <div class="row">
                                         <div class="form-group col-sm-10">

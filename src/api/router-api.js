@@ -40,6 +40,7 @@ apiRouter.get('/challenges', function(req, res, next) {
 apiRouter.get('/challenges/:id', function(req, res, next) {
     let challengeId = req.params.id;
     Challenge.findById(challengeId)
+        .populate('steps')
         .exec(function (err, challenge) {
             if(err) return next(err);
             if(!challenge){

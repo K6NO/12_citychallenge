@@ -120,20 +120,10 @@
 }
 
 .message-title-user {
-    margin: 1em 0;
-    /*padding: 20px 0;*/
-    /*background-color: #03a9f4;*/
-    /*border-radius: .8em;*/
-    /*box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);*/
-}
+    margin: 1em 0;}
 
 .message-title-partner {
-    margin: 1em 0;
-    /*padding: 20px 0;*/
-    /*background-color: #f44336;*/
-    /*border-radius: .8em;*/
-    /*box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);*/
-}
+    margin: 1em 0;}
 
 .message-image {
     max-height: 80px;
