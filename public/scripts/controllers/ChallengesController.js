@@ -6,7 +6,6 @@
 
             // get all challenges
             dataService.getChallenges(function (response) {
-                console.log(response.data);
                 $scope.challenges = response.data;
             });
 
@@ -15,7 +14,6 @@
             // update challenge
             $scope.updateChallenge = function (challengeId, challenge) {
                 dataService.updateChallenge(challengeId, challenge, function (challenge) {
-                    console.log(challenge);
                     $scope.challenge = challenge;
                 });
             };

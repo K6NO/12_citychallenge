@@ -1,0 +1,61 @@
+<div class="signup-page">
+    <navbar></navbar>
+    <div class="wrapper">
+        <div class="header header-filter" style="background-image: url('../assets/img/city.jpg'); background-size: cover; background-position: top center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                        <div class="card card-signup">
+                            <ng-form name ="loginForm" novalidate>
+
+                                <div class="header header-success text-center">
+                                    <h4>Login With...</h4>
+                                    <div class="social-line">
+                                        <a href="#FACEBOOKSIGNUP" class="btn btn-simple btn-just-icon">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <a href="#GOOGLESIGNUP" class="btn btn-simple btn-just-icon">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <p class="text-divider">Or With You Credentials...</p>
+                                <div class="content">
+                                    <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">email</i>
+										</span>
+                                        <input type="text" name="email" required ng-model="user.emailAddress" class="form-control" placeholder="Email...">
+                                    </div>
+
+                                    <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">lock_outline</i>
+										</span>
+                                        <input type="password" name="password" required ng-model="user.password" placeholder="Password..." class="form-control" />
+                                    </div>
+
+                                    <div class="footer text-center">
+                                        <button ng-click="login()" type="submit" class="btn btn-simple btn-danger btn-lg">Login</button>
+                                    </div>
+                                    <div ng-if="errors" class="alert alert-danger">
+                                        <div class="container-fluid">
+                                            <div class="alert-icon">
+                                                <i class="material-icons">error_outline</i>
+                                            </div>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                                            </button>
+                                            <b>Something's wrong:</b> {{errors}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -191,35 +191,6 @@ apiRouter.put('/current/challenges/:id', function(req, res, next) {
                 });
         });
 });
-    //CurrentChallenge.update({_id: currentChallengeId},
-    //    { $set:
-    //        {
-    //            "steps.0.completed": req.body[0].completed,
-    //            "steps.1.completed": req.body[1].completed,
-    //            "steps.2.completed": req.body[2].completed
-    //        },
-    //    function (err, numAffected) {
-    //        if(err) return next(err);
-    //        console.log(numAffected);
-    //        return res.status(201).json(numAffected);
-    //    }
-    //});
-
-    //CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true}, function (err, _currentChallenge, response) {
-    //    if (err) return next(err);
-    //    if(!_currentChallenge){
-    //        var noDataErr = new Error('CurrentChallenge not found');
-    //        noDataErr.status = 404;
-    //        return next(noDataErr);
-    //    }
-    //    console.log(_currentChallenge);
-    //    console.log('_____________');
-    //    console.log(response);
-    //
-    //
-    //    return res.status(201).json(_currentChallenge);
-    //
-    //});
 
 
 
@@ -276,15 +247,6 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
                     });
 
                 });
-
-
-                //currentChallenge.save(function (err, _currentChallenge) {
-                //    if (err) return next(err);
-                //    _currentChallenge.populate('messages', function (err, __currentChallenge) {
-                //        if(err) return next(err);
-                //        return res.status(201).json(__currentChallenge.messages);
-                //    })
-                //})
             });
         })
 });
@@ -293,9 +255,11 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
 /* USERS */
 
 // GET a single user
-apiRouter.get('/users/:id', function(req, res, next) {
+apiRouter.get('/users', auth.isAuthenticated, function(req, res, next) {
     // TODO switch to req.session.userId, add mid.isAuthenticated middleware to params
-    let userId = req.params.id;
+    console.log(req.session.passport.user);
+    let userId = req.session.passport.user._id;
+    console.log('userId: ' + userId);
     User.findOne({_id: userId})
         .select('-password')
         .exec(function (err, user) {
@@ -310,7 +274,7 @@ apiRouter.post('/users', function(req, res, next) {
     user.save(function (err) {
         if (err) return next(err);
         res.setHeader('Location', '/');
-        res.status(200).json({saved: true});
+        res.status(200).json({_id: user._id, saved: true});
     })
 });
 

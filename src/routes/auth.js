@@ -25,7 +25,11 @@ router.get('/logout', function (req, res) {
 
 /* LOCAL AUTH */
 
-// process the login form
+router.get('/loggedin', function(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
+});
+
+// POST / login process the login form
 router.post("/login", passport.authenticate('local-login'), function(req, res) {
     res.json(req.user);
 });
@@ -36,12 +40,7 @@ router.post("/logout", function(req, res) {
     res.send(200);
 });
 
-// loggedin
-router.get("/loggedin", function(req, res) {
-    res.send(req.isAuthenticated() ? req.user : '0');
-});
 
-// signup
 router.post("/signup", function(req, res, next) {
     console.log(req.body.emailAddress);
     User.findOne({

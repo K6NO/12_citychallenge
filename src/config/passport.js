@@ -72,6 +72,7 @@ module.exports = function(passport) {
                     return done(null, false, {message:'Password invalid. Unable to login'});
                 }
                 // all is well, return successful user
+                user.password = '';
                 return done(null, user);
             });
         }
