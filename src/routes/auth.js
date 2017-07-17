@@ -26,7 +26,10 @@ router.get('/logout', function (req, res) {
 /* LOCAL AUTH */
 
 router.get('/loggedin', function(req, res) {
-    res.send(req.isAuthenticated() ? req.user : '0');
+    console.log('in loggedin');
+    console.log(req.isAuthenticated());
+    //console.log(req.session.passport.user);
+    res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
 
 // POST / login process the login form

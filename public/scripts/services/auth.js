@@ -3,8 +3,11 @@ angular.module('cityChallengeApp').
     factory('authService',
     ['$q', '$timeout', '$http',
         function ($q, $timeout, $http) {
-        var user = null;
+            var user = null;
+            var loggedInUser = null;
+
             function isLoggedIn() {
+
                 if(user) {
                     return true;
                 } else {
@@ -13,7 +16,28 @@ angular.module('cityChallengeApp').
             }
 
             function getUserStatus() {
-                return user;
+                return $http.get('/auth/loggedin')
+                    .then(function (response) {
+                        console.log('getUserStatus returns: ');
+                        console.log(response);
+                        if(response.data.status === false) {
+                            user = false;
+                            console.log(response.data.status);
+                        } else {
+                            user = true;
+                            console.log('setting loggedInUser from http post response');
+
+                            loggedInUser = response.data.user;
+                        }
+                    });
+            }
+
+            function getLoggedInUser(){
+                if (loggedInUser) {
+                    return loggedInUser;
+                } else {
+                    console.log('getLoggedinUser = false')
+                }
             }
 
             function login(email, password) {
@@ -24,11 +48,11 @@ angular.module('cityChallengeApp').
                 // send a post request to the server
                 $http.post('/auth/login',
                     {emailAddress: email, password: password})
-                    // handle success
-                    .then(function (data) {
-
-                        if(data.status === 200){
+                    // handle success, set loggedInUser and user status
+                    .then(function (response) {
+                        if(response.status === 200){
                             user = true;
+                            loggedInUser = response.data;
                             deferred.resolve();
                         } else {
                             user = false;
@@ -37,6 +61,8 @@ angular.module('cityChallengeApp').
                     })
                     // handle error
                     .catch(function (data) {
+                        console.log('in catch auth service');
+                        console.log(data);
                         user = false;
                         deferred.reject();
                     });
@@ -53,9 +79,10 @@ angular.module('cityChallengeApp').
 
                 // send a get request to the server
                 $http.get('/auth/logout')
-                    // handle success
+                // handle success, set user and loggedInUser to false
                     .then(function (data) {
                         user = false;
+                        loggedInUser = null;
                         deferred.resolve();
                     })
                     // handle error
@@ -76,9 +103,10 @@ angular.module('cityChallengeApp').
                 // send a post request to the server
                 $http.post('/auth/signup',
                     user)
-                    // handle success
-                    .then(function (user, status) {
-                        if(status === 200 && user){
+                // handle success, set loggedInUser and user status
+                    .then(function (response) {
+                        if(response.status === 200 && response){
+                            loggedInUser = response.data;
                             deferred.resolve();
                         } else {
                             deferred.reject();
@@ -99,7 +127,8 @@ angular.module('cityChallengeApp').
                 getUserStatus: getUserStatus,
                 login: login,
                 logout: logout,
-                register: register
+                register: register,
+                getLoggedInUser : getLoggedInUser
             })
 }]);
 

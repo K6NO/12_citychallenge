@@ -24,9 +24,14 @@
                             <i class="material-icons">face</i>Take a challenge
                         </a>
                     </li>
-                    <li ng-if="!user">
-                        <a href="#!/logout">
+                    <li ng-controller="LogoutController" ng-if="!user">
+                        <a href="" ng-click="logout()">
                             <i class="material-icons">exit_to_app</i> Sign out
+                        </a>
+                    </li>
+                    <li ng-if="!user">
+                        <a href="#!/login">
+                            <i class="material-icons">exit_to_app</i> Sign In
                         </a>
                     </li>
                     <li ng-if="!user">

@@ -6,10 +6,21 @@ var auth = require('basic-auth');
 
 // Define a middleware function to be used for every secured routes
 function isAuthenticated (req, res, next){
-    if (!req.isAuthenticated())
-        res.send(401);
-    else
-        next();
+    var isUserAuth = auth(req);
+    //console.log(req.getHeader('Authorization'));
+    console.log(isUserAuth);
+    if (!req.isAuthenticated()) {
+        console.log('in if');
+        return next(false);
+
+    }
+    //res.send(401);
+    else {
+        console.log('in else');
+        return next(true);
+
+    }
+        //next();
 }
 
 // User authentication
