@@ -9,16 +9,17 @@
             $scope.pageIndicator = 'profile-page';
 
 
-            $scope.user = authService.getLoggedInUser();
+
+            let user = authService.getLoggedInUser();
+            $scope.user = user;
+            console.log(user._id);
 
 
-
-            //dataService.getCurrentChallengesForUser(userId, function (response) {
-            //    $scope.currentChallenges = response.data;
-            //    console.log(response.data);
-            //}, function (response) {
-            //    $scope.errors = response.data.errors;
-            //})
+            dataService.getCurrentChallengesForUser(function (response) {
+                $scope.currentChallenges = response.data;
+            }, function (response) {
+                $scope.errors = response.data.errors;
+            });
 
             // add user
             //$scope.addNewUser = function () {

@@ -10,12 +10,5 @@
             });
 
             $scope.pageIndicator = 'landing-page';
-
-            // update challenge
-            $scope.updateChallenge = function (challengeId, challenge) {
-                dataService.updateChallenge(challengeId, challenge, function (challenge) {
-                    $scope.challenge = challenge;
-                });
-            };
         });
 })();

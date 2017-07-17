@@ -10,13 +10,11 @@ function isAuthenticated (req, res, next){
     //console.log(req.getHeader('Authorization'));
     console.log(isUserAuth);
     if (!req.isAuthenticated()) {
-        console.log('in if');
         return next(false);
 
     }
     //res.send(401);
     else {
-        console.log('in else');
         return next(true);
 
     }

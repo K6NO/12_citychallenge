@@ -115,10 +115,10 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
 });
 
 // GET all currentChallenges for user
-apiRouter.get('/current/challenges/user/:id', function(req, res, next) {
+apiRouter.get('/current/user/challenges/', function(req, res, next) {
     // TODO change to session.userId and change path (delete /user/)
-    let userId = req.params.id;
-    console.log('userId: ' + userId);
+    let userId = req.session.passport.user._id;
+    console.log('userId: ' + req.session.passport.user._id);
     CurrentChallenge.find({'user' : userId})
         .sort('createdAt')
         .populate('partner', '-password')
