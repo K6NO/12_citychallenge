@@ -7,10 +7,22 @@ const express = require('express'),
 /* FACEBOOK AUTH ROUTES */
 
 // GET /auth/login/facebook
-router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email,user_hometown"]}));
+router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email", "user_hometown", "name"]}));
 
 // GET /auth/facebook/return
 router.get('/facebook/return', passport.authenticate('facebook',
+    {succesRedirect: '/profile', successRedirect: '/#!/profile', failureRedirect: '/#!/login'}), function (req, res) {
+    // success auth
+    res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
+});
+
+/* GOOGLE AUTH ROUTES */
+
+// GET /auth/login/google
+router.get('/login/google', passport.authenticate('google', {scope: ['email', 'profile']}));
+
+// GET /auth/google/return
+router.get('/google/return', passport.authenticate('google',
     {succesRedirect: '/profile', successRedirect: '/#!/profile', failureRedirect: '/#!/login'}), function (req, res) {
     // success auth
     res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});

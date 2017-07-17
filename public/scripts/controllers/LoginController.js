@@ -23,14 +23,6 @@
                         $scope.disabled = false;
                         $scope.loginForm = {};
                     })
-            }
-
-            $scope.facebookLogin = function () {
-                $scope.error = false;
-                $scope.disabled = true;
-
-                authService.facebookLogin()
-
-            }
+            };
         });
 })();
