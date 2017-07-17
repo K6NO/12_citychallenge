@@ -81,13 +81,26 @@ module.exports = function(passport) {
     // Facebook authentication strategy
     //https://github.com/nax3t/angular-express-passport-tutorial/blob/master/facebook.md
 
-    //passport.use('facebook', new FacebookStrategy({
-    //    clientID: secret.facebookAppId,
-    //    clientSecret: secret.facebookSecret,
-    //    callbackURL: "http://localhost:3000/auth/facebook/return",
-    //    profileFields: ['id', 'displayName', 'photos', 'email', 'hometown']
-    //}), function () {
-    //    console.log('yay');
-    //
-    //});
+    passport.use('facebook', new FacebookStrategy({
+        clientID: secret.facebookAppId,
+        clientSecret: secret.facebookSecret,
+        callbackURL: "http://localhost:3000/auth/facebook/return",
+        profileFields: ['id', 'displayName', 'photos', 'email', 'hometown']
+    }, function (accessToken, refreshToken, profile, done) {
+        if (profile.emails[0]) {
+            User.findOneAndUpdate({
+                emailAddress: profile.emails[0].value
+            }, {
+                fullName: profile.displayName,
+                userName: profile.username,
+                emailAddress: profile.emails[0].value,
+                photoUrl: profile.photos[0].value
+            }, {
+                upsert: true
+            }, done)
+        } else {
+            var noEmailError = new Error('Your email privacy settings on Facebook prevent you from signing in with your Facebook Account. You can visit your Facebook profile to change this or choose another sign in method.');
+            done(noEmailError, null);
+        }
+    }));
 };

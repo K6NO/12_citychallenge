@@ -10,9 +10,10 @@ const express = require('express'),
 router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email,user_hometown"]}));
 
 // GET /auth/facebook/return
-router.get('/facebook/return', passport.authenticate('facebook', {failureRedirect: '/auth/login'}), function (req, res) {
+router.get('/facebook/return', passport.authenticate('facebook',
+    {succesRedirect: '/profile', successRedirect: '/#!/profile', failureRedirect: '/#!/login'}), function (req, res) {
     // success auth
-    res.status(200).json({auth: true});
+    res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
 
 /* LOGOUT */
