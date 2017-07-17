@@ -120,7 +120,7 @@ apiRouter.get('/current/user/challenges/', function(req, res, next) {
     let userId = req.session.passport.user._id;
     console.log('userId: ' + req.session.passport.user._id);
     CurrentChallenge.find({'user' : userId})
-        .sort('createdAt')
+        .sort('-createdAt')
         .populate('partner', '-password')
         .populate('challenge', 'title likes times_taken difficulty fun karma')
         .exec(function (err, currentChallenges) {
@@ -131,20 +131,22 @@ apiRouter.get('/current/user/challenges/', function(req, res, next) {
 
 // POST create a new current challenge AND check for matching challenge
 apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, function(req, res, next) {
-    if(req.currentChallenges) {
-        res.status(200).json({
-            currentChallenges: req.currentChallenges
-        });
-    } else if (req.currentChallenge) {
+    if(req.currentChallenge) {
         res.status(200).json({
             currentChallenge: req.currentChallenge
         });
-    } else {
+    }  else {
         res.status(404).json({
             message: 'Could not save current challenge'
         })
     }
 });
+
+//else if (req.currentChallenge) {
+//    res.status(200).json({
+//        currentChallenge: req.currentChallenge
+//    });
+//}
 
 // PUT update a current challenge - abandon
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {

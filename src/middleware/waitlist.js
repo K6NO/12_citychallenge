@@ -18,6 +18,7 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
     let newCurrentChallenge = new CurrentChallenge(req.body);
     newCurrentChallenge.save(function (err, _currentChallenge) {
         if (err) return next(err);
+        let step1 =
 
         //add new currentChallenge to the waitlist;
         db.collection('waitlist').insert(_currentChallenge);
@@ -93,7 +94,7 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
 
                                             // return both documents in an array
                                             req.saved = true;
-                                            req.currentChallenges = [firstChallenge, secondChallenge];
+                                            req.currentChallenge = secondChallenge;
                                             next();
                                         }); // end second update
                                 }); // end first update

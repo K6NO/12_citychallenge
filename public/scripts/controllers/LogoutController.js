@@ -13,7 +13,6 @@
 
             $scope.logout = function () {
 
-
                 authService.logout()
                     .then(function () {
                         $location.path('/challenges');

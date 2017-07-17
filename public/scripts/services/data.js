@@ -42,7 +42,6 @@
             // GET all currentChallenges for user
             // returns an array of currentChallenges objects
             this.getCurrentChallengesForUser = function (successCallback, errorCallback) {
-                console.log('inCurrentChallenge Get');
                 $http.get('/api/current/user/challenges/')
                     .then(successCallback, errorCallback)
             };

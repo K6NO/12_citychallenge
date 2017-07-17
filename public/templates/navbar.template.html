@@ -14,17 +14,17 @@
 
             <div class="navbar-collapse" ng-class="{collapse: isCollapsed}" id="navigation-example">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!user">
+                    <li ng-if="user">
                         <a href="#!/profile">
                             <i class="material-icons">face</i>Profile
                         </a>
                     </li>
-                    <li ng-if="!user">
+                    <li>
                         <a href="#!/">
                             <i class="material-icons">face</i>Take a challenge
                         </a>
                     </li>
-                    <li ng-controller="LogoutController" ng-if="!user">
+                    <li ng-controller="LogoutController" ng-if="user">
                         <a href="" ng-click="logout()">
                             <i class="material-icons">exit_to_app</i> Sign out
                         </a>
@@ -36,7 +36,7 @@
                     </li>
                     <li ng-if="!user">
                         <a href="#!/signup">
-                            <i class="material-icons">exit_to_app</i> Register / Sign In
+                            <i class="material-icons">exit_to_app</i> Register
                         </a>
                     </li>
                     <li>

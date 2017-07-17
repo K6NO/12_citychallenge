@@ -1,17 +1,18 @@
 (function(){
     'use strict';
-    let errorCallback = function (response) {
-        $scope.errors = response.data.errors;
-    };
 
     angular.module('cityChallengeApp')
-        .controller('CurrentChallengeController',  function ($scope, $location, $filter, dataService) {
+        .controller('CurrentChallengeController',  function ($scope, $location, $filter, dataService, authService) {
 
             let errorCallback = function (response) {
                 $scope.errors = response.data.errors;
             };
 
             $scope.pageIdentifier = 'landing-page';
+
+            let user = authService.getLoggedInUser();
+            //$scope.user = user;
+            console.log(user._id);
 
             let currentChallengeId = $location.path().split('/')[3];
 
@@ -25,28 +26,30 @@
                         if(a.createdAt > b.createdAt) return 1;
                         return 0;
                     }
-
-                    let userMessages = response.data.currentChallenge.messages;
-                    let allMessages = [];
-                    if(response.data.partnerMessages) {
-                        console.log('true');
-                        let partnerMessages = response.data.partnerMessages;
-                        allMessages = userMessages.concat(partnerMessages);
+                    if(response.data.currentChallenge.user._id !== user._id){
+                        // TODO create error page and show it to the user
+                        $scope.errors = 'It is not your challenge, so you cannot see it.'
                     } else {
-                        console.log('false');
-                        allMessages = userMessages;
+                        let userMessages = response.data.currentChallenge.messages;
+                        let allMessages = [];
+                        if(response.data.partnerMessages) {
+                            let partnerMessages = response.data.partnerMessages;
+                            allMessages = userMessages.concat(partnerMessages);
+                        } else {
+                            allMessages = userMessages;
+                        }
+
+                        allMessages.sort(compare);
+
+                        $scope.currentChallenge = response.data.currentChallenge;
+                        if(allMessages) {
+                            $scope.messages = allMessages;
+                        }
+
+                        // bind checkboxes to steps
+                        //$scope.steps = response.data.currentChallenge.steps;
                     }
 
-                    allMessages.sort(compare);
-                    console.log(allMessages);
-
-                    $scope.currentChallenge = response.data.currentChallenge;
-                    if(allMessages) {
-                        $scope.messages = allMessages;
-                    }
-
-                    // bind checkboxes to steps
-                    $scope.steps = response.data.currentChallenge.steps;
 
                 }, errorCallback);
             }
@@ -57,9 +60,9 @@
                 //let currentChallenge = {
                 //    "steps": $scope.steps
                 //};
-                console.log($scope.steps);
+                //console.log($scope.steps);
 
-                dataService.stepCompletedCurrentChallenge($scope.currentChallenge._id, $scope.steps, function (response) {
+                dataService.stepCompletedCurrentChallenge($scope.currentChallenge._id, $scope.currentChallenge.steps, function (response) {
                     console.log('service returns this');
 
                     console.log(response.data);
