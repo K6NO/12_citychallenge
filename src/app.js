@@ -108,22 +108,33 @@ app.use('/auth', authRouter);
 
 // ERROR HANDLERS
 
+//app.get('*', function(req, res, next) {
+//  var err = new Error();
+//  err.status = 404;
+//  next(err);
+//});
+//
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+//app.use(function(err, req, res, next) {
+//  console.log(err.status);
+//  if(err.status !== 404) {
+//    console.log('404 error handler, next');
+//    return next();
+//  }
+//  res.status(404).send(err.message || '404 - Not Found.')
+//});
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.log(err);
+
   res.locals.text = err.text;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json(err.message);
 });
 
 module.exports = app;

@@ -8,8 +8,6 @@
             //console.log(user);
             $scope.pageIndicator = 'profile-page';
 
-
-
             let user = authService.getLoggedInUser();
             $scope.user = user;
             console.log(user._id);

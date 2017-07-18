@@ -64,7 +64,7 @@ angular.module('cityChallengeApp').
                         console.log('in catch auth service');
                         console.log(data);
                         user = false;
-                        deferred.reject();
+                        deferred.reject(data);
                     });
 
                 // return promise object
@@ -114,7 +114,8 @@ angular.module('cityChallengeApp').
                     })
                     // handle error
                     .catch(function (data) {
-                        deferred.reject();
+                        console.log(data);
+                        deferred.reject(data);
                     });
 
                 // return promise object

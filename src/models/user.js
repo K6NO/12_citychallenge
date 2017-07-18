@@ -28,8 +28,7 @@ var UserSchema = new Schema({
     userName: {
         type: String,
         required: [true, 'Provide a username.'],
-        trim: true,
-        unique: true
+        trim: true
     },
     photoUrl: {
         type: String,

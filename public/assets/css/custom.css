@@ -135,3 +135,14 @@
     padding: 1em 0 0 0;
 }
 
+.signup-pictures {
+    width: 20%;
+    padding: 5px;
+}
+.signup-pictures:hover {
+    border: 2px solid #f44336;
+}
+
+.signup-pictures:active {
+    border: 2px solid #f44336;
+}

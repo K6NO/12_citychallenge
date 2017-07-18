@@ -9,12 +9,12 @@
                             <ng-form name = "signupForm" novalidate>
 
                                 <div class="header header-success text-center">
-                                    <h4>Sign Up On...</h4>
+                                    <h4>Sign Up With...</h4>
                                     <div class="social-line">
-                                        <a href="#FACEBOOKSIGNUP" class="btn btn-simple btn-just-icon">
+                                        <a href="/auth/login/facebook" class="btn btn-simple btn-just-icon">
                                             <i class="fa fa-facebook-square"></i>
                                         </a>
-                                        <a href="#GOOGLESIGNUP" class="btn btn-simple btn-just-icon">
+                                        <a href="/auth/login/google" class="btn btn-simple btn-just-icon">
                                             <i class="fa fa-google-plus"></i>
                                         </a>
                                     </div>
@@ -49,19 +49,37 @@
 										</span>
                                         <input type="password" name="password" required ng-model="user.password" placeholder="Password..." class="form-control" />
                                     </div>
+                                    <div class="footer text-center">
+                                        <h5>Choose a profile pic...</h5>
+                                        <a href="">
+                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/1_bulldog.png">
+                                        </a>
+                                        <a href="">
+                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/2_cat.png">
+                                        </a>
+                                        <a href="">
+                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/3_owl.png">
+                                        </a>
+                                        <a href="">
+                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/4_ostrich.png">
+                                        </a>
+                                        <a href="">
+                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/5_turtle.png">
+                                        </a>
+                                    </div>
 
                                     <div class="footer text-center">
                                         <button ng-click="register(user)" type="submit" class="btn btn-simple btn-danger btn-lg">Get Started</button>
                                     </div>
-                                    <div  class="alert alert-danger">
+                                    <div ng-if="errors.length > 0" class="alert alert-danger">
                                         <div class="container-fluid">
                                             <div class="alert-icon">
                                                 <i class="material-icons">error_outline</i>
                                             </div>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <button ng-click="removeError()" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true"><i class="material-icons">clear</i></span>
                                             </button>
-                                            <b>Error Alert:</b> {{errors}}
+                                            <b>Whoops:</b> <span ng-repeat="error in errors"> {{error}}
                                         </div>
                                     </div>
                                 </div>

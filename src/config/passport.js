@@ -53,8 +53,10 @@ module.exports = function(passport) {
      On creating your LocalStrategy you may pass set of options in additional argument to constructor
      choosing differently named fields using options usernameField and/or passwordField.
      */
-    passport.use('local-login', new LocalStrategy(
-        {usernameField:"emailAddress", passwordField:"password"},
+    passport.use('local-login', new LocalStrategy({
+        usernameField:"emailAddress",
+        passwordField:"password"
+    },
         function(emailAddress, password, done) {
             User.findOne({
                 emailAddress: emailAddress
@@ -66,11 +68,19 @@ module.exports = function(passport) {
                 }
                 // if no user is found, return the message
                 if (!user) {
-                    return done(null, false, {message:'User not found. Unable to login'});
+                    console.log('local-login no user is found');
+
+                    return done(null, false, {
+                        message:'User not found. Unable to login'
+                    });
                 }
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password)) {
-                    return done(null, false, {message:'Password invalid. Unable to login'});
+                    console.log('local-login pwd not valid');
+
+                    return done(null, false, {
+                        message:'Password invalid. Unable to login'
+                    });
                 }
                 // all is well, return successful user
                 user.password = '';
@@ -87,13 +97,12 @@ module.exports = function(passport) {
         callbackURL: "http://localhost:3000/auth/facebook/return",
         profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown']
     }, function (accessToken, refreshToken, profile, done) {
-        console.log(profile);
         if (profile.emails[0]) {
             User.findOneAndUpdate({
                 emailAddress: profile.emails[0].value
             }, {
                 fullName: profile.displayName,
-                userName: profile.username,
+                userName: profile.name.givenName,
                 emailAddress: profile.emails[0].value,
                 photoUrl: profile.photos[0].value
             }, {
@@ -111,8 +120,16 @@ module.exports = function(passport) {
         clientID: secret.googleId,
         clientSecret: secret.googleSecret,
         callbackURL: "http://localhost:3000/auth/google/return"
-    },
+
+        },
         function (accessToken, refreshToken, profile, done) {
+            console.log(profile);
+
+            let largerImage = profile.photos[0].value.substring(0, profile.photos[0].value.length-2);
+            largerImage += '200';
+            console.log("largerImage");
+
+            console.log(largerImage);
             if(profile.emails[0]){
                 User.findOneAndUpdate({
                     emailAddress: profile.emails[0].value
@@ -120,7 +137,7 @@ module.exports = function(passport) {
                     fullName: profile.displayName,
                     userName: profile.name.givenName,
                     emailAddress: profile.emails[0].value,
-                    photoUrl: profile.photos[0].value
+                    photoUrl : largerImage
                 }, {
                     upsert: true
                 }, done)
