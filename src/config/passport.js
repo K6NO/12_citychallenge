@@ -85,7 +85,7 @@ module.exports = function(passport) {
         clientID: secret.facebookAppId,
         clientSecret: secret.facebookSecret,
         callbackURL: "http://localhost:3000/auth/facebook/return",
-        profileFields: ['id', 'displayName', 'name', 'photos', 'email', 'hometown']
+        profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown']
     }, function (accessToken, refreshToken, profile, done) {
         console.log(profile);
         if (profile.emails[0]) {

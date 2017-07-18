@@ -122,7 +122,7 @@ apiRouter.get('/current/user/challenges/', function(req, res, next) {
     CurrentChallenge.find({'user' : userId})
         .sort('-createdAt')
         .populate('partner', '-password')
-        .populate('challenge', 'title likes times_taken difficulty fun karma')
+        .populate('challenge', 'title likes times_taken difficulty fun karma time')
         .exec(function (err, currentChallenges) {
             if(err) return next(err);
             res.status(200).json(currentChallenges)

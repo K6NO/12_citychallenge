@@ -51,6 +51,10 @@ var UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    level: {
+        type: Number,
+        default: 1
+    },
     //challenges: [{
     //    type: Schema.Types.ObjectId,
     //    ref: 'CurrentChallenge'
@@ -95,6 +99,10 @@ UserSchema.statics.authenticate = function (email, password, callback) {
             })
 
         })
+};
+
+UserSchema.methods.calculateLevel = function () {
+    this.level = Math.floor(this.karma / 100);
 };
 
 UserSchema.methods.validPassword = function (password) {

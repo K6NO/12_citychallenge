@@ -7,7 +7,7 @@ const express = require('express'),
 /* FACEBOOK AUTH ROUTES */
 
 // GET /auth/login/facebook
-router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email", "user_hometown", "name"]}));
+router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email user_hometown"]}));
 
 // GET /auth/facebook/return
 router.get('/facebook/return', passport.authenticate('facebook',

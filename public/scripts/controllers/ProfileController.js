@@ -21,6 +21,19 @@
                 $scope.errors = response.data.errors;
             });
 
+            let ranks = {
+                1 : 'Initiate',
+                2 : 'Waking Consciousness',
+                3 : 'Deep Dreaming',
+                4 : 'Inner Silence',
+                5 : 'Awakening',
+                6 : 'Eternal Sunshine',
+                7 : 'Mindful Inner Peace',
+                8 : 'Spirit Being'
+            }
+
+            $scope.rank = ranks[user.level];
+
             // add user
             //$scope.addNewUser = function () {
             //    dataService.addUser($scope.user, function (user) {
