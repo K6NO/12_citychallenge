@@ -7,11 +7,12 @@
             $scope.errors = [];
             $scope.pageIdentifier = 'signup-page';
             $scope.user = {};
+            $scope.selectedProfilePic = 0;
 
             $scope.chooseProfilePic = function (clickedItem) {
-                let dataValue = clickedItem.target.attributes.src.value;
-                console.log(dataValue);
-                $scope.user.photoUrl = dataValue;
+                let profilePicUrl = clickedItem.target.attributes.src.value;
+                $scope.selectedProfilePic = clickedItem.target.attributes.id.value;
+                $scope.user.photoUrl = profilePicUrl;
             };
 
             $scope.removeError = function () {
@@ -28,9 +29,11 @@
                             $location.path('/profile')})
                         .catch(
                             function (error) {
+                                $scope.user.password = '';
                                 $scope.errors.push(error.data);
                             })
                 } else {
+                    $scope.user.password = '';
                     $scope.errors.push('Fill in all fields and choose a profile pic.');
                 }
             }

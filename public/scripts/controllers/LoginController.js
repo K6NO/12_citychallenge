@@ -23,11 +23,13 @@
                         //$scope.loginForm= {};
                     })
                     .catch(function (error) {
-                        $scope.errors.push(error.data);
-
-                        //$scope.error = true;
-                        //$scope.disabled = false;
-                        //$scope.loginForm = {};
+                        if(error.status === 401) {
+                            $scope.errors.push('Email already registered or wrong password.')
+                            $scope.user.password = '';
+                        } else {
+                            $scope.errors.push(error.data);
+                            $scope.user.password = '';
+                        }
                     })
             };
         });

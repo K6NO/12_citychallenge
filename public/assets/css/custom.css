@@ -143,6 +143,7 @@
     border: 2px solid #f44336;
 }
 
-.signup-pictures:active {
+.signup-pictures.active {
+    background: #f44336;
     border: 2px solid #f44336;
 }

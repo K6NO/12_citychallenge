@@ -62,7 +62,10 @@ angular.module('cityChallengeApp').
                     // handle error
                     .catch(function (data) {
                         console.log('in catch auth service');
-                        console.log(data);
+                        //if (data.status === 401) {
+                        //    console.log(data);
+                        //    deferred.reject(data);
+                        //}
                         user = false;
                         deferred.reject(data);
                     });

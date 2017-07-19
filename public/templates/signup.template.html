@@ -52,19 +52,19 @@
                                     <div class="footer text-center">
                                         <h5>Choose a profile pic...</h5>
                                         <a href="">
-                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/1_bulldog.png">
+                                            <img id="pic1" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic1'}" ng-src="../assets/img/faces/1_bulldog.png">
                                         </a>
                                         <a href="">
-                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/2_cat.png">
+                                            <img id="pic2" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic2'}" ng-src="../assets/img/faces/2_cat.png">
                                         </a>
                                         <a href="">
-                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/3_owl.png">
+                                            <img id="pic3" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic3'}" ng-src="../assets/img/faces/3_owl.png">
                                         </a>
                                         <a href="">
-                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/4_ostrich.png">
+                                            <img id="pic4" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic4'}" ng-src="../assets/img/faces/4_ostrich.png">
                                         </a>
                                         <a href="">
-                                            <img ng-click="chooseProfilePic($event)" class="signup-pictures" ng-src="../assets/img/faces/5_turtle.png">
+                                            <img id="pic5" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic5'}" ng-src="../assets/img/faces/5_turtle.png">
                                         </a>
                                     </div>
 
@@ -79,7 +79,7 @@
                                             <button ng-click="removeError()" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true"><i class="material-icons">clear</i></span>
                                             </button>
-                                            <b>Whoops:</b> <span ng-repeat="error in errors"> {{error}}
+                                            <b>Whoops:</b> <span ng-repeat="error in errors"> {{error}}</span>
                                         </div>
                                     </div>
                                 </div>

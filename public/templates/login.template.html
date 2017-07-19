@@ -47,7 +47,7 @@
                                             <button ng-click="removeError()" type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true"><i class="material-icons">clear</i></span>
                                             </button>
-                                            <b>Whoops:</b> {{errors}}
+                                            <b>Whoops:</b> <span ng-repeat="error in errors"> {{error}}</span>
                                         </div>
                                     </div>
                                 </div>
