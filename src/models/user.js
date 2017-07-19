@@ -42,18 +42,9 @@ var UserSchema = new Schema({
         type: String,
         trim: true
     },
-    karma: {
-        type: Number,
-        default: 0
-    },
-    completed: {
-        type: Number,
-        default: 0
-    },
-    level: {
-        type: Number,
-        default: 1
-    },
+    karma: {type:  Number, default: 0},
+    completed: {type:  Number, default: 0},
+    level: {type:  Number, default: 1},
     //challenges: [{
     //    type: Schema.Types.ObjectId,
     //    ref: 'CurrentChallenge'

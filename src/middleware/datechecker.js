@@ -19,14 +19,16 @@ var checkIfEndDatePassed = function (req, res, next) {
         .populate('challenge', '_id karma times_taken')
         .populate('user', '_id karma completed')
         .populate('partner', '_id karma completed')
+        .populate('steps')
         .exec(function (err, currentChallenges) {
         if (err) return next(err);
         if(currentChallenges) {
             currentChallenges.forEach(function (currentChallenge) {
+                console.log(currentChallenge);
 
                 // TODO check if both currentChallenges evaluate here-  - if yes commented fields can be deleted
                 // Update state of currentChallenge, karma and number of current challenges for user and partner
-                if(currentChallenge.steps.length === 3) {
+                if(currentChallenge.steps[0].completed && currentChallenge.steps[1].completed && currentChallenge.steps[2].completed) {
                     currentChallenge.state = 'completed';
                     let newUserKarma = currentChallenge.user.karma += currentChallenge.challenge.karma;
                     //let newPartnerKarma = currentChallenge.partner.karma += currentChallenge.challenge.karma;

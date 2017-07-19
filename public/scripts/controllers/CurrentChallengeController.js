@@ -5,7 +5,7 @@
         .controller('CurrentChallengeController',  function ($scope, $location, $route, $filter, dataService, authService) {
 
             let errorCallback = function (response) {
-                $scope.errors = response.data.errors;
+                $scope.errors = response.data;
             };
 
             $scope.pageIdentifier = 'landing-page';

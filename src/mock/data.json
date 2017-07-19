@@ -4,19 +4,19 @@
     "one" : {
       "stepNumber": 1,
       "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
-      "completed" : false
+      "completed" : true
         },
       "two" :
         {
           "stepNumber": 2,
           "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
-          "completed" : false
+          "completed" : true
         },
     "three" :
         {
           "stepNumber": 3,
           "description" : "Morbi fermentum vehicula tortor ut fermentum.",
-          "completed" : false
+          "completed" : true
         }
     },
 
@@ -51,7 +51,7 @@
       "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
       "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
       "city": "Ozora",
-      "karma": 20,
+      "karma": 10,
       "time": 7,
       "likes": 0,
       "backgroundImage" : "/assets/img/bg3.jpeg",
@@ -81,7 +81,6 @@
       "fun": 5,
       "backgroundImage" : "/assets/img/bg4.jpeg",
       "steps": [
-
         "->steps.one",
         "->steps.two",
         "->steps.three"
@@ -97,7 +96,7 @@
       "userName": "K6NO",
       "password": "password",
       "city": "Budapest",
-      "karma": 50
+      "karma": 0
     },
     "mano": {
       "_id": "57029ed4795118be119cc222",
@@ -107,7 +106,7 @@
       "photoUrl": "https://avatars3.githubusercontent.com/u/19394212?v=3&s=500",
       "password": "password",
       "city": "Budapest",
-      "karma": 100
+      "karma": 0
     }
   },
   "currentChallenges": {
@@ -117,7 +116,13 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.one",
       "state": "active",
-      "stepsCompleted": ["->steps.one", "->steps.two"],
+      "steps": [
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
+      ],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
 
@@ -127,7 +132,13 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.one",
       "state": "active",
-      "stepsCompleted": ["->steps.one"],
+      "steps": [
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
+      ],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -136,7 +147,13 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.two",
       "state": "completed",
-      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
+      "steps": [
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
+      ],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -145,7 +162,13 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.two",
       "state": "completed",
-      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
+      "steps": [
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
+      ],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -154,7 +177,13 @@
       "partner": "->users.keno",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
+      "steps": [
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
+      ],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     },
@@ -163,7 +192,13 @@
       "partner": "->users.mano",
       "challenge" : "->challenges.three",
       "state": "active",
-      "stepsCompleted": ["->steps.one","->steps.two","->steps.three"],
+      "steps": [
+
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+
+      ],
       "startedAt" : "2017-07-02T16:37:26.484Z",
       "endsAt" : "2017-07-09T16:37:26.484Z"
     }
