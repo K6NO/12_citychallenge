@@ -20,6 +20,7 @@ var checkIfEndDatePassed = function (req, res, next) {
         .populate('user', '_id karma completed')
         .populate('partner', '_id karma completed')
         .populate('steps')
+        .populate('partnerChallenge')
         .exec(function (err, currentChallenges) {
         if (err) return next(err);
         if(currentChallenges) {

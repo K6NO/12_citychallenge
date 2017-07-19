@@ -86,7 +86,7 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
     let challengeId = req.params.id;
 
     CurrentChallenge.findById(challengeId)
-        .populate('user partner challenge messages steps')
+        .populate('user partner challenge messages steps partnerChallenge')
         .exec(function (err, currentChallenge) {
             if(err) return next(err);
             if(!currentChallenge) {

@@ -14,14 +14,15 @@
                                 <div class="challenge-box-profile">
                                     <i class="material-icons">stars</i> {{currentChallenge.user.karma}} karma
                                     <i class="material-icons">check_box</i> {{currentChallenge.user.completed}} completed challenges
-                                    <button ng-click="abandonCurrentChallenge()" class="btn btn-danger btn-round">
+                                    <button ng-if="currentChallenge.partnerChallenge.state == 'active' || currentChallenge.partnerChallenge.state == 'abandoned'"
+                                            ng-click="abandonCurrentChallenge()" class="btn btn-danger btn-round">
                                         i have to give up <i class="material-icons">sentiment_very_dissatisfied</i>
                                     </button>
                                 </div>
                             </div>
                             <div class="col-md-2 text-center">
-                                <h2 ng-if="currentChallenge.partner" class="info-title">{{currentChallenge.remaining[0]}}</h2>
-                                <h6 ng-if="currentChallenge.partner" class="info-title">{{currentChallenge.remaining[1]}} left</h6>
+                                <h2 ng-if="currentChallenge.partnerChallenge.state == 'active'" class="info-title">{{currentChallenge.remaining[0]}}</h2>
+                                <h6 ng-if="currentChallenge.partnerChallenge.state == 'active'" class="info-title">{{currentChallenge.remaining[1]}} left</h6>
                             </div>
                             <div ng-if="!currentChallenge.partner" class="col-md-5 text-center">
 
@@ -29,7 +30,7 @@
                                 <h6 class="info-title text-uppercase">Your challenge starts as soon as we find one</h6>
 
                             </div>
-                            <div ng-if="currentChallenge.partner" class="col-md-5 text-center">
+                            <div ng-if="currentChallenge.partnerChallenge.state == 'active' || currentChallenge.partnerChallenge.state == 'completed'" class="col-md-5 text-center">
 
                                 <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
                                 <h6 class="info-title text-uppercase">{{currentChallenge.partner.userName}}</h6>
@@ -41,8 +42,18 @@
                                     <i class="material-icons">check_box</i> {{currentChallenge.partner.completed}} completed challenges
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            <div ng-if="currentChallenge.partnerChallenge.state == 'abandoned'" class="col-md-5 text-center">
+
+                                <h2 class="info-title text-uppercase">Your partner left you behind... sad panda</h2>
+                                <h6 class="info-title text-uppercase">But persevere my friend, you do it for yourself!</h6>
+                            </div>
+
+                            </div>
+                        <div class="row"
+                             ng-hide="currentChallenge.state == 'abandoned'"
+                             ng-show="currentChallenge.partnerChallenge.state == 'active' ||
+                             currentChallenge.partnerChallenge.state == 'abandoned' ||
+                             currentChallenge.partnerChallenge.state == 'completed'">
                             <div class="col-md-6 messages-background">
                                 <h1>Say how you feel...</h1>
                                 <div class="row">
@@ -57,14 +68,14 @@
                                 <div class="row justify-content-md-center">
                                     <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message align-self-center' : 'your-message align-self-center'">{{message.text}}</div>
                                 </div>
-                                <div class="row">
+                                <div ng-if="currentChallenge.partnerChallenge.state == 'active'" class="row">
                                         <div class="form-group col-sm-10">
                                             <input type="text" ng-model="newMessageText" placeholder="What's on your mind?" class="form-control" />
                                         </div>
                                     {{newMessageText}}
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-2">
+                                    <div ng-if="currentChallenge.partnerChallenge.state == 'active'" class="col-sm-2">
                                         <button ng-click="sendMessage(newMessageText)" class="btn btn-danger">Send</button>
                                     </div>
                                 </div>
@@ -74,8 +85,8 @@
 
                                 <div class="checkbox text-left">
                                     <label ng-repeat="step in currentChallenge.steps" class="checkbox-label">
-                                        <div class="col-xs-1">
-                                            <!--ng-if="currentChallenge.partner"-->
+                                        <div ng-if="currentChallenge.partnerChallenge.state == 'active'
+                                        || currentChallenge.partnerChallenge.state == 'abandoned'" class="col-xs-1">
                                             <input type="checkbox"
                                                    value="{{step._id}}"
                                                    ng-model="step.completed"/>
@@ -89,7 +100,8 @@
                                             <span>{{step.description}}</span>
                                         </div>
                                     </label>
-                                    <button ng-click="saveSteps()" class="btn btn-danger btn-round">
+                                    <button ng-if="currentChallenge.partnerChallenge.state == 'active' || currentChallenge.partnerChallenge.state == 'abandoned'"
+                                            ng-click="saveSteps()" class="btn btn-danger btn-round">
                                         save progress <i class="material-icons">sentiment_very_satisfied</i>
                                     </button>
                                     <!--ng-if="currentChallenge.partner"-->
@@ -105,15 +117,6 @@
                                 <p>{{currentChallenge.challenge.science}}</p>
                                 <h5>Why do this?</h5>
                                 <p>{{currentChallenge.challenge.why}}</p>
-
-
-                                <div class="col-md-6  text-left">
-
-                                </div>
-                                <div class="col-md-6 text-left">
-                                    <h5 class="text-center">Who did it already?</h5>
-                                    <p>Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.</p>
-                                </div>
                             </div>
                         </div>
                     </div>
