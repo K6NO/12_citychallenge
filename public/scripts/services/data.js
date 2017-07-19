@@ -49,7 +49,6 @@
             // POST create a new current challenge AND check for matching challenge
             // returns currentChallenges = [firstChallenge, secondChallenge] IF matches were found OR just saved: true
             this.addCurrentChallenge = function (currentChallenge, successCallback, errorCallback) {
-
                 $http.post('/api/current/challenges/', currentChallenge)
                     .then(successCallback, errorCallback)
             };

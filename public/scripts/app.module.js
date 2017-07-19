@@ -10,7 +10,7 @@ cityChallengeApp.run(function ($rootScope, $location, $route, authService) {
         function (event, next) {
             authService.getUserStatus()
                 .then(function () {
-                    console.log('Nezt view requires login? : ' + next.isLogin);
+                    console.log('Next view requires login? : ' + next.isLogin);
                     if(next.isLogin && !authService.isLoggedIn()){
                         $rootScope.savedLocation = $location.url();
                         $location.path('/login');

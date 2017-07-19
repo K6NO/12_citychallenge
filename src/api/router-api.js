@@ -214,10 +214,6 @@ apiRouter.get('/current/challenges/:id/messages', function(req, res, next) {
         })
 });
 
-//{
-//    path: 'messages.text',
-//        model: Message
-//}
 
 // POST new text for currentChallenge
 apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {

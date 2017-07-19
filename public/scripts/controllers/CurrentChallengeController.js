@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('cityChallengeApp')
-        .controller('CurrentChallengeController',  function ($scope, $location, $filter, dataService, authService) {
+        .controller('CurrentChallengeController',  function ($scope, $location, $route, $filter, dataService, authService) {
 
             let errorCallback = function (response) {
                 $scope.errors = response.data.errors;
@@ -35,6 +35,7 @@
                         if(response.data.partnerMessages) {
                             let partnerMessages = response.data.partnerMessages;
                             allMessages = userMessages.concat(partnerMessages);
+                            $scope.partnerMessages = response.data.partnerMessages;
                         } else {
                             allMessages = userMessages;
                         }
@@ -84,7 +85,7 @@
                 dataService.sendMessage($scope.currentChallenge._id, {"message" : newMessageText}, function (currentChallengeMessages) {
                     $scope.currentChallenge.messages = currentChallengeMessages.data;
                     $scope.newMessageText = '';
-                    console.log(currentChallengeMessages)
+                    $route.reload();
                 }, errorCallback)
             }
         });
