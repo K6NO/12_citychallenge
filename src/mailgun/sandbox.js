@@ -9,19 +9,34 @@ let subjectVar = 'K6NO';
 
 var mailOptions = {
     from: 'CityChallenge <info@citychallenge.com>',
-    to: ['tamas.kenessey@gmail.com'],
-    bcc: ['tamas.kenessey@gmail.com', 'keno@happyzens.com', 'eurologusok@gmail.com'],
-    subject: 'This is the first MIME eamil message',
-    text: 'Hello! This is the text version of the message from ' + subjectVar,
-    html: '<h1>Hello</h1><p>This is the text version of the message from' + subjectVar + '</p>'
+    to: ['tamas.kenessey@gmail.com', 'keno@happyzens.com'],
+    bcc: ['tamas.kenessey@gmail.com', 'keno@happyzens.com'],
+    subject: 'This is the first MIME email message from ' + subjectVar,
+    text: `Hello! This is the text version of the message from ${subjectVar}. Special chars: éáíöüőúó "+#$@  -------`,
+    html: `<h1>Hello</h1><p>This is the text version of the message from ${subjectVar}
+            <br> special chars: éáíöüőúó "+#$@  -------
+            <br> <span style="color: darkred">Using inline CSS style</span></p>
+            <img src="http://localhost:3000/assets/img/bg.jpg" style="max-width: 300px; border: 5px solid black" alt="Image from server with CSS-style"/>`
 };
 var mail = new MailComposer(mailOptions);
-mail.compile().build(function (err, message) {
-    if (err) {
-        console.log(err);
+mail.compile().build(function (mailBuildError, message) {
+    if (mailBuildError) {
+        console.log(mailBuildError);
     } else {
         console.log('YAY!');
-        process.stdout.write(message);
+        let dataToSend = {
+            to: ['tamas.kenessey@gmail.com', 'keno@happyzens.com'],
+            bcc: ['tamas.kenessey@gmail.com', 'keno@happyzens.com'],
+            message: message.toString('utf8')
+        };
+        mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+            if(sendError) {
+                console.log(sendError);
+            } else {
+                console.log('messages sent');
+                console.log(body);
+            }
+        })
     }
 });
 
