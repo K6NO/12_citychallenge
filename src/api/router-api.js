@@ -39,16 +39,50 @@ apiRouter.get('/challenges', function(req, res, next) {
 // GET a single challenge
 apiRouter.get('/challenges/:id', function(req, res, next) {
     let challengeId = req.params.id;
+    let userId = req.user._id;
+
+
     Challenge.findById(challengeId)
         .populate('steps')
         .exec(function (err, challenge) {
             if(err) return next(err);
+
             if(!challenge){
                 var noChallengeErr = new Error('Challenge not found');
                 noChallengeErr.status = 404;
                 return next(noChallengeErr);
             }
-            return res.status(200).json(challenge);
+
+            // search matching currentChallenges from user
+
+
+            CurrentChallenge.find(
+                {
+                $and: [
+                    {challenge : {$eq: challengeId}},
+                    {user: {$eq: userId}}
+                ]
+            }, function (err, _currentChallenges) {
+                    console.log('err elott, CB');
+                    console.log(_currentChallenges);
+                    console.log(err);
+
+                    if(err) return next(err);
+                    console.log('err utan, CB');
+
+                    if(_currentChallenges) {
+                        console.log('getting currentChallenges');
+
+                        console.log(_currentChallenges);
+                        return res.status(200).json({
+                            "challenge" : challenge,
+                            "currentChallenges" : _currentChallenges
+                        });
+                    }
+                    return res.status(200).json({
+                        "challenge" : challenge
+                    });
+                });
         });
 });
 
@@ -62,7 +96,7 @@ apiRouter.post('/challenges/', function(req, res, next) {
     });
 });
 
-// PUT update a challenge (likes, difficulty, fun, times_taken) - TODO: change challenge object on front-end side
+// PUT update a challenge (likes, difficulty, fun, times_taken)
 apiRouter.put('/challenges/:id', function(req, res, next) {
     let challengeId = req.params.id;
 
@@ -142,11 +176,6 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
     }
 });
 
-//else if (req.currentChallenge) {
-//    res.status(200).json({
-//        currentChallenge: req.currentChallenge
-//    });
-//}
 
 // PUT update a current challenge - abandon
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {

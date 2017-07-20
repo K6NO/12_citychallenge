@@ -10,9 +10,25 @@
                             <div class="challenge-detail-big-picture text-center" ng-style="challenge.backgroundImage != '' && {'background-image':'url('+ challenge.backgroundImage+')', 'background-size' : 'cover'}">
 
                                 <h2 class="info-title text-ivory text-uppercase">{{challenge.title}}</h2>
-                                    <button ng-click="startCurrentChallenge()" class="btn btn-danger btn-round">
+                                    <button ng-if="buttonFlag === ''"
+                                            ng-click="startCurrentChallenge()" class="btn btn-danger btn-round">
                                         <i class="material-icons">favorite_border</i> do this
                                     </button>
+
+                                <button ng-if="buttonFlag === 'completed'"
+                                        ng-click="startCurrentChallenge()" class="btn btn-success btn-round">
+                                    <i class="material-icons">favorite_border</i> already completed... let's do it again!
+                                </button>
+                                <a ng-if="buttonFlag === 'active'" href="#!/challenges/current/{{currentChallengeId}}">
+                                <button
+                                        class="btn btn-primary btn-round">
+                                    <i class="material-icons">favorite_border</i> in progress
+                                </button>
+                                </a>
+                                <button ng-if="buttonFlag === 'failed'"
+                                        ng-click="startCurrentChallenge()" class="btn btn-danger btn-round">
+                                    <i class="material-icons">favorite_border</i> failed but no worries, do it again
+                                </button>
                                 <div class="challenge-box-profile background-white clearfix">
                                     <div class="col-md-6 col-md-offset-3">
                                         <i class="material-icons">stars</i> {{challenge.karma}} karma
