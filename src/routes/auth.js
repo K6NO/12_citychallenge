@@ -2,7 +2,8 @@
 const express = require('express'),
     router = express.Router(),
     passport = require('passport'),
-    User = require('../models/user').User;
+    User = require('../models/user').User,
+    sendEmail = require('../mailgun/messageFactory');
 
 /* FACEBOOK AUTH ROUTES */
 
@@ -83,6 +84,11 @@ router.post("/signup", function(req, res, next) {
             newUser.city = req.body.city;
             newUser.save(function(err, user) {
                 if(err) return next(err);
+
+                // sending welcome email message
+                console.log('sending email');
+                sendEmail('signup', user, null);
+
                 req.login(user, function(err) {
                     if (err) {
                         return next(err);

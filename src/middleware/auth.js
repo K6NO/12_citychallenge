@@ -11,42 +11,12 @@ function isAuthenticated (req, res, next){
     console.log(isUserAuth);
     if (!req.isAuthenticated()) {
         return next(false);
-
     }
-    //res.send(401);
     else {
         return next(true);
 
     }
-        //next();
 }
 
-// User authentication
-// Parse Authorization header
-//function isAuthenticated (req, res, next) {
-//    var isUserAuth = auth(req);
-//    console.log(isUserAuth);
-//    if (isUserAuth) {
-//        console.log(isUserAuth.name + ' ' + isUserAuth.pass);
-//        User.authenticate(isUserAuth.name, isUserAuth.pass, function (err, user) {
-//            if(err){
-//                let authErr = new Error('Error when authenticating user.');
-//                authErr.status = 401;
-//                return next(authErr);
-//            } else if (!user) {
-//                let authErr = new Error('Invalid credentials.');
-//                authErr.status = 401;
-//                return next(authErr);
-//            } else {
-//                req.session.userId = user._id;
-//            }
-//            return next();
-//        });
-//    } else {
-//        var err = new Error('You must be logged in to view this page.');
-//        err.status = 401;
-//        return next(err);
-//    }
-//}
 
 module.exports.isAuthenticated = isAuthenticated;

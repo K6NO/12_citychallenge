@@ -25,14 +25,13 @@ module.exports = function (messagingEvent, user, currentChallenge) {
 
     let constructEmail = function (messagingEvent, templates, user, currentChallenge) {
 
-
         let templateName = messagingEvent + 'Message';
         let subjectName = messagingEvent + 'Subject';
         let mailOptions = {
             from: 'CityChallenge <noreply@kenomano.com>',
-            to: user.emailAddress,
+            to: currentChallenge.user.emailAddress,
             subject: templates[subjectName](currentChallenge),
-            text: `Dear ${user.userName}, please switch to HTML view or visit your profile to view what's happening at: http:localhost//3000/`,
+            text: `Dear ${currentChallenge.user.userName}, please switch to HTML view or visit your profile to view what's happening at: http:localhost//3000/`,
             html: templates[templateName](currentChallenge)
         };
         return mailOptions;
@@ -45,8 +44,10 @@ module.exports = function (messagingEvent, user, currentChallenge) {
             console.log(mailBuildError);
         } else {
             console.log('YAY!');
+            console.log(currentChallenge.user.emailAddress);
+
             let dataToSend = {
-                to: user.emailAddress,
+                to: currentChallenge.user.emailAddress,
                 message: message.toString('utf8')
             };
             mailgun.messages().sendMime(dataToSend, function (sendError, body) {

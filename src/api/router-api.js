@@ -1,26 +1,25 @@
 'use strict';
 
-var express = require('express');
-var apiRouter = express.Router();
-var mongoose = require('mongoose');
+const express = require('express'),
+    apiRouter = express.Router(),
+    mongoose = require('mongoose');
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 
 // Import models
-var User = require('../models/user').User;
-var Challenge = require('../models/challenge').Challenge;
-var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
-var Step = require('../models/current_challenge').Step;
-var Message = require('../models/message').Message;
+const User = require('../models/user').User,
+    Challenge = require('../models/challenge').Challenge,
+    CurrentChallenge = require('../models/current_challenge').CurrentChallenge,
+    Message = require('../models/message').Message;
 
 
 // auth middleware
-var auth = require('../middleware/auth'); //auth.isAuthenticated
+const auth = require('../middleware/auth'); //auth.isAuthenticated
 
 // waitlist, checkdates middleware
-var waitlist = require('../middleware/waitlist');
-var dateChecker = require('../middleware/datechecker');
+const waitlist = require('../middleware/waitlist'),
+    dateChecker = require('../middleware/datechecker');
 
 
 /* CHALLENGES */
@@ -63,17 +62,13 @@ apiRouter.get('/challenges/:id', function(req, res, next) {
                     {user: {$eq: userId}}
                 ]
             }, function (err, _currentChallenges) {
-                    console.log('err elott, CB');
-                    console.log(_currentChallenges);
+
                     console.log(err);
 
                     if(err) return next(err);
-                    console.log('err utan, CB');
 
                     if(_currentChallenges) {
-                        console.log('getting currentChallenges');
 
-                        console.log(_currentChallenges);
                         return res.status(200).json({
                             "challenge" : challenge,
                             "currentChallenges" : _currentChallenges
@@ -135,7 +130,6 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
                     .populate('messages')
                     .exec(function (err, partnerChallenge) {
                         if(err) return next(err);
-                        console.log(partnerChallenge.messages);
                         res.status(200).json({currentChallenge: currentChallenge, partnerMessages: partnerChallenge.messages});
                     })
             } else {
@@ -150,7 +144,6 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
 
 // GET all currentChallenges for user
 apiRouter.get('/current/user/challenges/', function(req, res, next) {
-    // TODO change to session.userId and change path (delete /user/)
     let userId = req.session.passport.user._id;
     console.log('userId: ' + req.session.passport.user._id);
     CurrentChallenge.find({'user' : userId})
@@ -180,7 +173,6 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
 // PUT update a current challenge - abandon
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
     let currentChallengeId = req.params.id;
-    console.log(currentChallengeId);
     CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
         .exec(function (err, currentChallenge) {
             if (err) return next(err);
@@ -197,8 +189,7 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
 // PUT update a current challenge - step completed
 apiRouter.put('/current/challenges/:id', function(req, res, next) {
     let currentChallengeId = req.params.id;
-    console.log('cChallengeId: ' + currentChallengeId);
-    let updateObject1 = req.body[0]._id;
+    //let updateObject1 = req.body[0]._id;
 
 
     CurrentChallenge.findById(currentChallengeId)
@@ -206,9 +197,7 @@ apiRouter.put('/current/challenges/:id', function(req, res, next) {
         .exec(function (err, _currentChallenge) {
             if (err) return next(err);
             _currentChallenge.steps.forEach(function (step, index) {
-                console.log('step ' + step);
                 if (step.stepNumber === req.body[index].stepNumber) {
-                    console.log('update field');
                     step.completed = req.body[index].completed;
                     step.save(function (err) {
                         if(err) return next(err);
@@ -217,7 +206,6 @@ apiRouter.put('/current/challenges/:id', function(req, res, next) {
             });
             _currentChallenge.save(function (err, numAffected) {
                     if (err) return next(err);
-                    console.log(numAffected);
                     return res.status(201).json(numAffected)
                 });
         });
@@ -268,7 +256,6 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
                 if(err) return next(err);
                 message.save(function (err, _message) {
                     if (err) return next(err);
-                    console.log(_message);
                     currentChallenge.populate('messages', function (err, _currentChallenge) {
                         return res.status(201).json(_currentChallenge.messages);
                     });
@@ -282,8 +269,7 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
 /* USERS */
 
 // GET a single user
-apiRouter.get('/users', auth.isAuthenticated, function(req, res, next) {
-    // TODO switch to req.session.userId, add mid.isAuthenticated middleware to params
+apiRouter.get('/users', function(req, res, next) {
     console.log(req.session.passport.user);
     let userId = req.session.passport.user._id;
     console.log('userId: ' + userId);

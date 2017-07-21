@@ -1,9 +1,9 @@
 'use strict';
-var mongoose = require('mongoose');
-
-var db = mongoose.connection;
-var CurrentChallenge = require('../models/current_challenge').CurrentChallenge;
-const Step = require('../models/step').Step;
+const mongoose = require('mongoose'),
+    db = mongoose.connection,
+    CurrentChallenge = require('../models/current_challenge').CurrentChallenge,
+    Step = require('../models/step').Step,
+    sendEmail = require('../mailgun/messageFactory');
 
 /* HELPER FUNCTIONS */
 
@@ -15,7 +15,7 @@ function addDays(date, days) {
 }
 
 var saveAndCheckWaitListForMatch = function(req, res, next) {
-    // save current challenge
+    // save current challenge - create new steps
     let step1 = new Step({
         "description" : req.body.steps[0].description,
         "stepNumber" : req.body.steps[0].stepNumber
@@ -28,11 +28,14 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
         "description" : req.body.steps[2].description,
         "stepNumber" : req.body.steps[2].stepNumber
     });
+
+    // create new currentChallenge
     let newCurrentChallenge = new CurrentChallenge({
         user : req.body.user,
         challenge : req.body.challenge,
         steps: [step1, step2, step3]
     });
+
 
     newCurrentChallenge.save(function (err, _currentChallenge) {
         if (err) return next(err);
@@ -78,6 +81,7 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                         let startDate = new Date();
                                         let endDate = addDays(startDate, matchingCurrentChallenges[0].challenge.time);
 
+                                        // TODO changes happen here
                                         CurrentChallenge.findOneAndUpdate(
                                             {
                                                 _id: matchingCurrentChallenges[0]._id
@@ -91,11 +95,14 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                                     endsAt: endDate
                                                 }
                                             },
-                                            { new: true},
-                                            function (err, firstChallenge) {
+                                            { new: true})
+                                            .populate('user challenge partner partnerChallenge')
+                                            .exec(function (err, firstChallenge) {
                                                 if(err) return next(err);
+                                                console.log('before first message');
+                                                sendEmail('startCurrentChallenge', null, firstChallenge);
 
-                                                // Update second currentChallenge (mathcing one) - start, endTime, state, partner
+                                                // Update second currentChallenge - start, endTime, state, partner
                                                 CurrentChallenge.findOneAndUpdate(
                                                     {
                                                         _id: matchingCurrentChallenges[1]._id
@@ -109,9 +116,14 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                                             endsAt: endDate
                                                         }
                                                     },
-                                                    {new: true},
-                                                    function (err, secondChallenge) {
+                                                    {new: true})
+                                                    .populate('user challenge partner partnerChallenge')
+                                                    .exec(function (err, secondChallenge) {
                                                         if(err) return next(err);
+
+                                                        console.log('before second message');
+
+                                                        sendEmail('startCurrentChallenge', null, secondChallenge);
 
                                                         // remove matching and new current challenges from waitlist
                                                         db.collection('waitlist').deleteMany({
@@ -122,11 +134,11 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                                         req.saved = true;
                                                         req.currentChallenge = secondChallenge;
                                                         next();
-                                                    }); // end second update
-                                            }); // end first update
+                                                    }); // end second update)
+                                            }); // end first update)
                                     }); // end find()
                             } else {
-                                // there was not metch, return the new currentChallenge
+                                // there was not match, return the new currentChallenge
                                 console.log('No matches found');
                                 req.currentChallenge = newCurrentChallenge;
                                 next();

@@ -9,27 +9,26 @@ const
 // Access credentials
 const secret = require('./secret.json');
 
-function generateOrFindUser(accessToken, refreshToken, profile, done) {
-    console.log('accessToken: ' + accessToken + ' refreshToken: ' + refreshToken);
-    console.log(profile.emails[0]);
-    if(profile.emails[0]) {
-        User.findOneAndUpdate({
-                emailAddress: profile.emails[0].value
-            }, {
-                fullName: profile.displayName,
-                userName: profile.username,
-                emailAddress: profile.emails[0].value,
-                photoUrl: profile.photos[0].value,
-                city: profile.hometown
-            }, {
-                upsert: true
-            },
-            done);
-    } else {
-        var noEmailError = new Error('Your email privacy settings prevent you from signing in. Please change privacy settings in your Facebook profile.');
-        done(noEmailError, null);
-    }
-}
+//function generateOrFindUser(accessToken, refreshToken, profile, done) {
+
+//    if(profile.emails[0]) {
+//        User.findOneAndUpdate({
+//                emailAddress: profile.emails[0].value
+//            }, {
+//                fullName: profile.displayName,
+//                userName: profile.username,
+//                emailAddress: profile.emails[0].value,
+//                photoUrl: profile.photos[0].value,
+//                city: profile.hometown
+//            }, {
+//                upsert: true
+//            },
+//            done);
+//    } else {
+//        var noEmailError = new Error('Your email privacy settings prevent you from signing in. Please change privacy settings in your Facebook profile.');
+//        done(noEmailError, null);
+//    }
+//}
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -123,13 +122,10 @@ module.exports = function(passport) {
 
         },
         function (accessToken, refreshToken, profile, done) {
-            console.log(profile);
 
             let largerImage = profile.photos[0].value.substring(0, profile.photos[0].value.length-2);
             largerImage += '200';
-            console.log("largerImage");
 
-            console.log(largerImage);
             if(profile.emails[0]){
                 User.findOneAndUpdate({
                     emailAddress: profile.emails[0].value
