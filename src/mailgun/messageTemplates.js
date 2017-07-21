@@ -1,5 +1,6 @@
 'use strict';
 
+// sent when routes/auth -> // POST /signup ->
 let signupMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">Welcome in the CityChallenge community</h1></div>
@@ -9,12 +10,14 @@ let signupMessage = function (currentChallenge) {
         We want to help each other on the journey to a happier, healthier, more active and more sustainable urban life.
 
         <a href="http://localhost:3000/" style="text-decoration: none; tex"><h2>Start your journey, take the first step</h2></a>
+        <p>To sign in, use the email (${currentChallenge.user.emailAddress}) and password you provided at registration.</p>
         <hr>
         <p>Please don't reply to this email. Really...</p>
     </body>
     `
 };
 
+// sent when router-api -> // POST create a new current challenge -> waitlist.js
 let startCurrentChallengeMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">Good news! We have found your partner! Your challenge has started</h1></div>
@@ -29,6 +32,7 @@ let startCurrentChallengeMessage = function (currentChallenge) {
     `
 };
 
+// sent when router-api -> PUT update a current challenge - abandon
 let partnerAbandonedMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">Snap! Your partner had to give up...</h1></div>
@@ -43,6 +47,7 @@ let partnerAbandonedMessage = function (currentChallenge) {
     `
 };
 
+// sent when router-api -> PUT update a current challenge - abandon
 let challengeCompletedMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">You are truly awesome!</h1></div>
@@ -59,6 +64,7 @@ let challengeCompletedMessage = function (currentChallenge) {
     `
 };
 
+// sent when router.api -> PUT update a current challenge - abandon
 let userAbandonedMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">You abandoned your challenge.</h1></div>
@@ -72,7 +78,7 @@ let userAbandonedMessage = function (currentChallenge) {
     `
 };
 
-let userFailedMessage = function (currentChallenge) {
+let challengeFailedMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">Your challenge was unsuccessfull</h1></div>
         <div style="border: #f44336 solid 1px; background: #fffff0"></div>
@@ -115,7 +121,7 @@ module.exports.startCurrentChallengeMessage = startCurrentChallengeMessage;
 module.exports.partnerAbandonedMessage = partnerAbandonedMessage;
 module.exports.challengeCompletedMessage = challengeCompletedMessage;
 module.exports.userAbandonedMessage = userAbandonedMessage;
-module.exports.userFailedMessage = userFailedMessage;
+module.exports.challengeFailedMessage = challengeFailedMessage;
 
 module.exports.signupSubject = signupSubject;
 module.exports.startCurrentChallengeSubject = startCurrentChallengeSubject;

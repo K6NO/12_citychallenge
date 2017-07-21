@@ -64,12 +64,10 @@ router.post("/logout", function(req, res) {
 
 
 router.post("/signup", function(req, res, next) {
-    console.log(req.body.emailAddress);
     User.findOne({
         emailAddress: req.body.emailAddress
     }, function(err, user) {
         if (user) {
-            console.log('Yay, identified user from email.');
             let err = new Error('This email is already registered to a profile');
             err.status = 500;
             return next(err);

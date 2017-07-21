@@ -4,31 +4,12 @@ const
     LocalStrategy   = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-    User = require('../models/user').User;
+    User = require('../models/user').User,
+    sendEmail = require('../mailgun/messageFactory');
 
 // Access credentials
 const secret = require('./secret.json');
 
-//function generateOrFindUser(accessToken, refreshToken, profile, done) {
-
-//    if(profile.emails[0]) {
-//        User.findOneAndUpdate({
-//                emailAddress: profile.emails[0].value
-//            }, {
-//                fullName: profile.displayName,
-//                userName: profile.username,
-//                emailAddress: profile.emails[0].value,
-//                photoUrl: profile.photos[0].value,
-//                city: profile.hometown
-//            }, {
-//                upsert: true
-//            },
-//            done);
-//    } else {
-//        var noEmailError = new Error('Your email privacy settings prevent you from signing in. Please change privacy settings in your Facebook profile.');
-//        done(noEmailError, null);
-//    }
-//}
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -75,8 +56,6 @@ module.exports = function(passport) {
                 }
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password)) {
-                    console.log('local-login pwd not valid');
-
                     return done(null, false, {
                         message:'Password invalid. Unable to login'
                     });
@@ -94,7 +73,8 @@ module.exports = function(passport) {
         clientID: secret.facebookAppId,
         clientSecret: secret.facebookSecret,
         callbackURL: "http://localhost:3000/auth/facebook/return",
-        profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown']
+        profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown'],
+        enableProof: true
     }, function (accessToken, refreshToken, profile, done) {
         if (profile.emails[0]) {
             User.findOneAndUpdate({
@@ -105,7 +85,9 @@ module.exports = function(passport) {
                 emailAddress: profile.emails[0].value,
                 photoUrl: profile.photos[0].value
             }, {
-                upsert: true
+                upsert: true,
+                new: true,
+                passRawResult: true
             }, done)
         } else {
             var noEmailError = new Error('Your email privacy settings on Facebook prevent you from signing in with your Facebook Account. You can visit your Facebook profile to change this or choose another sign in method.');
@@ -143,3 +125,14 @@ module.exports = function(passport) {
             }
         }))
 };
+
+//function (noUserError, user, raw) {
+//    if (noUserError) return done(noUserError, null);
+//    if(raw.lastErrorObject.updatedExisting) {
+//        done(user, null);
+//    } else {
+//        // new user
+//        sendEmail('signup', user, null);
+//        done(user, null);
+//    }
+//}

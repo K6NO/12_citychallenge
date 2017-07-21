@@ -5,6 +5,8 @@ const CurrentChallenge = require('../models/current_challenge').CurrentChallenge
 
 const User = require('../models/user').User;
 
+const sendEmail = require('../mailgun/messageFactory');
+
 
 // changes the state of currentChallenge if end date have passed
 //  -> if all steps completed - completed
@@ -16,8 +18,8 @@ var checkIfEndDatePassed = function (req, res, next) {
         endsAt : { $lte : inputDate}
 
     })
-        .populate('challenge', '_id karma times_taken')
-        .populate('user', '_id karma completed')
+        .populate('challenge')
+        .populate('user')
         .populate('partner', '_id karma completed')
         .populate('steps')
         .populate('partnerChallenge')
@@ -27,24 +29,18 @@ var checkIfEndDatePassed = function (req, res, next) {
             currentChallenges.forEach(function (currentChallenge) {
                 console.log(currentChallenge);
 
-                // TODO check if both currentChallenges evaluate here-  - if yes commented fields can be deleted
                 // Update state of currentChallenge, karma and number of current challenges for user and partner
                 if(currentChallenge.steps[0].completed && currentChallenge.steps[1].completed && currentChallenge.steps[2].completed) {
                     currentChallenge.state = 'completed';
                     let newUserKarma = currentChallenge.user.karma += currentChallenge.challenge.karma;
-                    //let newPartnerKarma = currentChallenge.partner.karma += currentChallenge.challenge.karma;
                     let newUserCompletedChallenges = currentChallenge.user.completed+=1; // completed: newUserCompletedChallenges
-                    //let newPartnerCompletedChallenges = currentChallenge.partner.completed+=1; // completed: newPartnerCompletedChallenges
                     let newChallengeTimesTaken = currentChallenge.challenge.times_taken+=1;
                     User.findByIdAndUpdate(currentChallenge.user._id, {karma: newUserKarma, completed: newUserCompletedChallenges}, {new: true}, function (err, user) {
                         if(err) return next(err);
                         Challenge.findByIdAndUpdate(currentChallenge.challenge._id, {times_taken : newChallengeTimesTaken}, {new: true}, function (err, challenge) {
                             if(err) return next(err);
+
                         });
-                        //User.findByIdAndUpdate(currentChallenge.partner._id, {karma: newPartnerKarma, completed: newPartnerCompletedChallenges}, {new: true}, function (err, partner) {
-                        //    if(err) return next(err);
-                        //
-                        //})
                     });
                 } else {
                     currentChallenge.state = 'failed';
@@ -52,6 +48,12 @@ var checkIfEndDatePassed = function (req, res, next) {
                 currentChallenge.save(function (err) {
                     if (err) return next(err);
                     console.log('State changed for ' + currentChallenge._id + ' to ' + currentChallenge.state);
+                    // send message to user
+                    if(currentChallenge.state === 'completed'){
+                        sendEmail('challengeCompleted', null, currentChallenge);
+                    } else if (currentChallenge.state === 'failed') {
+                        sendEmail('challengeFailedMessage', null, currentChallenge)
+                    }
                 }); // end save
             }); // end forEach
             next();
