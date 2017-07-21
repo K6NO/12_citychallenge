@@ -19,7 +19,8 @@ const auth = require('../middleware/auth'); //auth.isAuthenticated
 
 // waitlist, checkdates middleware
 const waitlist = require('../middleware/waitlist'),
-    dateChecker = require('../middleware/datechecker');
+    dateChecker = require('../middleware/datechecker'),
+    sendEmail = require('../mailgun/messageFactory');
 
 
 /* CHALLENGES */
@@ -174,6 +175,8 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
     let currentChallengeId = req.params.id;
     CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
+        .populate('user challenge partner partnerChallenge')
+        .populate('partnerChallenge.user')
         .exec(function (err, currentChallenge) {
             if (err) return next(err);
             if(!currentChallenge){
@@ -181,6 +184,15 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
                 noDataErr.status = 404;
                 return next(noDataErr);
             }
+            // hacking partner and user object into currentChallenge (deep population didn't work)
+            currentChallenge.partnerChallenge.user = currentChallenge.partner;
+            currentChallenge.partnerChallenge.partner = currentChallenge.user;
+
+            // send out emails to user and partner on event
+            console.log('sendEmail for partner of abandoning user: _____________');
+            sendEmail('partnerAbandoned', null, currentChallenge.partnerChallenge);
+            console.log('sendEmail for user abandoning: ______________-');
+            sendEmail('userAbandoned', null, currentChallenge);
 
             return res.status(201).json(currentChallenge);
         })

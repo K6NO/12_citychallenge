@@ -9,7 +9,6 @@ module.exports = function (messagingEvent, user, currentChallenge) {
     const templates = require('./messageTemplates');
 
     if(!user) {
-        console.log('no user');
         user = currentChallenge.user;
     }
 

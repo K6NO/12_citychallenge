@@ -47,7 +47,6 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                 if (err) return next(err);
                 step3.save(function (err, _step3) {
                     if (err) return next(err);
-                    console.log('all steps saved');
 
                     //add new currentChallenge to the waitlist;
                     db.collection('waitlist').insert(_currentChallenge);

@@ -21,7 +21,7 @@ let startCurrentChallengeMessage = function (currentChallenge) {
         <div style="border: #f44336 solid 1px; background: #fffff0"></div>
         <h2>Dear ${currentChallenge.user.userName},</h2>
         <p>${currentChallenge.partner.userName} will be your partner in ${currentChallenge.challenge.title}. <br>
-        <a href="http://localhost:3000/challenge/current/${currentChallenge._id}">Check out the first step or say hi to your partner.</a>
+        <a href="http://localhost:3000/#!/challenges/current/${currentChallenge._id}">Check out the first step or say hi to your partner.</a>
 
         <hr>
         <p>Please don't reply to this email. Really...</p>
@@ -34,8 +34,8 @@ let partnerAbandonedMessage = function (currentChallenge) {
         <div style="background: #f44336"><h1 style="color: #fffff0">Snap! Your partner had to give up...</h1></div>
         <div style="border: #f44336 solid 1px; background: #fffff0"></div>
         <h2>Dear ${currentChallenge.user.userName},</h2>
-        <p>${currentChallenge.partner.userName} abandoned your challenge: ${currentChallenge.challenge.title}. This is sad, but please continue. Remember, you do it for yourself.<br>
-        <a href="http://localhost:3000/challenge/current/${currentChallenge._id}">Check if ${currentChallenge.partner.userName} has left you a message here.</a>
+        <p>${currentChallenge.partner.userName} abandoned your challenge. This is sad news, but please continue. At the end, you started it for yourself.<br>
+        <a href="http://localhost:3000/#!/challenges/current/${currentChallenge._id}">Check if ${currentChallenge.partner.userName} has left you a message here.</a>
 
         <hr>
         <p>Please don't reply to this email. Really...</p>
@@ -49,8 +49,8 @@ let challengeCompletedMessage = function (currentChallenge) {
         <div style="border: #f44336 solid 1px; background: #fffff0"></div>
         <h2>Dear ${currentChallenge.user.userName},</h2>
         <p>Congratulations, you made it! You have just completed ${currentChallenge.challenge.title} together with ${currentChallenge.partner.userName}.<br>
-        You gained ${currentChallenge.challenge.karma} karma, check out <a href="http://localhost:3000/profile">your profile!</a>
-        <a href="http://localhost:3000/challenge/current/${currentChallenge._id}">Take a last look at your achievement.</a><br>
+        You gained ${currentChallenge.challenge.karma} karma, check out <a href="http://localhost:3000/#!/profile">your profile!</a>
+        <a href="http://localhost:3000/#!/challenges/current/${currentChallenge._id}">Take a last look at your achievement.</a><br>
         Stop for a moment and appreciate success, and don't forget to say thanks to ${currentChallenge.partner.userName}!
 
         <hr>
@@ -77,7 +77,7 @@ let userFailedMessage = function (currentChallenge) {
         <div style="background: #f44336"><h1 style="color: #fffff0">Your challenge was unsuccessfull</h1></div>
         <div style="border: #f44336 solid 1px; background: #fffff0"></div>
         <h2>Dear ${currentChallenge.user.userName},</h2>
-        <p>Bummer... You failed your challenge. Probably you forgot to <a href="http://localhost:3000/challenges/current/${currentChallenge._id}"> mark your steps completed.</a> But remember, you can try again or start another challenge anytime. Why not today?<br>
+        <p>Bummer... You failed your challenge. Probably you forgot to <a href="http://localhost:3000/#!/challenges/current/${currentChallenge._id}"> mark your steps completed.</a> But remember, you can try again or start another challenge anytime. Why not today?<br>
 
         <hr>
         <p>Please don't reply to this email. Really...</p>
