@@ -16,7 +16,6 @@ const MongoStore = require('connect-mongo')(session);
 // Pass configuration method to Passport
 require('./config/passport')(passport);
 
-const index = require('./routes/index');
 const apiRouter = require('./api/router-api');
 const authRouter = require('./routes/auth');
 
@@ -24,11 +23,8 @@ const mockData = require('./mock/data.json');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, '..', 'views'));
-app.set('view engine', 'jade');
 
-// Mongoose - TODO: follow-up: reset deprecated Mongoose promise to the general promise object
+// Mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/citychallenge');
 const db = mongoose.connection;
