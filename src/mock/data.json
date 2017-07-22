@@ -37,11 +37,9 @@
       "difficulty": 1,
       "fun": 5,
       "steps": [
-
         "->steps.one",
         "->steps.two",
         "->steps.three"
-
       ]
     },
     "two": {
@@ -75,6 +73,26 @@
       "city": "Chicago",
       "karma": 10,
       "time": 7,
+      "likes": 0,
+      "times_taken": 1,
+      "difficulty": 1,
+      "fun": 5,
+      "backgroundImage" : "/assets/img/bg4.jpeg",
+      "steps": [
+        "->steps.one",
+        "->steps.two",
+        "->steps.three"
+      ]
+    },
+    "four": {
+      "_id": "57029ed4795118be119cc13b",
+      "title" : "Fourth challenge",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
+      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
+      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
+      "city": "Chicago",
+      "karma": 10,
+      "time": 1,
       "likes": 0,
       "times_taken": 1,
       "difficulty": 1,

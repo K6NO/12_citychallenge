@@ -70,8 +70,8 @@ module.exports = function(passport) {
     // Facebook authentication strategy
 
     passport.use('facebook', new FacebookStrategy({
-        clientID: secret.facebookAppId,
-        clientSecret: secret.facebookSecret,
+        clientID: secret.facebookAppId, // process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: secret.facebookSecret, // process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL: "http://localhost:3000/auth/facebook/return",
         profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown'],
         enableProof: true
@@ -126,6 +126,7 @@ module.exports = function(passport) {
         }))
 };
 
+// custom callback with FB strategy does not return updated object
 //function (noUserError, user, raw) {
 //    if (noUserError) return done(noUserError, null);
 //    if(raw.lastErrorObject.updatedExisting) {

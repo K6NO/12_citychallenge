@@ -188,10 +188,8 @@ apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
             currentChallenge.partnerChallenge.user = currentChallenge.partner;
             currentChallenge.partnerChallenge.partner = currentChallenge.user;
 
-            // send out emails to user and partner on event
-            console.log('sendEmail for partner of abandoning user: _____________');
+            // send out emails to user and partner on the event
             sendEmail('partnerAbandoned', null, currentChallenge.partnerChallenge);
-            console.log('sendEmail for user abandoning: ______________-');
             sendEmail('userAbandoned', null, currentChallenge);
 
             return res.status(201).json(currentChallenge);
@@ -282,7 +280,6 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
 
 // GET a single user
 apiRouter.get('/users', function(req, res, next) {
-    console.log(req.session.passport.user);
     let userId = req.session.passport.user._id;
     console.log('userId: ' + userId);
     User.findOne({_id: userId})

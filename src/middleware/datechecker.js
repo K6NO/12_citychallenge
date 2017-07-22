@@ -47,7 +47,7 @@ var checkIfEndDatePassed = function (req, res, next) {
                 }
                 currentChallenge.save(function (err) {
                     if (err) return next(err);
-                    console.log('State changed for ' + currentChallenge._id + ' to ' + currentChallenge.state);
+
                     // send message to user
                     if(currentChallenge.state === 'completed'){
                         sendEmail('challengeCompleted', null, currentChallenge);

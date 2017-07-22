@@ -9,6 +9,7 @@
             };
 
             $scope.pageIdentifier = 'landing-page';
+            $scope.message = {};
 
             let user = authService.getLoggedInUser();
             //$scope.user = user;
@@ -57,16 +58,10 @@
 
 
             $scope.saveSteps = function () {
-                console.log('save steps cChallenge controller');
-                //let currentChallenge = {
-                //    "steps": $scope.steps
-                //};
-                //console.log($scope.steps);
+
 
                 dataService.stepCompletedCurrentChallenge($scope.currentChallenge._id, $scope.currentChallenge.steps, function (response) {
-                    console.log('service returns this');
-
-                    console.log(response.data);
+                    $route.reload();
                 }, errorCallback)
             };
 
@@ -82,6 +77,7 @@
             };
 
             $scope.sendMessage = function (newMessageText) {
+                console.log(newMessageText);
                 dataService.sendMessage($scope.currentChallenge._id, {"message" : newMessageText}, function (currentChallengeMessages) {
                     $scope.currentChallenge.messages = currentChallengeMessages.data;
                     $scope.newMessageText = '';

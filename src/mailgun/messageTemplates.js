@@ -47,7 +47,7 @@ let partnerAbandonedMessage = function (currentChallenge) {
     `
 };
 
-// sent when router-api -> PUT update a current challenge - abandon
+// sent when router.api -> GET currentChallenge -> middleware/datechecker.js
 let challengeCompletedMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">You are truly awesome!</h1></div>
@@ -78,6 +78,7 @@ let userAbandonedMessage = function (currentChallenge) {
     `
 };
 
+// sent when router.api -> GET currentChallenge -> middleware/datechecker.js
 let challengeFailedMessage = function (currentChallenge) {
     return `<body style="font-family: 'Helvetica', 'sans-serif'; text-align: center">
         <div style="background: #f44336"><h1 style="color: #fffff0">Your challenge was unsuccessfull</h1></div>

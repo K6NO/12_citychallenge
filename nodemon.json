@@ -1,8 +1,9 @@
 {
     "restartable": "rs",
     "ignore": [
-    ".git",
-    "./node_modules/**"
+        ".git",
+        "./node_modules/**",
+        "./.idea"
 ],
     "verbose": true,
     "env": {

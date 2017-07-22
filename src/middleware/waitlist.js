@@ -14,6 +14,9 @@ function addDays(date, days) {
     return result;
 }
 
+
+/* MIDDLEWARE MAIN FUNCTION */
+
 var saveAndCheckWaitListForMatch = function(req, res, next) {
     // save current challenge - create new steps
     let step1 = new Step({
@@ -36,10 +39,9 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
         steps: [step1, step2, step3]
     });
 
-
+    // saving new current challenges and its steps
     newCurrentChallenge.save(function (err, _currentChallenge) {
         if (err) return next(err);
-        console.log('no error on save');
 
         step1.save(function (err, _step1) {
             if (err) return next(err);
@@ -51,7 +53,9 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                     //add new currentChallenge to the waitlist;
                     db.collection('waitlist').insert(_currentChallenge);
 
-                    // check if the waitlist has a matching currentChallenge (same challenge, different user, waiting status)
+                    // check if the waitlist has a matching currentChallenge
+                    // (same challenge, different user, waiting status).
+                    // If yes, remove them from waitlist and return both. If no, return only the new currentChallenge
                     db.collection('waitlist').findOne(
                         {
                             $and: [
@@ -80,7 +84,6 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                         let startDate = new Date();
                                         let endDate = addDays(startDate, matchingCurrentChallenges[0].challenge.time);
 
-                                        // TODO changes happen here
                                         CurrentChallenge.findOneAndUpdate(
                                             {
                                                 _id: matchingCurrentChallenges[0]._id
@@ -98,7 +101,8 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                             .populate('user challenge partner partnerChallenge')
                                             .exec(function (err, firstChallenge) {
                                                 if(err) return next(err);
-                                                console.log('before first message');
+
+                                                // send email to the first user that the challenge has started
                                                 sendEmail('startCurrentChallenge', null, firstChallenge);
 
                                                 // Update second currentChallenge - start, endTime, state, partner
@@ -120,8 +124,7 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                                     .exec(function (err, secondChallenge) {
                                                         if(err) return next(err);
 
-                                                        console.log('before second message');
-
+                                                        // send email to the second user that the challenge has started
                                                         sendEmail('startCurrentChallenge', null, secondChallenge);
 
                                                         // remove matching and new current challenges from waitlist
@@ -137,18 +140,16 @@ var saveAndCheckWaitListForMatch = function(req, res, next) {
                                             }); // end first update)
                                     }); // end find()
                             } else {
-                                // there was not match, return the new currentChallenge
+                                // there was not match, return only the new currentChallenge (with status = 'waiting')
                                 console.log('No matches found');
                                 req.currentChallenge = newCurrentChallenge;
                                 next();
                             }
-                        }
+                        } // end callback
                     ); // end waitlist find
-
-                })
-            })
+                }); // end save step3
+            }); // end save step2
         }); // end save step1
-
     }); // end save
 };
 
