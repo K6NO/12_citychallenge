@@ -8,7 +8,8 @@ const express = require('express'),
       mongoose = require('mongoose'),
       seeder = require('mongoose-seeder'),
       passport = require('passport'),
-      session = require('express-session');
+      session = require('express-session'),
+    nconf = require('nconf');
 
 // Mongo session store
 const MongoStore = require('connect-mongo')(session);
@@ -24,9 +25,13 @@ const mockData = require('./mock/data.json');
 var app = express();
 
 
+let proba = nconf.file({file: __dirname + '/secret.json'});
+console.log(proba.secret);
+
+//mongodb://<dbuser>:<dbpassword>@ds159998.mlab.com:59998/heroku_44hwwvdq
 // Mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/citychallenge');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/citychallenge');
 const db = mongoose.connection;
 
 // body-parser and cookie-parser middleware

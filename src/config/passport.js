@@ -1,14 +1,28 @@
 'use strict';
-// load all the things we need
 const
     LocalStrategy   = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     User = require('../models/user').User,
-    sendEmail = require('../mailgun/messageFactory');
+    sendEmail = require('../mailgun/messageFactory'),
+    nconf = require('nconf');
+
+
 
 // Access credentials
 const secret = require('./secret.json');
+
+//let proba = nconf.file({file: __dirname + '/secret.json'});
+
+let facebookClientId = secret.FACEBOOK_CLIENT_ID;
+let facebookClientSecret = secret.FACEBOOK_CLIENT_SECRET;
+let googleClientId = secret.GOOGLE_CLIENT_ID;
+let googleClientSecret = secret.GOOGLE_CLIENT_SECRET;
+
+//let facebookClientIdHeroku = process.env.FACEBOOK_CLIENT_ID;
+//let facebookClientSecretHeroku = process.FACEBOOK_CLIENT_SECRET;
+//let googleClientIdHeroku = process.env.GOOGLE_CLIENT_ID;
+//let googleClientSecretHeroku = process.envGOOGLE_CLIENT_SECRET;
 
 
 // expose this function to our app using module.exports
@@ -69,9 +83,14 @@ module.exports = function(passport) {
 
     // Facebook authentication strategy
 
+
+//let facebookClientIdHeroku = process.env.FACEBOOK_CLIENT_ID;
+//let facebookClientSecretHeroku = process.FACEBOOK_CLIENT_SECRET;
+//let googleClientIdHeroku = process.env.GOOGLE_CLIENT_ID;
+//let googleClientSecretHeroku = process.envGOOGLE_CLIENT_SECRET;
     passport.use('facebook', new FacebookStrategy({
-        clientID: secret.FACEBOOK_CLIENT_ID, // process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: secret.FACEBOOK_CLIENT_SECRET, // process.env.FACEBOOK_CLIENT_SECRET,
+        clientID: facebookClientId, // process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: facebookClientSecret, // process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL: "http://localhost:3000/auth/facebook/return",
         profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown'],
         enableProof: true
@@ -98,8 +117,8 @@ module.exports = function(passport) {
     // Google authentication strategy
 
     passport.use('google', new GoogleStrategy({
-        clientID: secret.GOOGLE_CLIENT_ID, // process.env.GOOGLE_CLIENT_ID
-        clientSecret: secret.GOOGLE_CLIENT_SECRET, // process.env.GOOGLE_CLIENT_SECRET
+        clientID: googleClientId, // process.env.GOOGLE_CLIENT_ID
+        clientSecret: googleClientSecret, // process.env.GOOGLE_CLIENT_SECRET
         callbackURL: "http://localhost:3000/auth/google/return"
 
         },
