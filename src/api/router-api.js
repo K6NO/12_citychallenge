@@ -26,7 +26,7 @@ const waitlist = require('../middleware/waitlist'),
 /* CHALLENGES */
 
 // GET all challenges
-apiRouter.get('/challenges', function(req, res, next) {
+apiRouter.get('/challenges/', function(req, res, next) {
     Challenge.find({})
         .select('_id title description time karma likes times_taken difficulty fun backgroundImage')
         .sort({time: 1})
@@ -38,48 +38,53 @@ apiRouter.get('/challenges', function(req, res, next) {
 
 // GET a single challenge
 apiRouter.get('/challenges/:id', function(req, res, next) {
-    let challengeId = req.params.id;
-    let userId = req.user._id;
+    if(req.user) {
+        let challengeId = req.params.id;
+        let userId = req.user._id;
 
+        Challenge.findById(challengeId)
+            .populate('steps')
+            .exec(function (err, challenge) {
+                if(err) return next(err);
 
-    Challenge.findById(challengeId)
-        .populate('steps')
-        .exec(function (err, challenge) {
-            if(err) return next(err);
+                if(!challenge){
+                    var noChallengeErr = new Error('Challenge not found');
+                    noChallengeErr.status = 404;
+                    return next(noChallengeErr);
+                }
 
-            if(!challenge){
-                var noChallengeErr = new Error('Challenge not found');
-                noChallengeErr.status = 404;
-                return next(noChallengeErr);
-            }
+                // search matching currentChallenges from user - this is used to change buttons depending on
+                // the user's previous actions (completed, failed, in progress, etc.
+                CurrentChallenge.find(
+                    {
+                        $and: [
+                            {challenge : {$eq: challengeId}},
+                            {user: {$eq: userId}}
+                        ]
+                    }, function (err, _currentChallenges) {
 
-            // search matching currentChallenges from user
+                        console.log(err);
 
+                        if(err) return next(err);
 
-            CurrentChallenge.find(
-                {
-                $and: [
-                    {challenge : {$eq: challengeId}},
-                    {user: {$eq: userId}}
-                ]
-            }, function (err, _currentChallenges) {
+                        if(_currentChallenges) {
 
-                    console.log(err);
-
-                    if(err) return next(err);
-
-                    if(_currentChallenges) {
-
+                            return res.status(200).json({
+                                "challenge" : challenge,
+                                "currentChallenges" : _currentChallenges
+                            });
+                        }
                         return res.status(200).json({
-                            "challenge" : challenge,
-                            "currentChallenges" : _currentChallenges
+                            "challenge" : challenge
                         });
-                    }
-                    return res.status(200).json({
-                        "challenge" : challenge
                     });
-                });
-        });
+            });
+    } else {
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 // POST a new challenge
@@ -135,26 +140,29 @@ apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, funct
                     })
             } else {
                 res.status(200).json({currentChallenge: currentChallenge});
-
             }
-
-
-
         });
 });
 
 // GET all currentChallenges for user
 apiRouter.get('/current/user/challenges/', function(req, res, next) {
-    let userId = req.session.passport.user._id;
-    console.log('userId: ' + req.session.passport.user._id);
-    CurrentChallenge.find({'user' : userId})
-        .sort('-createdAt')
-        .populate('partner', '-password')
-        .populate('challenge', 'title likes times_taken difficulty fun karma time')
-        .exec(function (err, currentChallenges) {
-            if(err) return next(err);
-            res.status(200).json(currentChallenges)
-        });
+    if(req.session.passport !== undefined){
+        let userId = req.session.passport.user._id;
+        console.log('userId: ' + req.session.passport.user._id);
+        CurrentChallenge.find({'user' : userId})
+            .sort('-createdAt')
+            .populate('partner', '-password')
+            .populate('challenge', 'title likes times_taken difficulty fun karma time')
+            .exec(function (err, currentChallenges) {
+                if(err) return next(err);
+                res.status(200).json(currentChallenges)
+            });
+    } else {
+        // user not authenticated
+        let userNotAuthError = new Error('Your are not logged in.');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 // POST create a new current challenge AND check for matching challenge
@@ -280,20 +288,28 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
 
 // GET a single user
 apiRouter.get('/users', function(req, res, next) {
-    let userId = req.session.passport.user._id;
-    console.log('userId: ' + userId);
-    User.findOne({_id: userId})
-        .select('-password')
-        .exec(function (err, user) {
-            if (err) return next(err);
-            return res.status(200).json(user);
-        })
+    if(req.session.passport !== undefined) {
+        let userId = req.session.passport.user._id;
+        console.log('userId: ' + userId);
+        User.findOne({_id: userId})
+            .select('-password')
+            .exec(function (err, user) {
+                if (err) return next(err);
+                return res.status(200).json(user);
+            })
+    } else {
+        let userNotLoggedInError = new Error('User not logged in');
+        userNotLoggedInError.status = 401;
+        return next(userNotLoggedInError)
+    }
+
 });
 
 // POST - create a single user
 apiRouter.post('/users', function(req, res, next) {
     let user = new User(req.body);
     user.save(function (err) {
+        console.log(err);
         if (err) return next(err);
         res.setHeader('Location', '/');
         res.status(200).json({_id: user._id, saved: true});
