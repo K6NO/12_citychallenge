@@ -1,0 +1,95 @@
+<div class="signup-page">
+    <navbar></navbar>
+    <div class="wrapper">
+        <div class="header header-filter" style="background-image: url('../assets/img/city.jpg'); background-size: cover; background-position: top center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                        <div class="card card-signup">
+                            <ng-form name = "signupForm" novalidate>
+
+                                <div class="header header-success text-center">
+                                    <h4>Sign Up With...</h4>
+                                    <div class="social-line">
+                                        <a href="/auth/login/facebook" class="btn btn-simple btn-just-icon">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <a href="/auth/login/google" class="btn btn-simple btn-just-icon">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <p class="text-divider">Or Be Classical</p>
+                                <div class="content">
+                                    <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">face</i>
+										</span>
+                                        <input type="text" name="full-name" required ng-model="user.fullName" class="form-control" placeholder="Full Name... or whatever">
+                                    </div>
+
+                                    <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">face</i>
+										</span>
+                                        <input type="text" name="user-name" required ng-model="user.userName" class="form-control" placeholder="Username... snappy or flashy">
+                                    </div>
+
+                                    <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">email</i>
+										</span>
+                                        <input type="text" name="email" required ng-model="user.emailAddress" class="form-control" placeholder="Email...">
+                                    </div>
+
+                                    <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">lock_outline</i>
+										</span>
+                                        <input type="password" name="password" required ng-model="user.password" placeholder="Password..." class="form-control" />
+                                    </div>
+                                    <div class="footer text-center">
+                                        <h5>Choose a profile pic...</h5>
+                                        <a href="">
+                                            <img id="pic1" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic1'}" ng-src="../assets/img/faces/1_bulldog.png">
+                                        </a>
+                                        <a href="">
+                                            <img id="pic2" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic2'}" ng-src="../assets/img/faces/2_cat.png">
+                                        </a>
+                                        <a href="">
+                                            <img id="pic3" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic3'}" ng-src="../assets/img/faces/3_owl.png">
+                                        </a>
+                                        <a href="">
+                                            <img id="pic4" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic4'}" ng-src="../assets/img/faces/4_ostrich.png">
+                                        </a>
+                                        <a href="">
+                                            <img id="pic5" ng-click="chooseProfilePic($event)" class="signup-pictures" ng-class="{active: selectedProfilePic === 'pic5'}" ng-src="../assets/img/faces/5_turtle.png">
+                                        </a>
+                                    </div>
+
+                                    <div class="footer text-center">
+                                        <button ng-click="register(user)" type="submit" class="btn btn-simple btn-danger btn-lg">Get Started</button>
+                                    </div>
+                                    <div ng-if="errors.length > 0" class="alert alert-danger">
+                                        <div class="container-fluid">
+                                            <div class="alert-icon">
+                                                <i class="material-icons">error_outline</i>
+                                            </div>
+                                            <button ng-click="removeError()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                                            </button>
+                                            <b>Whoops:</b> <span ng-repeat="error in errors"> {{error}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer-element></footer-element>
+
+    </div>
+</div>

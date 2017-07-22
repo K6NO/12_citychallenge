@@ -18,15 +18,10 @@ angular.module('cityChallengeApp').
             function getUserStatus() {
                 return $http.get('/auth/loggedin')
                     .then(function (response) {
-                        console.log('getUserStatus returns: ');
-                        console.log(response);
                         if(response.data.status === false) {
                             user = false;
-                            console.log(response.data.status);
                         } else {
                             user = true;
-                            console.log('setting loggedInUser from http post response');
-
                             loggedInUser = response.data.user;
                         }
                     });
@@ -36,7 +31,7 @@ angular.module('cityChallengeApp').
                 if (loggedInUser) {
                     return loggedInUser;
                 } else {
-                    console.log('getLoggedinUser = false')
+                    return false;
                 }
             }
 
@@ -61,11 +56,6 @@ angular.module('cityChallengeApp').
                     })
                     // handle error
                     .catch(function (data) {
-                        console.log('in catch auth service');
-                        //if (data.status === 401) {
-                        //    console.log(data);
-                        //    deferred.reject(data);
-                        //}
                         user = false;
                         deferred.reject(data);
                     });
@@ -83,13 +73,13 @@ angular.module('cityChallengeApp').
                 // send a get request to the server
                 $http.get('/auth/logout')
                 // handle success, set user and loggedInUser to false
-                    .then(function (data) {
+                    .then(function () {
                         user = false;
                         loggedInUser = null;
                         deferred.resolve();
                     })
                     // handle error
-                    .catch(function (data) {
+                    .catch(function () {
                         user = false;
                         deferred.reject();
                     });
@@ -117,7 +107,6 @@ angular.module('cityChallengeApp').
                     })
                     // handle error
                     .catch(function (data) {
-                        console.log(data);
                         deferred.reject(data);
                     });
 

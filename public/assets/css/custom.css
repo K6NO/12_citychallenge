@@ -152,10 +152,13 @@
 
 .message-row {
     height: 280px;
+    background: #fffff0;
 }
 .message-box {
     max-height: 270px;
     overflow: auto;
+    word-break:break-all;
+
 }
 
 .title-row {

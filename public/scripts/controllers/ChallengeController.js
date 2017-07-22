@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('cityChallengeApp')
-        .controller('ChallengeController',  function ($scope, $location, $filter, dataService, authService) {
+        .controller('ChallengeController',  ['$scope', '$location', '$filter', 'dataService', 'authService', function ($scope, $location, $filter, dataService, authService) {
 
             $scope.pageIdentifier = 'landing-page';
             $scope.buttonFlag = '';
@@ -73,13 +73,5 @@
                     $scope.errors = response.data.errors;
                 })
             };
-
-            // update challenge
-            //$scope.updateChallenge = function (challengeId, challenge) {
-            //    dataService.updateChallenge(challengeId, challenge, function (challenge) {
-            //        console.log(challenge);
-            //        $scope.challenge = challenge;
-            //    });
-            //};
-        });
+        }]);
 })();

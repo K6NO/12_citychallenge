@@ -23,7 +23,7 @@
   "challenges": {
     "_model": "Challenge",
     "one": {
-      "_id" : "57029ed4795118be119cc43b",
+      "_id" : "57029ed4795118be119cc13b",
       "title" : "First challenge",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
       "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
@@ -43,7 +43,7 @@
       ]
     },
     "two": {
-      "_id" : "57029ed4795118be119cc33b",
+      "_id" : "57029ed4795118be119cc23b",
       "title" : "Second challenge",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
       "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
@@ -65,7 +65,7 @@
       ]
     },
     "three": {
-      "_id": "57029ed4795118be119cc23b",
+      "_id": "57029ed4795118be119cc33b",
       "title" : "Third challenge",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
       "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
@@ -85,7 +85,7 @@
       ]
     },
     "four": {
-      "_id": "57029ed4795118be119cc13b",
+      "_id": "57029ed4795118be119cc43b",
       "title" : "Fourth challenge",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
       "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
@@ -97,7 +97,7 @@
       "times_taken": 1,
       "difficulty": 1,
       "fun": 5,
-      "backgroundImage" : "/assets/img/bg4.jpeg",
+      "backgroundImage" : "/assets/img/bg8.png",
       "steps": [
         "->steps.one",
         "->steps.two",

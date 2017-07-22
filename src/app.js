@@ -80,7 +80,7 @@ db.once('open', ()=> {
 app.use(logger('dev'));
 
 // static files
-app.use('/', express.static('public'));
+app.use('/', express.static('dist'));
 
 // Vendor scripts (angular)
 app.get('/vendor/angular.js', function(req, res) {

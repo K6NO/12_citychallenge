@@ -6,7 +6,3 @@ cityChallengeApp.directive('footerElement', function () {
         replace: true
    }
 });
-
-//controller: ['$scope', '$filter', function ($scope, $filter) {
-//    console.log('from directive');
-//}]

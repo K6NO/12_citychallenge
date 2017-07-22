@@ -2,24 +2,21 @@
     'use strict';
 
     angular.module('cityChallengeApp')
-        .controller('LogoutController',  function ($scope, $location, dataService, authService) {
+        .controller('LogoutController', ['$scope', '$location', 'dataService', 'authService',
+            function ($scope, $location, dataService, authService) {
 
-            let errorCallback = function (response) {
-                $scope.errors = response.data.errors;
-            };
+                $scope.pageIdentifier = 'signup-page';
+                $scope.user = {};
 
-            $scope.pageIdentifier = 'signup-page';
-            $scope.user = {};
+                $scope.logout = function () {
 
-            $scope.logout = function () {
-
-                authService.logout()
-                    .then(function () {
-                        $location.path('/challenges');
-                    })
-                    .catch(function () {
-                        $scope.errors = 'Cannot logout';
-                    })
-            }
-        });
+                    authService.logout()
+                        .then(function () {
+                            $location.path('/challenges');
+                        })
+                        .catch(function () {
+                            $scope.errors = 'Cannot logout';
+                        })
+                }
+            }]);
 })();

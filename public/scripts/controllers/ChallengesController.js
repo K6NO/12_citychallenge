@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('cityChallengeApp')
-        .controller('ChallengesController',  function ($scope, $location, $filter, dataService) {
+        .controller('ChallengesController', ['$scope', '$location', '$filter', 'dataService',
+            function ($scope, $location, $filter, dataService) {
 
             // get all challenges
             dataService.getChallenges(function (response) {
@@ -10,5 +11,5 @@
             });
 
             $scope.pageIndicator = 'landing-page';
-        });
+        }]);
 })();

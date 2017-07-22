@@ -1,0 +1,38 @@
+<div class="{{pageIndicator}}">
+  <navbar></navbar>
+<div class="wrapper">
+  <div class="main main-raised">
+    <div class="container">
+      <div class="section text-center section-landing">
+        <div class="features">
+          <div class="row">
+            <div class="col-md-4 text-center" ng-repeat="challenge in challenges">
+              <div class="info">
+                <div class="challenge-box-bg" ng-style="challenge.backgroundImage != '' && {'background-image':'url('+challenge.backgroundImage+')', 'background-size' : 'cover'}">
+                  <div class="challenge-box-title">
+                    <h4 class="info-title text-ivory">{{challenge.title}}</h4>
+                  </div>
+                </div>
+                <p>{{challenge.description}}</p>
+              </div>
+              <div class="challenge-box-profile">
+                <i class="material-icons">stars</i> {{challenge.karma}} karma
+                <i class="material-icons">date_range</i> {{challenge.time}} days
+                <i class="material-icons">favorite</i> {{challenge.likes}}
+                <i class="material-icons">update</i> {{challenge.times_taken}}
+
+                <a href="#!/challenges/{{challenge._id}}">
+                  <button class="btn btn-danger btn-round">
+                    <i class="material-icons">favorite_border</i> learn more
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer-element></footer-element>
+</div>
+</div>

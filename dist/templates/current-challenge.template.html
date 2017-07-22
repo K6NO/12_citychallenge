@@ -1,0 +1,134 @@
+<div class="{{pageIdentifier}}">
+    <navbar></navbar>
+
+    <div class="wrapper">
+        <div class="main main-raised">
+            <div class="container">
+                <div class="section text-center section-landing">
+                    <div class="features">
+                        <div class="row title-row">
+                            <h2>{{currentChallenge.challenge.title}}</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 text-center">
+                                <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.user.photoUrl}}">
+                                <h6 class="info-title">{{currentChallenge.user.userName}}</h6>
+                                <h6 class="info-title">{{currentChallenge.user.fullName}}</h6>
+                                <div class="challenge-box-profile">
+                                    <i class="material-icons">stars</i> {{currentChallenge.user.karma}} karma
+                                    <i class="material-icons">check_box</i> {{currentChallenge.user.completed}} completed challenges
+                                    <button ng-if="currentChallenge.partnerChallenge.state == 'active' || currentChallenge.partnerChallenge.state == 'abandoned'"
+                                            ng-click="abandonCurrentChallenge()" class="btn btn-danger btn-round">
+                                        i have to give up <i class="material-icons">sentiment_very_dissatisfied</i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center counter-container">
+                                <div class="counter">
+                                    <h2 ng-if="currentChallenge.partnerChallenge.state == 'active'" class="info-title">{{currentChallenge.remaining[0]}}</h2>
+                                    <h6 ng-if="currentChallenge.partnerChallenge.state == 'active'" class="info-title">{{currentChallenge.remaining[1]}} left</h6>
+                                    <h2 ng-if="currentChallenge.partnerChallenge.state == 'active'" class="info-title">{{currentChallenge.challenge.karma}}</h2>
+                                    <h6 ng-if="currentChallenge.partnerChallenge.state == 'active'" class="info-title">karma points at stake</h6>
+                                </div>
+                            </div>
+                            <div ng-if="!currentChallenge.partner" class="col-md-5 text-center">
+
+                                <h2 class="info-title text-uppercase">We are currently searching for your partner</h2>
+                                <h6 class="info-title text-uppercase">Your challenge starts as soon as we find someone</h6>
+
+                            </div>
+                            <div ng-if="currentChallenge.partnerChallenge.state == 'active' || currentChallenge.partnerChallenge.state == 'completed'" class="col-md-5 text-center">
+
+                                <img class="profile-image img-rounded img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
+                                <h6 class="info-title text-uppercase">{{currentChallenge.partner.userName}}</h6>
+                                <h6 class="info-title text-uppercase">{{currentChallenge.partner.fullName}}</h6>
+
+                                <div class="challenge-box-profile">
+                                    <i class="material-icons">stars</i> {{currentChallenge.partner.karma}} karma
+                                    <i class="material-icons">check_box</i> {{currentChallenge.partner.completed}} completed challenges
+                                </div>
+                            </div>
+                            <div ng-if="currentChallenge.partnerChallenge.state == 'abandoned'" class="col-md-5 text-center">
+
+                                <h2 class="info-title text-uppercase">Your partner left... sad panda :(</h2>
+                                <img src="assets/img/sadpanda.png"/>
+                                <h6 class="info-title text-uppercase">But persevere my friend, you do it for yourself!</h6>
+                            </div>
+
+                        </div>
+                        <div class="row"
+                             ng-hide="currentChallenge.state == 'abandoned' || !currentChallenge.partner"
+                             ng-show="currentChallenge.partnerChallenge.state == 'active' ||
+                             currentChallenge.partnerChallenge.state == 'abandoned' ||
+                             currentChallenge.partnerChallenge.state == 'completed'">
+                            <div class="col-md-6 messages-background">
+                                <h1>Say how you feel...</h1>
+                                <div class="row">
+                                    <div class="col-md-6 message-title-user">
+                                        <img class="message-image img-circle img-responsive img-raised" ng-src="{{currentChallenge.user.photoUrl}}">
+                                    </div>
+                                    <div class="col-md-6 message-title-partner">
+                                        <img class="message-image img-circle img-responsive img-raised" ng-src="{{currentChallenge.partner.photoUrl}}">
+                                    </div>
+                                </div>
+                                <div class="message-row">
+                                    <div class="row message-box">
+                                        <div ng-repeat="message in messages" ng-class="message.user === currentChallenge.user._id ? 'my-message' : 'your-message'">{{message.text}}</div>
+                                    </div>
+                                </div>
+                                <div ng-if="currentChallenge.partnerChallenge.state == 'active'" class="row">
+                                    <div class="form-group col-sm-10">
+                                        <input type="text" ng-model="message.newMessageText" placeholder="Type here to send a message to your partner" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div ng-if="currentChallenge.partnerChallenge.state == 'active'" class="col-sm-2">
+                                        <button ng-click="sendMessage(message.newMessageText)" class="btn btn-danger">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 tasks-background">
+                                <h1 class="text-center">Mark your steps...</h1>
+
+                                <div class="checkbox text-left">
+                                    <label ng-repeat="step in currentChallenge.steps" class="checkbox-label">
+                                        <div ng-if="currentChallenge.partnerChallenge.state == 'active'
+                                        || currentChallenge.partnerChallenge.state == 'abandoned'" class="col-xs-1">
+                                            <input type="checkbox"
+                                                   value="{{step._id}}"
+                                                   ng-model="step.completed"/>
+                                        <span class="checkbox-material">
+                                            <span class="check">
+
+                                            </span>
+                                        </span>
+                                        </div>
+                                        <div class="col-xs-11">
+                                            <span>{{step.description}}</span>
+                                        </div>
+                                    </label>
+                                    <button ng-if="currentChallenge.partnerChallenge.state == 'active' || currentChallenge.partnerChallenge.state == 'abandoned'"
+                                            ng-click="saveSteps()" class="btn btn-danger btn-round">
+                                        save progress <i class="material-icons">sentiment_very_satisfied</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div >
+                                <h5>This is about...</h5>
+                                <p>{{currentChallenge.challenge.description}}</p>
+                                <h5>What science says?</h5>
+                                <p>{{currentChallenge.challenge.science}}</p>
+                                <h5>Why do this?</h5>
+                                <p>{{currentChallenge.challenge.why}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer-element></footer-element>
+    </div>
+</div>

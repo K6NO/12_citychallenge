@@ -1,0 +1,55 @@
+<!-- Navbar -->
+<nav class="navbar navbar-danger navbar-absolute">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">CityChallenge</a>
+            </div>
+
+            <div class="navbar-collapse" ng-class="{collapse: isCollapsed}" id="navigation-example">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="user">
+                        <a href="#!/profile">
+                            <i class="material-icons">face</i>Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!/">
+                            <i class="material-icons">face</i>Take a challenge
+                        </a>
+                    </li>
+                    <li ng-controller="LogoutController" ng-if="user">
+                        <a href="" ng-click="logout()">
+                            <i class="material-icons">exit_to_app</i> Sign out
+                        </a>
+                    </li>
+                    <li ng-if="!user">
+                        <a href="#!/login">
+                            <i class="material-icons">exit_to_app</i> Sign In
+                        </a>
+                    </li>
+                    <li ng-if="!user">
+                        <a href="#!/signup">
+                            <i class="material-icons">exit_to_app</i> Register
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com" target="_blank" class="btn btn-simple btn-white btn-just-icon">
+                            <i class="fa fa-facebook-square"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com" target="_blank" class="btn btn-simple btn-white btn-just-icon">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
