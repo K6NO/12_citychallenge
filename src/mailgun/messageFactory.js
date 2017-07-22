@@ -1,5 +1,5 @@
-const apiKey = require('../config/secret.json').mailGunApiKey;
-const domain = require('../config/secret.json').mailGunSandbox
+const apiKey = require('../config/secret.json').mailGunApiKey; // process.env.MAILGUN_API_KEY
+const domain = require('../config/secret.json').mailGunSandbox; // process.env.MAILGUN_DOMAIN
 const mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
 
 const MailComposer = require('nodemailer/lib/mail-composer');
@@ -17,10 +17,6 @@ module.exports = function (messagingEvent, user, currentChallenge) {
         console.log('no currentChallenge');
         currentChallenge.user = user;
     }
-    console.log(user);
-    console.log('____________');
-    console.log(currentChallenge);
-
 
     let constructEmail = function (messagingEvent, templates, user, currentChallenge) {
 
@@ -42,19 +38,15 @@ module.exports = function (messagingEvent, user, currentChallenge) {
         if (mailBuildError) {
             console.log(mailBuildError);
         } else {
-            console.log('YAY!');
-            console.log(currentChallenge.user.emailAddress);
-
             let dataToSend = {
                 to: currentChallenge.user.emailAddress,
                 message: message.toString('utf8')
             };
-            mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+            mailgun.messages().sendMime(dataToSend, function (sendError) {
                 if(sendError) {
                     console.log(sendError);
                 } else {
-                    console.log('messages sent');
-                    console.log(body);
+                    console.log('message sent');
                 }
             })
         }

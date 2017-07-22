@@ -70,8 +70,8 @@ module.exports = function(passport) {
     // Facebook authentication strategy
 
     passport.use('facebook', new FacebookStrategy({
-        clientID: secret.facebookAppId, // process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: secret.facebookSecret, // process.env.FACEBOOK_CLIENT_SECRET,
+        clientID: secret.FACEBOOK_CLIENT_ID, // process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: secret.FACEBOOK_CLIENT_SECRET, // process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL: "http://localhost:3000/auth/facebook/return",
         profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown'],
         enableProof: true
@@ -98,8 +98,8 @@ module.exports = function(passport) {
     // Google authentication strategy
 
     passport.use('google', new GoogleStrategy({
-        clientID: secret.googleId,
-        clientSecret: secret.googleSecret,
+        clientID: secret.GOOGLE_CLIENT_ID, // process.env.GOOGLE_CLIENT_ID
+        clientSecret: secret.GOOGLE_CLIENT_SECRET, // process.env.GOOGLE_CLIENT_SECRET
         callbackURL: "http://localhost:3000/auth/google/return"
 
         },

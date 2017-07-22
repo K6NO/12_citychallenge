@@ -7,6 +7,9 @@
     "devstart": "nodemon ./src/bin/www",
     "test": "mocha"
   },
+  "engines" : {
+    "node" : "6.3.1"
+  },
   "dependencies": {
     "@uirouter/angularjs": "latest",
     "angular": "^1.6.5",
