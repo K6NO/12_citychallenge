@@ -3,26 +3,15 @@ const
     LocalStrategy   = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-    User = require('../models/user').User,
-    sendEmail = require('../mailgun/messageFactory'),
-    nconf = require('nconf');
-
-
+    User = require('../models/user').User;
 
 // Access credentials
 const secret = require('./secret.json');
 
-//let proba = nconf.file({file: __dirname + '/secret.json'});
-
-let facebookClientId = secret.FACEBOOK_CLIENT_ID;
-let facebookClientSecret = secret.FACEBOOK_CLIENT_SECRET;
-let googleClientId = secret.GOOGLE_CLIENT_ID;
-let googleClientSecret = secret.GOOGLE_CLIENT_SECRET;
-
-//let facebookClientIdHeroku = process.env.FACEBOOK_CLIENT_ID;
-//let facebookClientSecretHeroku = process.FACEBOOK_CLIENT_SECRET;
-//let googleClientIdHeroku = process.env.GOOGLE_CLIENT_ID;
-//let googleClientSecretHeroku = process.envGOOGLE_CLIENT_SECRET;
+let facebookClientId = process.env.FACEBOOK_CLIENT_ID || secret.FACEBOOK_CLIENT_ID;
+let facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET || secret.FACEBOOK_CLIENT_SECRET;
+let googleClientId = process.env.GOOGLE_CLIENT_ID || secret.GOOGLE_CLIENT_ID;
+let googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || secret.GOOGLE_CLIENT_SECRET;
 
 
 // expose this function to our app using module.exports
@@ -84,10 +73,6 @@ module.exports = function(passport) {
     // Facebook authentication strategy
 
 
-//let facebookClientIdHeroku = process.env.FACEBOOK_CLIENT_ID;
-//let facebookClientSecretHeroku = process.FACEBOOK_CLIENT_SECRET;
-//let googleClientIdHeroku = process.env.GOOGLE_CLIENT_ID;
-//let googleClientSecretHeroku = process.envGOOGLE_CLIENT_SECRET;
     passport.use('facebook', new FacebookStrategy({
         clientID: facebookClientId, // process.env.FACEBOOK_CLIENT_ID,
         clientSecret: facebookClientSecret, // process.env.FACEBOOK_CLIENT_SECRET,
