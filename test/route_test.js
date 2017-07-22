@@ -1,69 +1,17 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
-let mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 //Require the dev-dependencies
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../src/bin/www');
-let should = chai.should();
-let seeder = require('mongoose-seeder');
-let data = require('../src/mock/data.json');
+const chai = require('chai'),
+    chaiHttp = require('chai-http'),
+    server = require('../src/bin/www'),
+    should = chai.should(),
+    seeder = require('mongoose-seeder'),
+    data = require('../src/mock/data.json');
 
-let challengesAnswer = [
-    {
-        "_id": "57029ed4795118be119cc13b",
-        "title": "Fourth challenge",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-        "karma": 10,
-        "time": 1,
-        "backgroundImage": "/assets/img/bg4.jpeg",
-        "fun": 5,
-        "difficulty": 1,
-        "times_taken": 1,
-        "likes": 0
-    },
-    {
-        "_id": "57029ed4795118be119cc33b",
-        "title": "Second challenge",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-        "karma": 10,
-        "time": 7,
-        "backgroundImage": "/assets/img/bg3.jpeg",
-        "fun": 5,
-        "difficulty": 3,
-        "times_taken": 5,
-        "likes": 0
-    },
-    {
-        "_id": "57029ed4795118be119cc23b",
-        "title": "Third challenge",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-        "karma": 10,
-        "time": 7,
-        "backgroundImage": "/assets/img/bg4.jpeg",
-        "fun": 5,
-        "difficulty": 1,
-        "times_taken": 1,
-        "likes": 0
-    },
-    {
-        "_id": "57029ed4795118be119cc43b",
-        "title": "First challenge",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-        "karma": 10,
-        "time": 30,
-        "backgroundImage": "/assets/img/bg2.jpeg",
-        "fun": 5,
-        "difficulty": 1,
-        "times_taken": 1,
-        "likes": 0
-    }
-];
-
-
-var expect = require('chai').expect;
+let expect = require('chai').expect;
 
 
 chai.use(chaiHttp);
