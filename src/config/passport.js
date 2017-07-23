@@ -11,6 +11,8 @@ let facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET; //|| secret.FACEB
 let googleClientId = process.env.GOOGLE_CLIENT_ID; // || secret.GOOGLE_CLIENT_ID;
 let googleClientSecret = process.env.GOOGLE_CLIENT_SECRET; // || secret.GOOGLE_CLIENT_SECRET;
 
+let URI = process.env.HEROKU_URI || 'http://localhost:3000';
+
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -74,7 +76,7 @@ module.exports = function(passport) {
     passport.use('facebook', new FacebookStrategy({
         clientID: facebookClientId, // process.env.FACEBOOK_CLIENT_ID,
         clientSecret: facebookClientSecret, // process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/facebook/return",
+        callbackURL: URI + "auth/facebook/return",
         profileFields: ['id', 'displayName', 'first_name', 'picture.type(large)', 'email', 'hometown'],
         enableProof: true
     }, function (accessToken, refreshToken, profile, done) {
@@ -102,7 +104,7 @@ module.exports = function(passport) {
     passport.use('google', new GoogleStrategy({
         clientID: googleClientId, // process.env.GOOGLE_CLIENT_ID
         clientSecret: googleClientSecret, // process.env.GOOGLE_CLIENT_SECRET
-        callbackURL: "http://localhost:3000/auth/google/return"
+        callbackURL: URI + "auth/google/return"
 
         },
         function (accessToken, refreshToken, profile, done) {
