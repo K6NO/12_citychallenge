@@ -29,7 +29,7 @@ var app = express();
 //mongodb://<dbuser>:<dbpassword>@ds159998.mlab.com:59998/heroku_44hwwvdq
 // Mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/citychallenge');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/citychallenge');
 const db = mongoose.connection;
 
 // body-parser and cookie-parser middleware
