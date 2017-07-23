@@ -1,5 +1,5 @@
-const apiKey = process.env.MAILGUNAPI_KEY // || require('../config/secret.json').mailGunApiKey;
-const domain = process.env.MAILGUN_SANDBOX // || require('../config/secret.json').mailGunSandbox;
+const apiKey = process.env.MAILGUN_API_KEY; // || require('../config/secret.json').mailGunApiKey;
+const domain = process.env.MAILGUN_DOMAIN; // || require('../config/secret.json').mailGunSandbox;
 const mailgun = require('mailgun-js')({apiKey: apiKey, domain: domain});
 
 const MailComposer = require('nodemailer/lib/mail-composer');
