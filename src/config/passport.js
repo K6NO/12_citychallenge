@@ -6,12 +6,12 @@ const
     User = require('../models/user').User;
 
 // Access credentials
-const secret = require('./secret.json');
+//const secret = require('./secret.json');
 
-let facebookClientId = process.env.FACEBOOK_CLIENT_ID || secret.FACEBOOK_CLIENT_ID;
-let facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET || secret.FACEBOOK_CLIENT_SECRET;
-let googleClientId = process.env.GOOGLE_CLIENT_ID || secret.GOOGLE_CLIENT_ID;
-let googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || secret.GOOGLE_CLIENT_SECRET;
+let facebookClientId = process.env.FACEBOOK_CLIENT_ID; //|| secret.FACEBOOK_CLIENT_ID;
+let facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET; //|| secret.FACEBOOK_CLIENT_SECRET;
+let googleClientId = process.env.GOOGLE_CLIENT_ID; // || secret.GOOGLE_CLIENT_ID;
+let googleClientSecret = process.env.GOOGLE_CLIENT_SECRET; // || secret.GOOGLE_CLIENT_SECRET;
 
 
 // expose this function to our app using module.exports
