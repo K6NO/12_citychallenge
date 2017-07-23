@@ -28,6 +28,7 @@
     "jade": "~1.11.0",
     "mailgun-js": "^0.11.2",
     "mongoose": "4.11.1",
+    "mongoose-seeder": "^1.2.1",
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "~1.8.1",
     "nodemailer": "^4.0.1",
@@ -61,7 +62,6 @@
     "gulp-useref": "^3.1.2",
     "jshint": "^2.9.5",
     "mocha": "^3.4.2",
-    "mongoose-seeder": "^1.2.1",
     "nodemon": "^1.11.0",
     "run-sequence": "^1.2.2"
   }
