@@ -51,6 +51,4 @@ config(['$locationProvider', '$routeProvider', '$httpProvider',
         }).
         otherwise('/challenges')
     }]);
-// All variables defined with the : prefix are extracted into the (injectable) $routeParams object.
-
 

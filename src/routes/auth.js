@@ -44,8 +44,8 @@ router.get('/logout', function (req, res) {
 /* LOCAL AUTH */
 
 router.get('/loggedin', function(req, res) {
-    console.log('in loggedin');
-    console.log(req.isAuthenticated());
+    //console.log('in loggedin');
+    //console.log(req.isAuthenticated());
     res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
 
@@ -91,7 +91,6 @@ router.post("/signup", function(req, res, next) {
                     if (err) {
                         return next(err);
                     }
-                    console.log(user._id);
                     res.json(user);
                 });
             });

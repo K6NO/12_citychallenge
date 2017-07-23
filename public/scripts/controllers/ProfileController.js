@@ -12,6 +12,7 @@
                 let user = authService.getLoggedInUser();
                 $scope.user = user;
                 console.log(user._id);
+                console.log(user);
 
 
                 dataService.getCurrentChallengesForUser(function (response) {
@@ -29,7 +30,7 @@
                     6 : 'Eternal Sunshine',
                     7 : 'Mindful Inner Peace',
                     8 : 'Spirit Being'
-                }
+                };
 
                 $scope.rank = ranks[user.level];
             }]);

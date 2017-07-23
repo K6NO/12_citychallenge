@@ -25,7 +25,7 @@ module.exports = function (messagingEvent, user, currentChallenge) {
             from: 'CityChallenge <noreply@kenomano.com>',
             to: currentChallenge.user.emailAddress,
             subject: templates[subjectName](currentChallenge),
-            text: `Dear ${currentChallenge.user.userName}, please switch to HTML view or visit your profile to view what's happening at: http:localhost//3000/`,
+            text: `Dear ${currentChallenge.user.userName}, please switch to HTML view or visit your profile to view what's happening at: http:localhost://3000/`,
             html: templates[templateName](currentChallenge)
         };
         return mailOptions;

@@ -14,9 +14,6 @@ const User = require('../models/user').User,
     Message = require('../models/message').Message;
 
 
-// auth middleware
-const auth = require('../middleware/auth'); //auth.isAuthenticated
-
 // waitlist, checkdates middleware
 const waitlist = require('../middleware/waitlist'),
     dateChecker = require('../middleware/datechecker'),
@@ -62,8 +59,6 @@ apiRouter.get('/challenges/:id', function(req, res, next) {
                             {user: {$eq: userId}}
                         ]
                     }, function (err, _currentChallenges) {
-
-                        console.log(err);
 
                         if(err) return next(err);
 
@@ -309,7 +304,6 @@ apiRouter.get('/users', function(req, res, next) {
 apiRouter.post('/users', function(req, res, next) {
     let user = new User(req.body);
     user.save(function (err) {
-        console.log(err);
         if (err) return next(err);
         res.setHeader('Location', '/');
         res.status(200).json({_id: user._id, saved: true});

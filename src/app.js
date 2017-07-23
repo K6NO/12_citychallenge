@@ -92,7 +92,6 @@ app.get('/vendor/angular-resource.js', function(req, res) {
   res.sendFile(path.join(__dirname, '../node_modules', 'angular-resource', 'angular-resource.js'));
 });
 app.get('/vendor/angular-ui-router.js', function(req, res) {
-  console.log('in get');
   res.sendFile(path.join(__dirname, '../node_modules', '@uirouter', 'angularjs', 'release', 'ui-router-angularjs.min.js'));
 });
 app.get('/vendor/angular-ui-bootstrap.js', function(req, res) {

@@ -22,6 +22,7 @@ angular.module('cityChallengeApp').
                             user = false;
                         } else {
                             user = true;
+                            console.log('setting logged in user: ')
                             loggedInUser = response.data.user;
                         }
                     });
@@ -29,6 +30,7 @@ angular.module('cityChallengeApp').
 
             function getLoggedInUser(){
                 if (loggedInUser) {
+                    console.log('in getLoggedInUSer: ');
                     return loggedInUser;
                 } else {
                     return false;
