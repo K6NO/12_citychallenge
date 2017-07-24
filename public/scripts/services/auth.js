@@ -24,7 +24,6 @@ angular.module('cityChallengeApp').
                             user = true;
                             console.log('setting logged in user: ')
                             loggedInUser = response.data.user;
-                            console.log(loggedInUser);
 
                         }
                     });

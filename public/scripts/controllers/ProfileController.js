@@ -21,7 +21,6 @@
                 authService.getLoggedInUser(function (response) {
                     if (response.data.status === false) {
                         // redirect to login page
-                        console.log('shiiiit');
                     } else {
                         $scope.user = response.data.user;
                         $scope.rank = ranks[$scope.user.level];

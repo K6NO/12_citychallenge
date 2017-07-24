@@ -72,14 +72,11 @@ db.once('open', ()=> {
   console.log('Connection to DB successfull');
 });
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 // logger / Morgan
 app.use(logger('dev'));
 
 // static files
-app.use('/', express.static('public'));
+app.use('/', express.static('dist'));
 
 // Vendor scripts (angular)
 app.get('/vendor/angular.js', function(req, res) {

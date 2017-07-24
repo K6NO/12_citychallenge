@@ -12,8 +12,6 @@ cityChallengeApp.run(function ($rootScope, $location, $route, authService) {
                     if(next.isLogin && !authService.isLoggedIn()){
                         $rootScope.savedLocation = $location.url();
                         $location.path('/login');
-                    } else {
-                        console.log('logged in or login not required!')
                     }
                 })
         })

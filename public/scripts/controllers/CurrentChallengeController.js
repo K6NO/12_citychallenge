@@ -68,7 +68,6 @@
                     };
                     dataService.abandonCurrentChallenge(currentChallengeId, currentChallenge, function (currentChallenge) {
                         $scope.currentChallenge = currentChallenge;
-                        console.log($scope.currentChallenge);
                         $location.path("/challenges");
                     }, function (error) {
                         $scope.errors = error.data;
@@ -76,7 +75,6 @@
                 };
 
                 $scope.sendMessage = function (newMessageText) {
-                    console.log(newMessageText);
                     dataService.sendMessage($scope.currentChallenge._id, {"message" : newMessageText}, function (currentChallengeMessages) {
                         $scope.currentChallenge.messages = currentChallengeMessages.data;
                         $scope.newMessageText = '';

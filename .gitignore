@@ -2,4 +2,3 @@
 node_modules
 src/config/secret.json
 .env
-public/
