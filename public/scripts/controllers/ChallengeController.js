@@ -14,12 +14,8 @@
             if(challengeId != undefined){
                 //get challenge and matching currentChallenges
                 dataService.getChallenge(challengeId, function (response) {
-                    // get user
-                    let user = authService.getLoggedInUser();
-                    $scope.user = user;
-                    userId = user._id;
-                    $scope.challenge = response.data.challenge;
 
+                    $scope.challenge = response.data.challenge;
                     // check status of matching currentChallenges
 
                     response.data.currentChallenges.some(function (currentChallenge) {
@@ -46,6 +42,18 @@
                     $scope.errors = err;
                 });
             }
+            // get user
+            authService.getLoggedInUser(function (response) {
+                if (response.data.status === false) {
+                    // redirect to login page
+                    console.log('shiiiit');
+                } else {
+                    $scope.user = response.data.user;
+                    userId = response.data.user._id;
+                }
+            }, function (error) {
+                $scope.errors = error.data.errors;
+            });
 
             $scope.startCurrentChallenge = function () {
                 let currentChallenge = {
@@ -73,5 +81,6 @@
                     $scope.errors = response.data.errors;
                 })
             };
+
         }]);
 })();

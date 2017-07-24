@@ -14,8 +14,6 @@
                 };
 
                 $scope.login = function () {
-                    //$scope.error = false;
-                    //$scope.disabled = true;
 
                     authService.login($scope.user.emailAddress, $scope.user.password)
                         .then(function () {

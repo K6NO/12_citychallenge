@@ -5,33 +5,37 @@
         .controller('ProfileController', ['$scope', '$location', '$filter', 'dataService', 'authService',
             function ($scope, $location, $filter, dataService, authService) {
 
-                //console.log('in user controller');
-                //console.log(user);
+                let ranks = {
+                    1 : 'Initiate',
+                    2 : 'Deep Dreamer',
+                    3 : 'Waking Consciousness',
+                    4 : 'Inner Silence',
+                    5 : 'Awakened',
+                    6 : 'Funny Pigeon',
+                    7 : 'Bearer of Light',
+                    8 : 'Eternal Space'
+                };
+
                 $scope.pageIndicator = 'profile-page';
 
-                let user = authService.getLoggedInUser();
-                $scope.user = user;
-                console.log(user._id);
-                console.log(user);
-
+                authService.getLoggedInUser(function (response) {
+                    if (response.data.status === false) {
+                        // redirect to login page
+                        console.log('shiiiit');
+                    } else {
+                        $scope.user = response.data.user;
+                        $scope.rank = ranks[$scope.user.level];
+                    }
+                }, function (error) {
+                    $scope.errors = error.data.errors;
+                });
 
                 dataService.getCurrentChallengesForUser(function (response) {
                     $scope.currentChallenges = response.data;
-                }, function (response) {
-                    $scope.errors = response.data.errors;
+                }, function (error) {
+                    $scope.errors = error.data.errors;
                 });
 
-                let ranks = {
-                    1 : 'Initiate',
-                    2 : 'Waking Consciousness',
-                    3 : 'Deep Dreaming',
-                    4 : 'Inner Silence',
-                    5 : 'Awakening',
-                    6 : 'Eternal Sunshine',
-                    7 : 'Mindful Inner Peace',
-                    8 : 'Spirit Being'
-                };
 
-                $scope.rank = ranks[user.level];
             }]);
 })();

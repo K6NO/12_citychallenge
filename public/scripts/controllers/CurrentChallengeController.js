@@ -5,16 +5,18 @@
         .controller('CurrentChallengeController', ['$scope', '$location', '$route', '$filter', 'dataService', 'authService',
             function ($scope, $location, $route, $filter, dataService, authService) {
 
-                let errorCallback = function (response) {
-                    $scope.errors = response.data;
-                };
-
                 $scope.pageIdentifier = 'landing-page';
                 $scope.message = {};
 
-                let user = authService.getLoggedInUser();
-                //$scope.user = user;
-                console.log(user._id);
+                authService.getLoggedInUser(function (response) {
+                    if (response.data.status === false) {
+                        $location.path("/login");
+                    } else {
+                        $scope.user = response.data.user;
+                    }
+                }, function (error) {
+                    $scope.errors = error.data.errors;
+                });
 
                 let currentChallengeId = $location.path().split('/')[3];
 
@@ -28,10 +30,6 @@
                             if(a.createdAt > b.createdAt) return 1;
                             return 0;
                         }
-                        if(response.data.currentChallenge.user._id !== user._id){
-                            // TODO create error page and show it to the user
-                            $scope.errors = 'It is not your challenge, so you cannot see it.'
-                        } else {
                             let userMessages = response.data.currentChallenge.messages;
                             let allMessages = [];
                             if(response.data.partnerMessages) {
@@ -48,13 +46,9 @@
                             if(allMessages) {
                                 $scope.messages = allMessages;
                             }
-
-                            // bind checkboxes to steps
-                            //$scope.steps = response.data.currentChallenge.steps;
-                        }
-
-
-                    }, errorCallback);
+                    }, function (error) {
+                        $scope.errors = error.data;
+                    });
                 }
 
 
@@ -63,7 +57,9 @@
 
                     dataService.stepCompletedCurrentChallenge($scope.currentChallenge._id, $scope.currentChallenge.steps, function (response) {
                         $route.reload();
-                    }, errorCallback)
+                    }, function (error) {
+                        $scope.errors = error.data;
+                    })
                 };
 
                 $scope.abandonCurrentChallenge = function () {
@@ -74,7 +70,9 @@
                         $scope.currentChallenge = currentChallenge;
                         console.log($scope.currentChallenge);
                         $location.path("/challenges");
-                    }, errorCallback)
+                    }, function (error) {
+                        $scope.errors = error.data;
+                    })
                 };
 
                 $scope.sendMessage = function (newMessageText) {
@@ -83,7 +81,9 @@
                         $scope.currentChallenge.messages = currentChallengeMessages.data;
                         $scope.newMessageText = '';
                         $route.reload();
-                    }, errorCallback)
+                    }, function (error) {
+                        $scope.errors = error.data;
+                    })
                 }
             }]);
 })();

@@ -24,17 +24,15 @@ angular.module('cityChallengeApp').
                             user = true;
                             console.log('setting logged in user: ')
                             loggedInUser = response.data.user;
+                            console.log(loggedInUser);
+
                         }
                     });
             }
 
-            function getLoggedInUser(){
-                if (loggedInUser) {
-                    console.log('in getLoggedInUSer: ');
-                    return loggedInUser;
-                } else {
-                    return false;
-                }
+            function getLoggedInUser(successCallback, errorCallback){
+                $http.get('/auth/loggedin')
+                        .then(successCallback, errorCallback);
             }
 
             function login(email, password) {

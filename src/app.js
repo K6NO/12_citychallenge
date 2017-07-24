@@ -79,7 +79,7 @@ db.once('open', ()=> {
 app.use(logger('dev'));
 
 // static files
-app.use('/', express.static('dist'));
+app.use('/', express.static('public'));
 
 // Vendor scripts (angular)
 app.get('/vendor/angular.js', function(req, res) {

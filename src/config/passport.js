@@ -5,13 +5,15 @@ const
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     User = require('../models/user').User;
 
-// Access credentials
-let facebookClientId = process.env.FACEBOOK_CLIENT_ID; //|| secret.FACEBOOK_CLIENT_ID;
-let facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET; //|| secret.FACEBOOK_CLIENT_SECRET;
-let googleClientId = process.env.GOOGLE_CLIENT_ID; // || secret.GOOGLE_CLIENT_ID;
-let googleClientSecret = process.env.GOOGLE_CLIENT_SECRET; // || secret.GOOGLE_CLIENT_SECRET;
+const secret = require('./secret.json');
 
-let URI = process.env.HEROKU_URI || 'http://localhost:3000';
+// Access credentials
+let facebookClientId = process.env.FACEBOOK_CLIENT_ID || secret.FACEBOOK_CLIENT_ID;
+let facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET || secret.FACEBOOK_CLIENT_SECRET;
+let googleClientId = process.env.GOOGLE_CLIENT_ID || secret.GOOGLE_CLIENT_ID;
+let googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || secret.GOOGLE_CLIENT_SECRET;
+
+let URI = process.env.HEROKU_URI || 'http://localhost:3000/';
 
 
 // expose this function to our app using module.exports

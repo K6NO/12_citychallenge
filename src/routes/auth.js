@@ -14,7 +14,7 @@ router.get('/login/facebook', passport.authenticate('facebook', {scope: ["email 
 router.get('/facebook/return', passport.authenticate('facebook', {
     successRedirect: '/#!/profile',
     failureRedirect: '/#!/login'
-    }), function (req, res) {
+}), function (req, res) {
     // success auth
     res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
@@ -28,7 +28,7 @@ router.get('/login/google', passport.authenticate('google', {scope: ['email', 'p
 router.get('/google/return', passport.authenticate('google', {
     successRedirect: '/#!/profile',
     failureRedirect: '/#!/login'
-    }), function (req, res) {
+}), function (req, res) {
     // success auth
     res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
@@ -45,14 +45,17 @@ router.get('/logout', function (req, res) {
 
 router.get('/loggedin', function(req, res) {
     //console.log('in loggedin');
-    //console.log(req.isAuthenticated());
+    if(req.session.passport) {
+
+        console.log(req.session.passport.user);
+    }
     res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
 
 // POST / login process the login form
 router.post("/login", passport.authenticate('local-login', {
     successRedirect: '/#!/profile'
-    }), function(req, res) {
+}), function(req, res) {
     res.json(req.user);
 });
 
@@ -71,7 +74,7 @@ router.post("/signup", function(req, res, next) {
             let err = new Error('This email is already registered to a profile');
             err.status = 500;
             return next(err);
-            } else {
+        } else {
             console.log('Yay, creating new user.');
             var newUser = new User();
             newUser.emailAddress = req.body.emailAddress.toLowerCase();

@@ -15,7 +15,7 @@
                             $location.path('/challenges');
                         })
                         .catch(function () {
-                            $scope.errors = 'Cannot logout';
+                            $scope.errors = 'Could not log out. Bizarre...';
                         })
                 }
             }]);
