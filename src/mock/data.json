@@ -109,19 +109,19 @@
     "_model": "User",
     "keno": {
       "_id": "57029ed4795118be119cc111",
-      "emailAddress": "tomkeno@gmail.com",
-      "fullName": "Tamas Kenessey",
+      "emailAddress": "citychallengetestemail@gmail.com",
+      "fullName": "Huck Mock",
       "photoUrl": "../assets/img/faces/1_bulldog.png",
-      "userName": "K6NO",
+      "userName": "hucky mocky",
       "password": "password",
       "city": "Budapest",
       "karma": 0
     },
     "mano": {
       "_id": "57029ed4795118be119cc222",
-      "emailAddress": "mano.keno@gmail.com",
+      "emailAddress": "tamas.kenessey@gmail.com",
       "fullName": "Mano Keno",
-      "userName": "KenoMano",
+      "userName": "K6noMan0",
       "photoUrl": "https://avatars3.githubusercontent.com/u/19394212?v=3&s=500",
       "password": "password",
       "city": "Budapest",
@@ -134,17 +134,14 @@
       "user": "->users.keno",
       "partner": "->users.mano",
       "challenge" : "->challenges.one",
-      "state": "active",
+      "state": "waiting",
       "steps": [
 
         "->steps.one",
         "->steps.two",
         "->steps.three"
 
-      ],
-      "startedAt" : "2017-07-02T16:37:26.484Z",
-      "endsAt" : "2017-07-09T16:37:26.484Z"
-
+      ]
     },
     "two": {
       "user": "->users.mano",
