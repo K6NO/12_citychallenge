@@ -3,19 +3,19 @@
     "_model": "Step",
     "one" : {
       "stepNumber": 1,
-      "description" : "Nam at felis et mauris fringilla porta. Nam vulputate euismod ipsum, sit amet fringilla tortor gravida auctor.",
+      "description" : "This is a random step 1",
       "completed" : true
         },
       "two" :
         {
           "stepNumber": 2,
-          "description" : "Praesent convallis mauris mi, in gravida nulla facilisis id. Integer dignissim massa eget leo venenatis gravida.",
+          "description" : "This is a random step 2",
           "completed" : true
         },
     "three" :
         {
           "stepNumber": 3,
-          "description" : "Morbi fermentum vehicula tortor ut fermentum.",
+          "description" : "And guess what, this is a random step 3. I was too lazy to set up all the different steps for all the challenges to be honest.",
           "completed" : true
         }
     },
@@ -24,13 +24,14 @@
     "_model": "Challenge",
     "one": {
       "_id" : "57029ed4795118be119cc13b",
-      "title" : "First challenge",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
-      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
-      "city": "Budapest",
+      "title" : "Pay it forward day",
+      "description": "Do three good deeds today to strangers without expecting anything in return with one exception: the recipient should pay it forward (do another good deed) to someone else. When you know you’ve given someone’s mood a lift and made a difference – there’s nothing like it.",
+      "why" : "Here are some examples, but you are encouraged to do whatever comes into your mind: returning someone’s shopping trolley, buying someone a gift, giving a homeless person food vouchers, or food, not charging a client for work, paying for a stranger’s bus/train pass, helping someone else in need.",
+      "difficulties" : "Random acts of kindness might born suspicion at first. Did the stranger offering me the coffee has second thoughts? Is it poisoned? Why does he/she do it? people have become individualistic over the last few decades, and score about 40% lower on tests of empathy than those brought up in the 1970s. Today we are not used to receiving unexpected acts of goodwill, so be patient with others and explain your intentions openly. ",
+      "science": "Researchers from all over the world have found  that people who spend a bigger proportion of their income on others tend to be far happier, in the long run, than those spending it on themselves. (https://link.springer.com/article/10.1007/s10902-005-3650-z). Even if you may not get an immediate payback in terms of money or kindness, on the long run you are likely to feel more satisfied. Michael Norton from Harvard Business School has tested the concept with data from more than 130 countries, from the US to Uganda. “Across all countries – rich or poor, and in every continent – people who gave more tended to be happier people,” he says. For this reason, he thinks the joy of giving appears to be a “psychological universal” – a trait that lies at the core of human nature, independent of your culture. Giving to others can increase your social connection (who isn’t grateful after they’ve received a nice present) and your sense of purpose in life; you feel like you’ve made a difference, and there is a point in getting out of bed in the morning.",
+      "city": "Worldwide",
       "karma": 10,
-      "time": 30,
+      "time": 1,
       "likes": 0,
       "backgroundImage" : "/assets/img/bg2.jpeg",
       "times_taken": 1,
@@ -44,32 +45,32 @@
     },
     "two": {
       "_id" : "57029ed4795118be119cc23b",
-      "title" : "Second challenge",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
-      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
-      "city": "Ozora",
+      "title" : "The 333 challenge (lite)",
+      "description": "Pare down your wardrobe to 33 items that you wear in the next month. You can expect to have more money, time, space, clarity and freedom in your life. You will spend less on things you don’t really need, will have plenty of physical space in your home and reserve your mental energies for more important thoughts. Last, but not least, your mornings will start with a simple, happy choice among your favourite pieces.",
+      "why" : "<a href='https://bemorewithless.com/project-333/'>Rules come from the owner of the idea.</a> Max. 33 items including clothing, accessories, jewelry, outerwear and shoes. These items are not counted as part of the 33 items – wedding ring or another sentimental piece of jewelry that you never take off, underwear, sleep wear, in-home lounge wear,  and workout clothing (you can only wear your workout clothing to workout). How to do it: Choose your 33 items, box up the remainder of your fashion statement, seal it with tape and put it out of sight. What else: consider that you are creating a wardrobe that you can live, work and play in for three months. Remember that this is not a project in suffering. If your clothes don’t fit or are in poor condition, replace them.",
+      "difficulties" : "You will have to jump a number of mental fences. First, the 333 challenge needs planning. Take your and do you your prep. You will regain that multiple times during the next month. Remember, this is not about suffering, but about joy and freedom and good preparation is key to achieve these results. Second, you may think that others will judge you for wearing the same clothes repeatedly. Most people having done this challenge for much longer periods report that they peers at work, school or public spaces don’t notice any difference. When the topic comes up they usually receive very positive feedback from others. ",
+      "science": "There is a remarkable number of people from all over the world who have tried this out and they report considerable improvement in their everyday life. <a href='https://bemorewithless.com/category/project333/'> You can browse them mainly here.</a>",
+      "city": "Worldwide",
       "karma": 10,
-      "time": 7,
+      "time": 30,
       "likes": 0,
       "backgroundImage" : "/assets/img/bg3.jpeg",
       "times_taken": 5,
       "difficulty": 3,
       "fun": 5,
       "steps": [
-
         "->steps.one",
         "->steps.two",
         "->steps.three"
-
       ]
     },
     "three": {
       "_id": "57029ed4795118be119cc33b",
-      "title" : "Third challenge",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
-      "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
-      "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
+      "title" : "Car-free week",
+      "description": "Leave your car behind for a week. You live in a city, there are plenty of travel choices for getting around. Use your legs or bike, take public transport and for longer journeys the train, a bus or car charing. If you walk or bike you can rediscover your living environment, if you use the public transport you can read a book in a week. Not to talk about the environmental benefits…",
+      "why" : "You can only take this challenge if you regularly use a private car. You commit not to use your car for a week for any purposes (taking the children to school, going to work or out in the evening, visiting relatives, etc.) except for emergency situations, where using your car could save you or someone else from some harm or some bad thing happening. ",
+      "difficulties" : "Subject to how much your life depends on your car, you may encounter a number of difficulties. Please consider these in advance and think about how will you address those. More help on this comes soon.",
+      "science": "Walking and cycling has considerable health benefits, unless you are living in a heavily polluted area. In cities with average air pollution health benefits associated with the more active lifestyle typically outweigh the potential harms. More on this comes soon.",
       "city": "Chicago",
       "karma": 10,
       "time": 7,
@@ -89,6 +90,7 @@
       "title" : "Fourth challenge",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sem malesuada, aliquet libero a, tristique magna. Suspendisse rutrum lobortis ipsum, et commodo nibh. Praesent eu diam ex. Suspendisse potenti. Duis lacinia, nisl sed pretium molestie, tortor nisi pharetra erat, sed tempor sem turpis placerat felis. Suspendisse potenti. Donec consequat tristique diam id finibus. Donec vitae orci vel dui gravida tempus.",
       "why" : "Sed ut imperdiet tortor. Integer in hendrerit dolor. Proin eget dui non purus auctor malesuada eget id erat. Nulla at mauris vel felis hendrerit vehicula ac quis lorem. Aliquam maximus nibh sed nulla hendrerit tempus sit amet ac quam. Morbi sed urna commodo, gravida nisl sed, elementum nisl. Nunc elementum facilisis leo sed ultricies.",
+      "difficulties" : "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
       "science": "Nunc consectetur ex nec purus iaculis auctor. Aenean id vestibulum erat, sed dictum sapien. Pellentesque in arcu quis erat volutpat tristique at a massa. Aenean cursus, tellus pulvinar pretium vulputate, mauris odio elementum dolor, a condimentum ipsum sapien ut purus. Curabitur dictum, tellus vel bibendum ultricies, odio neque euismod ante, quis imperdiet nibh nibh non arcu. Vivamus et risus vel dui ornare vulputate. Ut fermentum arcu sed est facilisis viverra. Nulla placerat libero nulla. Donec mauris ligula, fringilla eget tortor a, placerat bibendum magna. Praesent venenatis ut eros eget finibus. Praesent malesuada felis vitae leo semper, in euismod lorem rhoncus. Cras tempor nisl ipsum, eu dapibus leo feugiat in. Vivamus neque est, auctor ut imperdiet vel, tempor vel mauris.",
       "city": "Chicago",
       "karma": 10,

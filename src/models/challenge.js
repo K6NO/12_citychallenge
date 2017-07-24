@@ -21,6 +21,11 @@ var ChallengeSchema = new Schema({
         required: [true, 'Provide info on why one should take this challenge.'],
         trim: true
     },
+    difficulties: {
+        type: String,
+        required: [true, 'Provide info on the potential difficulties coming with the challenge.'],
+        trim: true
+    },
     science: {
         type: String,
         required: [true, 'Provide info on the scientific background of the challenge.'],
