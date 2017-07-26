@@ -1,6 +1,10 @@
-# Treehouse Project 12 -CityChallenge
+# Treehouse Full Stack Javascript Techdegree
+### Project 12 - CityChallenge
 
 https://citychallenge-app2.herokuapp.com/
+
+NodeJS - Express, AngularJS, MongoDB, Mongoose, Mocha-Chai, Gulp, APIs used: FB & Google auth, Mailgun
+
 ##### The idea
 In the CityChallenge app you take challenges that, if fulfilled, may significantly improve your everyday life by making it more active, adventurous, conscious and sustainable in an urban setting. Now there are only three challenges, hopefully more and better will come :)
 
@@ -43,7 +47,7 @@ When the challenge starts the **‘message box’** and the **‘steps box’** 
 
 The **profile view** displays personal info and lists ongoing and past challenges.
 
-**IMPORTANT - Emailing:** Please note that the free tier of Mailgun only sends emails to registered addresses. I created two accounts on Gmail for testing purposes: citychallengetestemail@gmail.com. Pass: citychallenge and citychallengetestemail2@gmail.com. Pass: citychallenge2. There you can verify the arrival of the emails. Please also note that a welcome email is only sent for those who have signed up locally.
+**IMPORTANT - Emailing:** Please note that the free tier of Mailgun only sends emails to registered addresses.
 
 There are some basic **tests on the routes with Mocha and Chai. -> npm run test**
 
