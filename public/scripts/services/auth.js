@@ -22,7 +22,7 @@ angular.module('cityChallengeApp').
                             user = false;
                         } else {
                             user = true;
-                            console.log('setting logged in user: ')
+                            console.log('setting logged in user: ');
                             loggedInUser = response.data.user;
 
                         }

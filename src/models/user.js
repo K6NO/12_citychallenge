@@ -1,13 +1,19 @@
 'use strict';
 
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 
+let Badge = require('./badge.js').Badge;
+
+function calculateLevel (karma) {
+    return Math.floor(karma / 100);
+}
+
 // TODO verify if list of current challenges is necessary
-var UserSchema = new Schema({
+let UserSchema = new Schema({
     emailAddress: {
         type: String,
         unique: true,
@@ -44,11 +50,17 @@ var UserSchema = new Schema({
     },
     karma: {type:  Number, default: 0},
     completed: {type:  Number, default: 0},
-    level: {type:  Number, default: 1},
+    level: {
+        type:  Number,
+        default: 1
+    },
     //challenges: [{
     //    type: Schema.Types.ObjectId,
     //    ref: 'CurrentChallenge'
     //}],
+    badges : [
+        { type: Schema.Types.ObjectId, ref: 'Badge'}
+    ],
     createdAt: {
         type: Date,
         default: Date.now
@@ -66,6 +78,15 @@ UserSchema.pre('save', function (next) {
         next();
     });
 });
+
+
+
+// TODO this is inefficient, but did not find a better event hook
+// calculates the level based on karma
+//UserSchema.post('init', function () {
+//    this.level = Math.floor(this.karma / 100);
+//    console.log('calculating level');
+//});
 
 // Static method for auth middleware
 
@@ -91,14 +112,16 @@ UserSchema.statics.authenticate = function (email, password, callback) {
         })
 };
 
-UserSchema.methods.calculateLevel = function () {
-    this.level = Math.floor(this.karma / 100);
-};
 
 UserSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password)
 };
 
+//UserSchema.methods.updateLevel = function () {
+//    console.log('level updated');
+//    this.level = Math.floor(this.karma / 10);
+//    console.log(this.level);
+//};
 // Email unique-validator
 UserSchema.plugin(uniqueValidator);
 

@@ -293,6 +293,7 @@ apiRouter.put('/users/:id', function(req, res, next) {
             .select('-password')
             .exec();
         userPromise.then((user) => {
+            user.calculateLevel();
             return res.status(201).json(user);
         }).catch((err) => {return next (err)});
     }

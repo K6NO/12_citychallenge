@@ -54,7 +54,7 @@ var CurrentChallengeSchema = new Schema({
 
 // return remaining days/hours/minutes
 CurrentChallengeSchema.methods.calculateRemainingTime = function () {
-    let difference = this.endsAt - this.startedAt;
+    let difference = this.endsAt - Date.now();
     console.log(difference);
     if (difference > 86400000) {
         this.remaining = [Math.floor(difference / 86400000), 'days'];

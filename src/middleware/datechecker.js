@@ -23,20 +23,26 @@ var checkIfEndDatePassed = function (req, res, next) {
         .populate('partner', '_id karma completed')
         .populate('steps')
         .populate('partnerChallenge')
-        .exec(function (err, currentChallenges) {
+        .exec(
+
+            function (err, currentChallenges) {
         if (err) return next(err);
         if(currentChallenges) {
             currentChallenges.forEach(function (currentChallenge) {
-                console.log(currentChallenge);
 
-                // Update state of currentChallenge, karma and number of current challenges for user and partner
+                // Update state of currentChallenge, karma, level and number of current challenges for user
                 if(currentChallenge.steps[0].completed && currentChallenge.steps[1].completed && currentChallenge.steps[2].completed) {
+
                     currentChallenge.state = 'completed';
+
                     let newUserKarma = currentChallenge.user.karma += currentChallenge.challenge.karma;
+                    let newUserLevel = Math.floor(currentChallenge.user.karma / 10);
                     let newUserCompletedChallenges = currentChallenge.user.completed+=1; // completed: newUserCompletedChallenges
                     let newChallengeTimesTaken = currentChallenge.challenge.times_taken+=1;
-                    User.findByIdAndUpdate(currentChallenge.user._id, {karma: newUserKarma, completed: newUserCompletedChallenges}, {new: true}, function (err, user) {
+
+                    User.findByIdAndUpdate(currentChallenge.user._id, {karma: newUserKarma, level: newUserLevel, completed: newUserCompletedChallenges}, {new: true}, function (err, user) {
                         if(err) return next(err);
+
                         Challenge.findByIdAndUpdate(currentChallenge.challenge._id, {times_taken : newChallengeTimesTaken}, {new: true}, function (err, challenge) {
                             if(err) return next(err);
 
