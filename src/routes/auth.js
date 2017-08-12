@@ -44,7 +44,6 @@ router.get('/logout', function (req, res) {
 /* LOCAL AUTH */
 
 router.get('/loggedin', function(req, res) {
-
     res.status(200).json(req.isAuthenticated() ? {status: true, user: req.session.passport.user} : {status: false});
 });
 

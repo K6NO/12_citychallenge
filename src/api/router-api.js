@@ -35,9 +35,10 @@ apiRouter.get('/challenges/', function(req, res, next) {
 
 // GET a single challenge
 apiRouter.get('/challenges/:id', function(req, res, next) {
-    if(req.user) {
+    // check if user is logged in
+    if(req.session.passport) {
         let challengeId = req.params.id;
-        let userId = req.user._id;
+        let userId = req.session.passport.user._id;
 
         Challenge.findById(challengeId)
             .populate('steps')
@@ -51,7 +52,7 @@ apiRouter.get('/challenges/:id', function(req, res, next) {
                 }
 
                 // search matching currentChallenges from user - this is used to change buttons depending on
-                // the user's previous actions (completed, failed, in progress, etc.
+                // the user's previous actions (completed, failed, in progress, etc.)
                 CurrentChallenge.find(
                     {
                         $and: [
@@ -96,7 +97,7 @@ apiRouter.post('/challenges/', function(req, res, next) {
 apiRouter.put('/challenges/:id', function(req, res, next) {
     let challengeId = req.params.id;
 
-    // second param is the update object - should arrive in the updated form from the frontend
+    // second param is the update object
     Challenge.findByIdAndUpdate(challengeId, req.body, {new: true})
         .exec(function (err, challenge) {
             if (err) return next(err);
@@ -113,37 +114,44 @@ apiRouter.put('/challenges/:id', function(req, res, next) {
 
 // GET a single currentChallenge
 apiRouter.get('/current/challenges/:id', dateChecker.checkIfEndDatePassed, function(req, res, next) {
-    let challengeId = req.params.id;
+    // check if user is logged in
+    if(req.session.passport) {
+        let challengeId = req.params.id;
+        CurrentChallenge.findById(challengeId)
+            .populate('user partner challenge messages steps partnerChallenge')
+            .exec(function (err, currentChallenge) {
+                if(err) return next(err);
+                if(!currentChallenge) {
+                    let noDataError = new Error('Current challenge was not found');
+                    noDataError.status = 404;
+                    return next(noDataError);
+                }
+                currentChallenge.calculateRemainingTime();
 
-    CurrentChallenge.findById(challengeId)
-        .populate('user partner challenge messages steps partnerChallenge')
-        .exec(function (err, currentChallenge) {
-            if(err) return next(err);
-            if(!currentChallenge) {
-                let noDataError = new Error('Current challenge was not found');
-                noDataError.status = 404;
-                return next(noDataError);
-            }
-            currentChallenge.calculateRemainingTime();
-
-            if(currentChallenge.partnerChallenge) {
-                CurrentChallenge.findById(currentChallenge.partnerChallenge)
-                    .populate('messages')
-                    .exec(function (err, partnerChallenge) {
-                        if(err) return next(err);
-                        res.status(200).json({currentChallenge: currentChallenge, partnerMessages: partnerChallenge.messages});
-                    })
-            } else {
-                res.status(200).json({currentChallenge: currentChallenge});
-            }
-        });
+                if(currentChallenge.partnerChallenge) {
+                    CurrentChallenge.findById(currentChallenge.partnerChallenge)
+                        .populate('messages')
+                        .exec(function (err, partnerChallenge) {
+                            if(err) return next(err);
+                            res.status(200).json({currentChallenge: currentChallenge, partnerMessages: partnerChallenge.messages});
+                        })
+                } else {
+                    res.status(200).json({currentChallenge: currentChallenge});
+                }
+            });
+    } else {
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 // GET all currentChallenges for user
 apiRouter.get('/current/user/challenges/', function(req, res, next) {
-    if(req.session.passport !== undefined){
+    // check if user is logged in
+    if(req.session.passport){
         let userId = req.session.passport.user._id;
-        console.log('userId: ' + req.session.passport.user._id);
         CurrentChallenge.find({'user' : userId})
             .sort('-createdAt')
             .populate('partner', '-password')
@@ -153,15 +161,17 @@ apiRouter.get('/current/user/challenges/', function(req, res, next) {
                 res.status(200).json(currentChallenges)
             });
     } else {
-        // user not authenticated
+        // User is not logged in
         let userNotAuthError = new Error('Your are not logged in.');
         userNotAuthError.status = 401;
         return next(userNotAuthError);
     }
 });
 
+// TODO check waitlist logic
 // POST create a new current challenge AND check for matching challenge
 apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, function(req, res, next) {
+    // session (logged in user) is checked in middleware
     if(req.currentChallenge) {
         res.status(200).json({
             currentChallenge: req.currentChallenge
@@ -176,52 +186,63 @@ apiRouter.post('/current/challenges/', waitlist.saveAndCheckWaitListForMatch, fu
 
 // PUT update a current challenge - abandon
 apiRouter.put('/current/challenges/:id/abandon', function(req, res, next) {
-    let currentChallengeId = req.params.id;
-    CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
-        .populate('user challenge partner partnerChallenge')
-        .populate('partnerChallenge.user')
-        .exec(function (err, currentChallenge) {
-            if (err) return next(err);
-            if(!currentChallenge){
-                var noDataErr = new Error('CurrentChallenge not found');
-                noDataErr.status = 404;
-                return next(noDataErr);
-            }
-            // hacking partner and user object into currentChallenge (deep population didn't work)
-            currentChallenge.partnerChallenge.user = currentChallenge.partner;
-            currentChallenge.partnerChallenge.partner = currentChallenge.user;
+    if(req.session.passport) {
+        let currentChallengeId = req.params.id;
+        CurrentChallenge.findByIdAndUpdate(currentChallengeId, req.body, {new: true})
+            .populate('user challenge partner partnerChallenge')
+            .populate('partnerChallenge.user')
+            .exec(function (err, currentChallenge) {
+                if (err) return next(err);
+                if(!currentChallenge){
+                    var noDataErr = new Error('CurrentChallenge not found');
+                    noDataErr.status = 404;
+                    return next(noDataErr);
+                }
+                // hacking partner and user object into currentChallenge (deep population didn't work)
+                currentChallenge.partnerChallenge.user = currentChallenge.partner;
+                currentChallenge.partnerChallenge.partner = currentChallenge.user;
 
-            // send out emails to user and partner on the event
-            sendEmail('partnerAbandoned', null, currentChallenge.partnerChallenge);
-            sendEmail('userAbandoned', null, currentChallenge);
+                // send out emails to user and partner on the event
+                sendEmail('partnerAbandoned', null, currentChallenge.partnerChallenge);
+                sendEmail('userAbandoned', null, currentChallenge);
 
-            return res.status(201).json(currentChallenge);
-        })
+                return res.status(201).json(currentChallenge);
+            })
+    } else {
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in.');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 // PUT update a current challenge - step completed
 apiRouter.put('/current/challenges/:id', function(req, res, next) {
-    let currentChallengeId = req.params.id;
-    //let updateObject1 = req.body[0]._id;
-
-
-    CurrentChallenge.findById(currentChallengeId)
-        .populate('steps')
-        .exec(function (err, _currentChallenge) {
-            if (err) return next(err);
-            _currentChallenge.steps.forEach(function (step, index) {
-                if (step.stepNumber === req.body[index].stepNumber) {
-                    step.completed = req.body[index].completed;
-                    step.save(function (err) {
-                        if(err) return next(err);
-                    });
-                }
-            });
-            _currentChallenge.save(function (err, numAffected) {
+    if(req.session.passport) {
+        let currentChallengeId = req.params.id;
+        CurrentChallenge.findById(currentChallengeId)
+            .populate('steps')
+            .exec(function (err, _currentChallenge) {
+                if (err) return next(err);
+                _currentChallenge.steps.forEach(function (step, index) {
+                    if (step.stepNumber === req.body[index].stepNumber) {
+                        step.completed = req.body[index].completed;
+                        step.save(function (err) {
+                            if (err) return next(err);
+                        });
+                    }
+                });
+                _currentChallenge.save(function (err, numAffected) {
                     if (err) return next(err);
                     return res.status(201).json(numAffected)
                 });
-        });
+            });
+    } else {
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in.');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 
@@ -247,35 +268,43 @@ apiRouter.get('/current/challenges/:id/messages', function(req, res, next) {
 
 // POST new text for currentChallenge
 apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
-    let currentChallengeId = req.params.id;
-    CurrentChallenge.findById(currentChallengeId)
-        .exec(function (err, currentChallenge) {
-            if (err) return next(err);
-            if(!currentChallenge){
-                var noDataErr = new Error('CurrentChallenge not found. Message not saved.');
-                noDataErr.status = 404;
-                return next(noDataErr);
-            }
+    if(req.session.passport) {
 
-            let message = new Message(
-                {
-                    "user" : currentChallenge.user,
-                    "currentChallenge" : currentChallenge._id,
-                    "text" : req.body.message
-                });
+        let currentChallengeId = req.params.id;
+        CurrentChallenge.findById(currentChallengeId)
+            .exec(function (err, currentChallenge) {
+                if (err) return next(err);
+                if (!currentChallenge) {
+                    var noDataErr = new Error('CurrentChallenge not found. Message not saved.');
+                    noDataErr.status = 404;
+                    return next(noDataErr);
+                }
 
-            currentChallenge.messages.push(message);
-            currentChallenge.save(function (err) {
-                if(err) return next(err);
-                message.save(function (err, _message) {
-                    if (err) return next(err);
-                    currentChallenge.populate('messages', function (err, _currentChallenge) {
-                        return res.status(201).json(_currentChallenge.messages);
+                let message = new Message(
+                    {
+                        "user": currentChallenge.user,
+                        "currentChallenge": currentChallenge._id,
+                        "text": req.body.message
                     });
 
+                currentChallenge.messages.push(message);
+                currentChallenge.save(function (err) {
+                    if (err) return next(err);
+                    message.save(function (err, _message) {
+                        if (err) return next(err);
+                        currentChallenge.populate('messages', function (err, _currentChallenge) {
+                            return res.status(201).json(_currentChallenge.messages);
+                        });
+
+                    });
                 });
             });
-        })
+    } else {
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in.');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 
@@ -283,7 +312,7 @@ apiRouter.post('/current/challenges/:id/messages', function(req, res, next) {
 
 // GET a single user
 apiRouter.get('/users', function(req, res, next) {
-    if(req.session.passport !== undefined) {
+    if(req.session.passport) {
         let userId = req.session.passport.user._id;
         console.log('userId: ' + userId);
         User.findOne({_id: userId})
@@ -293,38 +322,36 @@ apiRouter.get('/users', function(req, res, next) {
                 return res.status(200).json(user);
             })
     } else {
-        let userNotLoggedInError = new Error('User not logged in');
-        userNotLoggedInError.status = 401;
-        return next(userNotLoggedInError)
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in.');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
     }
 
 });
 
-// POST - create a single user
-apiRouter.post('/users', function(req, res, next) {
-    let user = new User(req.body);
-    user.save(function (err) {
-        if (err) return next(err);
-        res.setHeader('Location', '/');
-        res.status(200).json({_id: user._id, saved: true});
-    })
-});
-
+// TODO - user update needs to be implemented on FE side
 // PUT - update a single user
 apiRouter.put('/users/:id', function(req, res, next) {
-    let userId = req.params.id;
-    //params: id, updateObj, {options}
-    User.findByIdAndUpdate(userId, req.body, {new: true})
-        .select('-password')
-        .exec(function (err, user) {
-            if (err) return next(err);
-            if(!user){
-                var noUserErr = new Error('User not found');
-                noUserErr.status = 404;
-                return next(noUserErr);
-            }
-            return res.status(201).json(user);
-        })
+    if(req.session.passport) {
+        let userId = req.session.passport.user._id;
+        User.findByIdAndUpdate(userId, req.body, {new: true})
+            .select('-password')
+            .exec(function (err, user) {
+                if (err) return next(err);
+                if (!user) {
+                    var noUserErr = new Error('User not found');
+                    noUserErr.status = 404;
+                    return next(noUserErr);
+                }
+                return res.status(201).json(user);
+            })
+    } else {
+        // User is not logged in
+        let userNotAuthError = new Error('Your are not logged in.');
+        userNotAuthError.status = 401;
+        return next(userNotAuthError);
+    }
 });
 
 module.exports = apiRouter;
