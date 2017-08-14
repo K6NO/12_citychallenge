@@ -15,20 +15,6 @@ angular.module('cityChallengeApp').
                 }
             }
 
-            function getUserStatus() {
-                return $http.get('/auth/loggedin')
-                    .then(function (response) {
-                        if(response.data.status === false) {
-                            user = false;
-                        } else {
-                            user = true;
-                            console.log('setting logged in user: ');
-                            loggedInUser = response.data.user;
-
-                        }
-                    });
-            }
-
             function getLoggedInUser(successCallback, errorCallback){
                 $http.get('/auth/loggedin')
                         .then(successCallback, errorCallback);
@@ -61,7 +47,6 @@ angular.module('cityChallengeApp').
 
                 // return promise object
                 return deferred.promise;
-
             }
 
             function logout() {
@@ -116,7 +101,6 @@ angular.module('cityChallengeApp').
 
             return({
                 isLoggedIn: isLoggedIn,
-                getUserStatus: getUserStatus,
                 login: login,
                 logout: logout,
                 register: register,

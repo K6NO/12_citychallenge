@@ -19,22 +19,18 @@
                     // check status of matching currentChallenges
 
                     response.data.currentChallenges.some(function (currentChallenge) {
-                        console.log('in some');
                         if(currentChallenge.state === 'active' || currentChallenge.state === 'waiting') {
                             $scope.currentChallengeId = currentChallenge._id;
                             $scope.buttonFlag = 'active';
-                            console.log('active');
 
                             return;
                         } else if (currentChallenge.state === 'completed') {
                             $scope.currentChallengeId = currentChallenge._id;
                             $scope.buttonFlag = 'completed';
-                            console.log('completed');
                             return;
                         } else {
                             $scope.currentChallengeId = currentChallenge._id;
                             $scope.buttonFlag = 'failed';
-                            console.log('failed');
                             return;
                         }
                     });
@@ -45,8 +41,7 @@
             // get user
             authService.getLoggedInUser(function (response) {
                 if (response.data.status === false) {
-                    // redirect to login page
-                    console.log('shiiiit');
+                    // TODO redirect to login page
                 } else {
                     $scope.user = response.data.user;
                     userId = response.data.user._id;
@@ -57,6 +52,7 @@
 
             $scope.startCurrentChallenge = function () {
                 let currentChallenge = {
+                    "time" : $scope.challenge.time,
                     "user" : userId,
                     "challenge" : challengeId,
                     "steps" : [
@@ -74,7 +70,6 @@
                         }]
                 };
                 dataService.addCurrentChallenge(currentChallenge, function (response) {
-                    console.log(response);
                     $scope.currentChallenge = response.data.currentChallenge;
                     $location.path("/challenges/current/" + response.data.currentChallenge._id);
                 }, function (response) {

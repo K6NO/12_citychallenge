@@ -42,8 +42,10 @@ var CurrentChallengeSchema = new Schema({
     },
     steps: [
         { type: Schema.Types.ObjectId, ref: 'Step'}
-
         ],
+    progressBar: [
+        { type: Schema.Types.ObjectId, ref: 'Step'}
+    ],
     messages: [
         { type: Schema.Types.ObjectId, ref: 'Message'}
     ],
@@ -62,11 +64,9 @@ CurrentChallengeSchema.methods.calculateRemainingTime = function () {
     } else if (difference > 3600000) {
         this.remaining = [Math.floor(difference / 3600000), 'hours'];
         console.log('hours');
-
     } else {
         this.remaining = [Math.floor(difference / 60000), 'minutes'];
         console.log('minutes');
-
     }
 };
 

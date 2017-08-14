@@ -7,13 +7,13 @@
 
                 let ranks = {
                     1 : 'Initiate',
-                    2 : 'Deep Dreamer',
-                    3 : 'Waking Consciousness',
-                    4 : 'Inner Silence',
-                    5 : 'Awakened',
+                    2 : 'Panda Bear',
+                    3 : 'Shitting Rainbows',
+                    4 : 'Mid-level Shitface',
+                    5 : 'Still Mid-level Shitface',
                     6 : 'Funny Pigeon',
-                    7 : 'Bearer of Light',
-                    8 : 'Eternal Space'
+                    7 : 'Gorilla Guerilla',
+                    8 : 'Superman'
                 };
 
                 $scope.pageIndicator = 'profile-page';

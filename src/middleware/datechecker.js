@@ -40,7 +40,12 @@ var checkIfEndDatePassed = function (req, res, next) {
                     let newUserCompletedChallenges = currentChallenge.user.completed+=1; // completed: newUserCompletedChallenges
                     let newChallengeTimesTaken = currentChallenge.challenge.times_taken+=1;
 
-                    User.findByIdAndUpdate(currentChallenge.user._id, {karma: newUserKarma, level: newUserLevel, completed: newUserCompletedChallenges}, {new: true}, function (err, user) {
+                    User.findByIdAndUpdate(currentChallenge.user._id, {
+                        karma: newUserKarma,
+                        level: newUserLevel,
+                        completed: newUserCompletedChallenges,
+                        $push: {"completedChallenges" : currentChallenge}
+                    }, {new: true}, function (err, user) {
                         if(err) return next(err);
 
                         Challenge.findByIdAndUpdate(currentChallenge.challenge._id, {times_taken : newChallengeTimesTaken}, {new: true}, function (err, challenge) {

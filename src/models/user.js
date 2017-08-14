@@ -7,6 +7,8 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 
 let Badge = require('./badge.js').Badge;
+let CurrentChallenge = require('./current_challenge.js').CurrentChallenge;
+
 
 function calculateLevel (karma) {
     return Math.floor(karma / 100);
@@ -48,16 +50,24 @@ let UserSchema = new Schema({
         type: String,
         trim: true
     },
-    karma: {type:  Number, default: 0},
-    completed: {type:  Number, default: 0},
+    karma: {
+        type:  Number,
+        default: 0
+    },
+    completed: {
+        type:  Number,
+        default: 0
+    },
     level: {
         type:  Number,
         default: 1
     },
-    //challenges: [{
-    //    type: Schema.Types.ObjectId,
-    //    ref: 'CurrentChallenge'
-    //}],
+    completedChallenges: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'CurrentChallenge'
+        }
+    ],
     badges : [
         { type: Schema.Types.ObjectId, ref: 'Badge'}
     ],
@@ -80,48 +90,34 @@ UserSchema.pre('save', function (next) {
 });
 
 
-
-// TODO this is inefficient, but did not find a better event hook
-// calculates the level based on karma
-//UserSchema.post('init', function () {
-//    this.level = Math.floor(this.karma / 100);
-//    console.log('calculating level');
-//});
-
 // Static method for auth middleware
-
 // TODO elvileg ezzel is mukodik, ha beadom az emailAddresst
-UserSchema.statics.authenticate = function (email, password, callback) {
-    User.findOne({emailAddress: email})
-        .exec(function (err, user) {
-            if(err) {
-                return callback(err);
-            } else if (!user) {
-                var noUserError = new Error('User not found.');
-                noUserError.status = 404;
-                return callback(noUserError);
-            }
-            bcrypt.compare(password, user.password, function (err, result) {
-                if(result === true) {
-                    return callback(null, user);
-                } else {
-                    return callback();
-                }
-            })
-
-        })
-};
+//UserSchema.statics.authenticate = function (email, password, callback) {
+//    User.findOne({emailAddress: email})
+//        .exec(function (err, user) {
+//            if(err) {
+//                return callback(err);
+//            } else if (!user) {
+//                var noUserError = new Error('User not found.');
+//                noUserError.status = 404;
+//                return callback(noUserError);
+//            }
+//            bcrypt.compare(password, user.password, function (err, result) {
+//                if(result === true) {
+//                    return callback(null, user);
+//                } else {
+//                    return callback();
+//                }
+//            })
+//
+//        })
+//};
 
 
 UserSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password)
 };
 
-//UserSchema.methods.updateLevel = function () {
-//    console.log('level updated');
-//    this.level = Math.floor(this.karma / 10);
-//    console.log(this.level);
-//};
 // Email unique-validator
 UserSchema.plugin(uniqueValidator);
 
